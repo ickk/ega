@@ -22,7 +22,7 @@ impl<V: Vector, Rhs: Vector> Meet<Rhs> for V {
     let e02 = p.e0() * q.e2() - p.e2() * q.e0();
     let e03 = p.e0() * q.e3() - p.e3() * q.e0();
     LineVal {
-      elements: [e12, e23, e31, e01, e02, e03],
+      elements: [e23, e31, e12, e01, e02, e03],
     }
   }
 }

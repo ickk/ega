@@ -24,19 +24,3 @@ pub struct BivectorRef<'multivector> {
 impl Bivector for BivectorRef<'_> {
   accessors! { array_ref[f32]: e23[0], e31[1], e12[2], e01[3], e02[4], e03[5] }
 }
-
-#[derive(Clone, Debug)]
-pub struct LineVal {
-  pub(crate) elements: [f32; 6],
-}
-impl Bivector for LineVal {
-  accessors! { elements[f32]: e23[0], e31[1], e12[2], e01[3], e02[4], e03[5] }
-}
-
-#[derive(Copy, Clone, Debug)]
-pub struct LineRef<'multivector> {
-  pub(crate) array_ref: &'multivector [f32; 6],
-}
-impl Bivector for LineRef<'_> {
-  accessors! { array_ref[f32]: e23[0], e31[1], e12[2], e01[3], e02[4], e03[5] }
-}

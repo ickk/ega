@@ -32,18 +32,12 @@ impl MultivectorVal {
     pub Self.elements {
       vector_owned -> VectorVal.elements[0..=3],
       vector -> VectorRef.array_ref[0..=3],
-      plane_owned -> PlaneVal.elements[0..=3],
-      plane -> PlaneRef.array_ref[0..=3],
 
       bivector_owned -> BivectorVal.elements[5..=10],
       bivector -> BivectorRef.array_ref[5..=10],
-      line_owned -> LineVal.elements[5..=10],
-      line -> LineRef.array_ref[5..=10],
 
       trivector_owned -> TrivectorVal.elements[12..=15],
       trivector -> TrivectorRef.array_ref[12..=15],
-      point_owned -> PointVal.elements[12..=15],
-      point -> PointRef.array_ref[12..=15],
 
       rotator_owned -> RotatorVal._elements[4..=7],
       rotator -> RotatorRef._array_ref[4..=7],

@@ -22,19 +22,3 @@ pub struct TrivectorRef<'multivector> {
 impl Trivector for TrivectorRef<'_> {
   accessors! { array_ref[f32]: e123[0], e032[1], e013[2], e021[3] }
 }
-
-#[derive(Clone, Debug)]
-pub struct PointVal {
-  pub(crate) elements: [f32; 4],
-}
-impl Trivector for PointVal {
-  accessors! { elements[f32]: e123[0], e032[1], e013[2], e021[3] }
-}
-
-#[derive(Copy, Clone, Debug)]
-pub struct PointRef<'multivector> {
-  pub(crate) array_ref: &'multivector [f32; 4],
-}
-impl Trivector for PointRef<'_> {
-  accessors! { array_ref[f32]: e123[0], e032[1], e013[2], e021[3] }
-}

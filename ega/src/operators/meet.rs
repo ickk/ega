@@ -1,9 +1,5 @@
 use crate::{
-  bivector::*,
-  multivector::*,
-  pseudo_scalar::*,
-  trivector::*,
-  vector::*,
+  bivector::*, multivector::*, pseudo_scalar::*, trivector::*, vector::*,
 };
 
 pub trait Meet<Rhs> {
@@ -28,10 +24,7 @@ fn vector_meet_vector(lhs: &Vector, rhs: &Vector) -> Bivector {
 }
 
 #[inline]
-fn vector_meet_bivector(
-  lhs: &Vector,
-  rhs: &Bivector,
-) -> Trivector {
+fn vector_meet_bivector(lhs: &Vector, rhs: &Bivector) -> Trivector {
   let (p, l) = (lhs, rhs);
   let e123 = p.e1() * l.e23() + p.e2() * l.e31() + p.e3() * l.e12();
   let e032 = p.e2() * l.e03() - p.e0() * l.e23() - p.e3() * l.e02();
@@ -42,18 +35,12 @@ fn vector_meet_bivector(
   }
 }
 #[inline]
-fn bivector_meet_vector(
-  lhs: &Bivector,
-  rhs: &Vector,
-) -> Trivector {
+fn bivector_meet_vector(lhs: &Bivector, rhs: &Vector) -> Trivector {
   -vector_meet_bivector(rhs, lhs)
 }
 
 #[inline]
-fn bivector_meet_bivector(
-  lhs: &Bivector,
-  rhs: &Bivector,
-) -> PseudoScalar {
+fn bivector_meet_bivector(lhs: &Bivector, rhs: &Bivector) -> PseudoScalar {
   let (l, m) = (lhs, rhs);
   let e0123 = l.e01() * m.e23()
     + l.e02() * m.e31()
@@ -65,10 +52,7 @@ fn bivector_meet_bivector(
 }
 
 #[inline]
-fn vector_meet_trivector(
-  lhs: &Vector,
-  rhs: &Trivector,
-) -> PseudoScalar {
+fn vector_meet_trivector(lhs: &Vector, rhs: &Trivector) -> PseudoScalar {
   let (p, x) = (lhs, rhs);
   let e0123 = p.e0() * x.e123()
     + p.e1() * x.e032()
@@ -77,10 +61,7 @@ fn vector_meet_trivector(
   PseudoScalar { e0123 }
 }
 #[inline]
-fn trivector_meet_vector(
-  lhs: &Trivector,
-  rhs: &Vector,
-) -> PseudoScalar {
+fn trivector_meet_vector(lhs: &Trivector, rhs: &Vector) -> PseudoScalar {
   -vector_meet_trivector(rhs, lhs)
 }
 

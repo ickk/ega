@@ -11,9 +11,7 @@ impl PseudoScalar {
 
 impl From<f32> for PseudoScalar {
   fn from(e0123: f32) -> PseudoScalar {
-    PseudoScalar {
-      e0123
-    }
+    PseudoScalar { e0123 }
   }
 }
 
@@ -22,8 +20,6 @@ impl std::ops::Neg for PseudoScalar {
 
   #[inline]
   fn neg(self) -> Self::Output {
-    PseudoScalar {
-      e0123: -self.e0123,
-    }
+    PseudoScalar { e0123: -self.e0123 }
   }
 }

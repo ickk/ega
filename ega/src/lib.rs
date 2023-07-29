@@ -6,5 +6,6 @@ pub mod reflectors;
 pub mod scalar;
 pub mod trivector;
 pub mod vector;
+pub mod meet;
 
 mod macros;

@@ -1,31 +1,18 @@
 use crate::macros::*;
-use crate::{
-  bivector::*, pseudo_scalar::*, scalar::*, trivector::*,
-  vector::*,
-};
 
 #[derive(Clone, Debug)]
-pub struct MultivectorVal {
+pub struct Multivector {
   pub(crate) elements: [f32; 16],
 }
 
 // TODO: These should really be called "VectorAccessors"
-impl Vector for MultivectorVal {
-  accessors! { elements[f32]: e0[0], e1[1], e2[2], e3[3] }
-}
-impl Scalar for MultivectorVal {
-  accessors! { elements[f32]: scalar[4] }
-}
-impl Bivector for MultivectorVal {
-  accessors! {
-    elements[f32]: e23[5], e31[6], e12[7], e01[8], e02[9], e03[10]
+impl Multivector {
+  accessors! { pub elements[f32]:
+    e0[0], e1[1], e2[2], e3[3],
+    scalar[4], e23[5], e31[6], e12[7],
+    e01[8], e02[9], e03[10], e0123[11],
+    e123[12], e032[13], e013[14], e021[15],
   }
-}
-impl PseudoScalar for MultivectorVal {
-  accessors! { elements[f32]: e0123[11] }
-}
-impl Trivector for MultivectorVal {
-  accessors! { elements[f32]: e123[12], e032[13], e013[14], e021[15] }
 }
 
 // TODO: This should actually be a grade selection operator

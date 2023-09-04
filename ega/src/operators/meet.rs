@@ -38,30 +38,49 @@ impl_meet! { vector_meet_scalar: Vector, Scalar => Vector }
 impl_meet! { vector_meet_vector: Vector, Vector => Bivector }
 impl_meet! { vector_meet_bivector: Vector, Bivector => Trivector }
 impl_meet! { vector_meet_trivector: Vector, Trivector => Pseudoscalar }
-impl_meet! { vector_meet_pseudoscalar: Vector, Pseudoscalar => Empty }
+impl_meet! { return_empty: Vector, Pseudoscalar => Empty }
 
 impl_meet! { bivector_meet_multivector: Bivector, Multivector => Multivector }
 impl_meet! { bivector_meet_scalar: Bivector, Scalar => Bivector }
 impl_meet! { bivector_meet_vector: Bivector, Vector => Trivector }
 impl_meet! { bivector_meet_bivector: Bivector, Bivector => Pseudoscalar }
-impl_meet! { bivector_meet_trivector: Bivector, Trivector => Empty }
-impl_meet! { bivector_meet_pseudoscalar: Bivector, Pseudoscalar => Empty }
+impl_meet! { return_empty: Bivector, Trivector => Empty }
+impl_meet! { return_empty: Bivector, Pseudoscalar => Empty }
 
 impl_meet! { trivector_meet_multivector: Trivector, Multivector => Multivector }
 impl_meet! { trivector_meet_scalar: Trivector, Scalar => Trivector }
 impl_meet! { trivector_meet_vector: Trivector, Vector => Pseudoscalar }
-impl_meet! { trivector_meet_bivector: Trivector, Bivector => Empty }
-impl_meet! { trivector_meet_trivector: Trivector, Trivector => Empty }
-impl_meet! { trivector_meet_pseudoscalar: Trivector, Pseudoscalar => Empty }
+impl_meet! { return_empty: Trivector, Bivector => Empty }
+impl_meet! { return_empty: Trivector, Trivector => Empty }
+impl_meet! { return_empty: Trivector, Pseudoscalar => Empty }
 
 impl_meet! { pseudoscalar_meet_multivector: Pseudoscalar, Multivector => Pseudoscalar }
 impl_meet! { pseudoscalar_meet_scalar: Pseudoscalar, Scalar => Pseudoscalar }
-impl_meet! { pseudoscalar_meet_vector: Pseudoscalar, Vector => Empty }
-impl_meet! { pseudoscalar_meet_bivector: Pseudoscalar, Bivector => Empty }
-impl_meet! { pseudoscalar_meet_trivector: Pseudoscalar, Trivector => Empty }
-impl_meet! { pseudoscalar_meet_pseudoscalar: Pseudoscalar, Pseudoscalar => Empty }
+impl_meet! { return_empty: Pseudoscalar, Vector => Empty }
+impl_meet! { return_empty: Pseudoscalar, Bivector => Empty }
+impl_meet! { return_empty: Pseudoscalar, Trivector => Empty }
+impl_meet! { return_empty: Pseudoscalar, Pseudoscalar => Empty }
 
-// multivector meet ___
+impl_meet! { return_empty: Empty, Empty => Empty }
+impl_meet! { return_empty: Multivector, Empty => Empty }
+impl_meet! { return_empty: Scalar, Empty => Empty }
+impl_meet! { return_empty: Vector, Empty => Empty }
+impl_meet! { return_empty: Bivector, Empty => Empty }
+impl_meet! { return_empty: Trivector, Empty => Empty }
+impl_meet! { return_empty: Pseudoscalar, Empty => Empty }
+impl_meet! { return_empty: Empty, Multivector => Empty }
+impl_meet! { return_empty: Empty, Scalar => Empty }
+impl_meet! { return_empty: Empty, Vector => Empty }
+impl_meet! { return_empty: Empty, Bivector => Empty }
+impl_meet! { return_empty: Empty, Trivector => Empty }
+impl_meet! { return_empty: Empty, Pseudoscalar => Empty }
+
+#[inline]
+fn return_empty<Lhs, Rhs>(_: &Lhs, _: &Rhs) -> Empty {
+  Empty
+}
+
+// Multivector
 
 #[rustfmt::skip]
 #[inline]
@@ -210,7 +229,8 @@ fn multivector_meet_pseudoscalar(
   Pseudoscalar::from(lhs.scalar() * rhs.e0123())
 }
 
-// scalar meet ___
+// Scalar
+
 #[inline]
 fn scalar_meet_scalar(lhs: &Scalar, rhs: &Scalar) -> Scalar {
   Scalar::from(lhs.scalar() * rhs.scalar())
@@ -245,7 +265,7 @@ fn scalar_meet_multivector(lhs: &Scalar, rhs: &Multivector) -> Multivector {
   Multivector::from(elements)
 }
 
-// vector meet ___
+// Vector
 
 #[inline]
 fn vector_meet_scalar(lhs: &Vector, rhs: &Scalar) -> Vector {
@@ -288,11 +308,6 @@ fn vector_meet_trivector(lhs: &Vector, rhs: &Trivector) -> Pseudoscalar {
   Pseudoscalar::from([e0123])
 }
 
-#[inline]
-fn vector_meet_pseudoscalar(_: &Vector, _: &Pseudoscalar) -> Empty {
-  Empty
-}
-
 #[rustfmt::skip]
 #[inline]
 fn vector_meet_multivector(lhs: &Vector, rhs: &Multivector) -> Multivector {
@@ -323,7 +338,8 @@ fn vector_meet_multivector(lhs: &Vector, rhs: &Multivector) -> Multivector {
   ])
 }
 
-// bivector meet ___
+// Bivector
+
 #[inline]
 fn bivector_meet_scalar(lhs: &Bivector, rhs: &Scalar) -> Bivector {
   let elements = lhs.elements.map(|e| rhs.scalar() * e);
@@ -351,20 +367,10 @@ fn bivector_meet_vector(lhs: &Bivector, rhs: &Vector) -> Trivector {
 #[inline]
 fn bivector_meet_bivector(lhs: &Bivector, rhs: &Bivector) -> Pseudoscalar {
   let (l, m) = (lhs, rhs);
-  let e0123 = l.e01() * m.e23() + l.e02() * m.e31() + l.e03() * m.e12()
-            + l.e23() * m.e01() + l.e31() * m.e02() + l.e12() * m.e03();
+  let e0123 = l.e01()*m.e23() + l.e02()*m.e31() + l.e03()*m.e12()
+            + l.e23()*m.e01() + l.e31()*m.e02() + l.e12()*m.e03();
 
   Pseudoscalar::from([e0123])
-}
-
-#[inline]
-fn bivector_meet_trivector(_: &Bivector, _: &Trivector) -> Empty {
-  Empty
-}
-
-#[inline]
-fn bivector_meet_pseudoscalar(_: &Bivector, _: &Pseudoscalar) -> Empty {
-  Empty
 }
 
 #[rustfmt::skip]
@@ -402,32 +408,12 @@ fn bivector_meet_multivector(
   ])
 }
 
-// trivector meet ___
+// Trivector
 
 #[inline]
 fn trivector_meet_scalar(lhs: &Trivector, rhs: &Scalar) -> Trivector {
   let elements = lhs.elements.map(|e| rhs.scalar() * e);
   Trivector::from(elements)
-}
-
-#[inline]
-fn trivector_meet_vector(lhs: &Trivector, rhs: &Vector) -> Pseudoscalar {
-  -vector_meet_trivector(rhs, lhs)
-}
-
-#[inline]
-fn trivector_meet_bivector(_: &Trivector, _: &Bivector) -> Empty {
-  Empty
-}
-
-#[inline]
-fn trivector_meet_trivector(_: &Trivector, _: &Trivector) -> Empty {
-  Empty
-}
-
-#[inline]
-fn trivector_meet_pseudoscalar(_: &Trivector, _: &Pseudoscalar) -> Empty {
-  Empty
 }
 
 #[rustfmt::skip]
@@ -454,7 +440,24 @@ fn trivector_meet_multivector(
   ])
 }
 
-// pseudoscalar meet ___
+// #[inline]
+// fn trivector_meet_vector(lhs: &Trivector, rhs: &Vector) -> Pseudoscalar {
+//   -vector_meet_trivector(rhs, lhs)
+// }
+
+#[inline]
+fn trivector_meet_vector(lhs: &Trivector, rhs: &Vector) -> Pseudoscalar {
+  let (a, b) = (lhs, rhs);
+
+  let pseudoscalar = -a.e123() * b.e0()
+    - a.e032() * b.e1()
+    - a.e013() * b.e2()
+    - a.e021() * b.e3();
+
+  Pseudoscalar::from(pseudoscalar)
+}
+
+// Pseudoscalar
 
 #[rustfmt::skip]
 #[inline]
@@ -468,29 +471,6 @@ fn pseudoscalar_meet_multivector(
 #[inline]
 fn pseudoscalar_meet_scalar(lhs: &Pseudoscalar, rhs: &Scalar) -> Pseudoscalar {
   Pseudoscalar::from(lhs.pseudoscalar() * rhs.scalar())
-}
-
-#[inline]
-fn pseudoscalar_meet_vector(_: &Pseudoscalar, _: &Vector) -> Empty {
-  Empty
-}
-
-#[inline]
-fn pseudoscalar_meet_bivector(_: &Pseudoscalar, _: &Bivector) -> Empty {
-  Empty
-}
-
-#[inline]
-fn pseudoscalar_meet_trivector(_: &Pseudoscalar, _: &Trivector) -> Empty {
-  Empty
-}
-
-#[inline]
-fn pseudoscalar_meet_pseudoscalar(
-  _: &Pseudoscalar,
-  _: &Pseudoscalar,
-) -> Empty {
-  Empty
 }
 
 #[cfg(any(test, doctest))]

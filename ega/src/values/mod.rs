@@ -16,6 +16,45 @@ pub use scalar::*;
 pub use trivector::*;
 pub use vector::*;
 
+use crate::operators::*;
+pub trait EgaVector:
+  private::Sealed
+  + Copy
+  + Clone
+  + core::fmt::Debug
+  + Nil
+  + Neg
+  + GradeSelect
+  + Meet<Multivector>
+  + Meet<Empty>
+  + Meet<Scalar>
+  + Meet<Vector>
+  + Meet<Bivector>
+  + Meet<Trivector>
+  + Meet<Pseudoscalar>
+{
+}
+
+impl EgaVector for Multivector {}
+impl EgaVector for Empty {}
+impl EgaVector for Scalar {}
+impl EgaVector for Vector {}
+impl EgaVector for Bivector {}
+impl EgaVector for Trivector {}
+impl EgaVector for Pseudoscalar {}
+
+impl private::Sealed for Multivector {}
+impl private::Sealed for Empty {}
+impl private::Sealed for Scalar {}
+impl private::Sealed for Vector {}
+impl private::Sealed for Bivector {}
+impl private::Sealed for Trivector {}
+impl private::Sealed for Pseudoscalar {}
+
+mod private {
+  pub trait Sealed {}
+}
+
 /// Create accessor functions for elements of a field
 ///
 /// usage: `accessors { <pub?> <field>[<type>]: <a1>[<i1>], <a2>[<i2>] }`

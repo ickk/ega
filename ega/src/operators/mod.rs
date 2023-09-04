@@ -6,6 +6,7 @@ pub use grade_select::*;
 pub use meet::*;
 pub use neg::*;
 pub use nil::*;
+pub use neg::*;
 
 pub trait Join<Rhs> {
   type Output;

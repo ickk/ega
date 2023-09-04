@@ -1,5 +1,11 @@
+pub mod grade_select;
 pub mod meet;
+pub mod neg;
+pub mod nil;
+pub use grade_select::*;
 pub use meet::*;
+pub use neg::*;
+pub use nil::*;
 
 pub trait Join<Rhs> {
   type Output;
@@ -31,10 +37,4 @@ pub trait Reverse {
   type Output;
 
   fn reverse(&self) -> Self::Output;
-}
-
-pub trait GradeSelect {
-  type Output;
-
-  fn grade(&self) -> Self::Output;
 }

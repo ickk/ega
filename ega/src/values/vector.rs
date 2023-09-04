@@ -1,7 +1,7 @@
-use crate::macros::*;
+use super::*;
 use core::fmt::{Debug, Formatter};
 
-#[derive(Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub struct Vector {
   pub(crate) elements: [f32; 4],
 }
@@ -10,8 +10,8 @@ impl Vector {
   accessors! { pub elements[f32]: e0[0], e1[1], e2[2], e3[3] }
 }
 
-impl From<(f32, f32, f32, f32)> for Vector {
-  fn from((e0, e1, e2, e3): (f32, f32, f32, f32)) -> Vector {
+impl From<[f32; 4]> for Vector {
+  fn from([e0, e1, e2, e3]: [f32; 4]) -> Vector {
     Vector {
       elements: [e0, e1, e2, e3],
     }

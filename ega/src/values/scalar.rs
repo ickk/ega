@@ -1,25 +1,29 @@
-#[derive(Debug, Copy, Clone, PartialEq)]
+use super::*;
+use core::fmt::{Debug, Formatter};
+
+#[derive(Copy, Clone, PartialEq)]
 pub struct Scalar {
-  pub(crate) e0123: f32,
+  pub(crate) elements: [f32; 1],
 }
 
 impl Scalar {
-  pub fn e0123(&self) -> f32 {
-    self.e0123
-  }
+  accessors! { pub elements[f32]: scalar[0] }
 }
 
 impl From<f32> for Scalar {
-  fn from(e0123: f32) -> Scalar {
-    Scalar { e0123 }
+  fn from(scalar: f32) -> Scalar {
+    Scalar { elements: [scalar] }
   }
 }
 
-impl std::ops::Neg for Scalar {
-  type Output = Scalar;
+impl From<[f32; 1]> for Scalar {
+  fn from([scalar]: [f32; 1]) -> Scalar {
+    Scalar { elements: [scalar] }
+  }
+}
 
-  #[inline]
-  fn neg(self) -> Self::Output {
-    Scalar { e0123: -self.e0123 }
+impl Debug for Scalar {
+  fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
+    fmt.write_fmt(format_args!("Scalar {{ {} }}", &self.scalar()))
   }
 }

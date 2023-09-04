@@ -1,23 +1,23 @@
-use crate::macros::*;
+use super::*;
 use core::fmt::{Debug, Formatter};
 
-impl From<(f32, f32, f32, f32, f32, f32)> for Bivector {
-  fn from(
-    (e23, e31, e12, e01, e02, e03): (f32, f32, f32, f32, f32, f32),
-  ) -> Bivector {
-    Bivector {
-      elements: [e23, e31, e12, e01, e02, e03],
-    }
-  }
-}
-
-#[derive(Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub struct Bivector {
   pub(crate) elements: [f32; 6],
 }
 
 impl Bivector {
   accessors! { pub elements[f32]: e23[0], e31[1], e12[2], e01[3], e02[4], e03[5] }
+}
+
+impl From<[f32; 6]> for Bivector {
+  fn from(
+    [e23, e31, e12, e01, e02, e03]: [f32; 6],
+  ) -> Bivector {
+    Bivector {
+      elements: [e23, e31, e12, e01, e02, e03],
+    }
+  }
 }
 
 impl Debug for Bivector {

@@ -1,25 +1,29 @@
-#[derive(Debug, Copy, Clone, PartialEq)]
-pub struct PseudoScalar {
-  pub(crate) e0123: f32,
+use super::*;
+use core::fmt::{Debug, Formatter};
+
+#[derive(Copy, Clone, PartialEq)]
+pub struct Pseudoscalar {
+  pub(crate) elements: [f32; 1],
 }
 
-impl PseudoScalar {
-  pub fn e0123(&self) -> f32 {
-    self.e0123
+impl Pseudoscalar {
+  accessors! { pub elements[f32]: pseudoscalar[0], e0123[0] }
+}
+
+impl From<f32> for Pseudoscalar {
+  fn from(e0123: f32) -> Pseudoscalar {
+    Pseudoscalar { elements: [e0123] }
   }
 }
 
-impl From<f32> for PseudoScalar {
-  fn from(e0123: f32) -> PseudoScalar {
-    PseudoScalar { e0123 }
+impl From<[f32; 1]> for Pseudoscalar {
+  fn from([e0123]: [f32; 1]) -> Pseudoscalar {
+    Pseudoscalar { elements: [e0123] }
   }
 }
 
-impl std::ops::Neg for PseudoScalar {
-  type Output = PseudoScalar;
-
-  #[inline]
-  fn neg(self) -> Self::Output {
-    PseudoScalar { e0123: -self.e0123 }
+impl Debug for Pseudoscalar {
+  fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
+    fmt.write_fmt(format_args!("Pseudoscalar {{ {} }}", &self.e0123()))
   }
 }

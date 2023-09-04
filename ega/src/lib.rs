@@ -1,4 +1,5 @@
-mod macros;
+#![no_std]
+
 pub mod operators;
 pub mod values;
 

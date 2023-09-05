@@ -1,7 +1,7 @@
 pub mod bivector;
 pub mod empty;
 pub mod multivector;
-pub mod pseudo_scalar;
+pub mod pseudoscalar;
 pub mod reflectors;
 pub mod scalar;
 pub mod trivector;
@@ -10,7 +10,7 @@ pub mod vector;
 pub use bivector::*;
 pub use empty::*;
 pub use multivector::*;
-pub use pseudo_scalar::*;
+pub use pseudoscalar::*;
 pub use reflectors::*;
 pub use scalar::*;
 pub use trivector::*;

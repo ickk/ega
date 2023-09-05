@@ -3,6 +3,7 @@ use core::fmt::{Debug, Formatter};
 
 #[derive(Copy, Clone, PartialEq)]
 pub struct Trivector {
+  /// The components ordered as `[e123, e032, e013, e021]`
   pub(crate) elements: [f32; 4],
 }
 
@@ -11,10 +12,10 @@ impl Trivector {
 }
 
 impl From<[f32; 4]> for Trivector {
-  fn from([e123, e032, e013, e021]: [f32; 4]) -> Trivector {
-    Trivector {
-      elements: [e123, e032, e013, e021],
-    }
+  /// Construct a `Trivector` from an array containing
+  /// `[e123, e032, e013, e021]`
+  fn from(elements: [f32; 4]) -> Trivector {
+    Trivector { elements }
   }
 }
 

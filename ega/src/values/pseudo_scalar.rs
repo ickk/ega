@@ -3,6 +3,7 @@ use core::fmt::{Debug, Formatter};
 
 #[derive(Copy, Clone, PartialEq)]
 pub struct Pseudoscalar {
+  /// The component `[e0123; 1]`
   pub(crate) elements: [f32; 1],
 }
 
@@ -11,12 +12,14 @@ impl Pseudoscalar {
 }
 
 impl From<f32> for Pseudoscalar {
+  /// Construct a `Pseudoscalar` from an f32
   fn from(e0123: f32) -> Pseudoscalar {
     Pseudoscalar { elements: [e0123] }
   }
 }
 
 impl From<[f32; 1]> for Pseudoscalar {
+  /// Construct a `Pseudoscalar` from an array containing `[e0123; 1]`
   fn from([e0123]: [f32; 1]) -> Pseudoscalar {
     Pseudoscalar { elements: [e0123] }
   }

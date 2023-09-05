@@ -3,38 +3,42 @@ use core::fmt::{Debug, Formatter};
 
 #[derive(Copy, Clone)]
 pub struct Multivector {
+  /// The components ordered as
+  /// ```skip
+  /// [
+  ///       e0,    e1,    e2,    e3,
+  ///   scalar,   e23,   e31,   e12,
+  ///      e01,   e02,   e03, e0123,
+  ///     e123,  e032,  e013,  e021,
+  /// ]
+  /// ```
   pub(crate) elements: [f32; 16],
 }
 
 impl Multivector {
   accessors! { pub elements[f32]:
-    e0[0], e1[1], e2[2], e3[3],
-    scalar[4], e23[5], e31[6], e12[7],
-    e01[8], e02[9], e03[10], e0123[11],
-    e123[12], e032[13], e013[14], e021[15],
+        e0[0],     e1[1],     e2[2],     e3[3],
+    scalar[4],    e23[5],    e31[6],    e12[7],
+       e01[8],    e02[9],   e03[10], e0123[11],
+     e123[12],  e032[13],  e013[14],  e021[15],
   }
 
+  // alias for `e0123`
   accessors! { pub elements[f32]: pseudoscalar[11] }
 }
 
 impl From<[f32; 16]> for Multivector {
-  #[rustfmt::skip]
-  fn from(
-    [
-      e0, e1, e2, e3,
-      scalar, e23, e31, e12,
-      e01, e02, e03, e0123,
-      e123, e032, e013, e021
-    ]: [f32; 16],
-  ) -> Multivector {
-    Multivector {
-      elements: [
-        e0, e1, e2, e3,
-        scalar, e23, e31, e12,
-        e01, e02, e03, e0123,
-        e123, e032, e013, e021,
-      ],
-    }
+  /// Construct a `Multivector` from an array containing
+  /// ```skip
+  /// [
+  ///       e0,    e1,    e2,    e3,
+  ///   scalar,   e23,   e31,   e12,
+  ///      e01,   e02,   e03, e0123,
+  ///     e123,  e032,  e013,  e021,
+  /// ]
+  /// ```
+  fn from(elements: [f32; 16]) -> Multivector {
+    Multivector { elements }
   }
 }
 

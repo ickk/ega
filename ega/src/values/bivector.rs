@@ -3,6 +3,7 @@ use core::fmt::{Debug, Formatter};
 
 #[derive(Copy, Clone, PartialEq)]
 pub struct Bivector {
+  /// The components ordered as `[e23, e31, e12, e01, e02, e03]`
   pub(crate) elements: [f32; 6],
 }
 
@@ -11,12 +12,10 @@ impl Bivector {
 }
 
 impl From<[f32; 6]> for Bivector {
-  fn from(
-    [e23, e31, e12, e01, e02, e03]: [f32; 6],
-  ) -> Bivector {
-    Bivector {
-      elements: [e23, e31, e12, e01, e02, e03],
-    }
+  /// Construct a `Biector` from an array containing
+  /// `[e23, e31, e12, e01, e02, e03]`
+  fn from(elements: [f32; 6]) -> Bivector {
+    Bivector { elements }
   }
 }
 

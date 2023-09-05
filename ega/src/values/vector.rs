@@ -3,6 +3,7 @@ use core::fmt::{Debug, Formatter};
 
 #[derive(Copy, Clone, PartialEq)]
 pub struct Vector {
+  /// The components ordered as `[e0, e1, e2, e3]`
   pub(crate) elements: [f32; 4],
 }
 
@@ -11,10 +12,9 @@ impl Vector {
 }
 
 impl From<[f32; 4]> for Vector {
-  fn from([e0, e1, e2, e3]: [f32; 4]) -> Vector {
-    Vector {
-      elements: [e0, e1, e2, e3],
-    }
+  /// Construct a `Vector` from an array containing `[e0, e1, e2, e3]`
+  fn from(elements: [f32; 4]) -> Vector {
+    Vector { elements }
   }
 }
 

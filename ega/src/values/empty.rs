@@ -4,8 +4,9 @@ use core::fmt::{Debug, Formatter};
 pub struct Empty;
 
 impl From<[f32; 0]> for Empty {
+  /// Construct an `Empty` from an empty array
   fn from(_: [f32; 0]) -> Empty {
-    Empty {}
+    Empty
   }
 }
 

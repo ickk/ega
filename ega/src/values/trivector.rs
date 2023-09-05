@@ -4,7 +4,7 @@ use core::fmt::{Debug, Formatter};
 #[derive(Copy, Clone, PartialEq)]
 pub struct Trivector {
   /// The components ordered as `[e123, e032, e013, e021]`
-  pub(crate) elements: [f32; 4],
+  pub elements: [f32; 4],
 }
 
 impl Trivector {

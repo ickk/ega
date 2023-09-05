@@ -3,12 +3,12 @@ use core::fmt::{Debug, Formatter};
 
 #[derive(Copy, Clone, PartialEq)]
 pub struct Scalar {
-  /// The component `[scalar; 1]`
-  pub(crate) elements: [f32; 1],
+  /// The component `[scalar]`
+  pub elements: [f32; 1],
 }
 
 impl Scalar {
-  accessors! { pub elements[f32]: scalar[0] }
+  accessors! { pub elements[f32]: scalar[0], s[0] }
 }
 
 impl From<f32> for Scalar {

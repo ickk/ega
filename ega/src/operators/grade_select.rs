@@ -23,27 +23,31 @@ impl GradeSelect for Multivector {
   fn grade_0(&self) -> Scalar {
     Scalar::from(self.scalar())
   }
+
   #[inline]
   fn grade_1(&self) -> Vector {
     let mut a = [0f32; 4];
     a.copy_from_slice(&self.elements[0..=3]);
     Vector::from(a)
   }
+
   #[inline]
   fn grade_2(&self) -> Bivector {
     let mut a = [0f32; 6];
     a.copy_from_slice(&self.elements[5..=10]);
     Bivector::from(a)
   }
+
   #[inline]
   fn grade_3(&self) -> Trivector {
     let mut a = [0f32; 4];
     a.copy_from_slice(&self.elements[12..=15]);
     Trivector::from(a)
   }
+
   #[inline]
   fn grade_4(&self) -> Pseudoscalar {
-    Pseudoscalar::from(self.pseudoscalar())
+    Pseudoscalar::from(self.e0123())
   }
 }
 

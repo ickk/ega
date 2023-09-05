@@ -4,7 +4,7 @@ use core::fmt::{Debug, Formatter};
 #[derive(Copy, Clone, PartialEq)]
 pub struct Vector {
   /// The components ordered as `[e0, e1, e2, e3]`
-  pub(crate) elements: [f32; 4],
+  pub elements: [f32; 4],
 }
 
 impl Vector {

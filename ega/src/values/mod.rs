@@ -69,7 +69,7 @@ macro_rules! accessors {
   ) => {
     $(
       #[inline]
-      $visability fn $accessor_name(&self) -> $element_type {
+      $visability const fn $accessor_name(&self) -> $element_type {
         self.$field_name[$index]
       }
     )+

@@ -2,6 +2,15 @@ use crate::values::*;
 
 pub use core::ops::Neg;
 
+impl Neg for Multivector {
+  type Output = Multivector;
+
+  #[inline]
+  fn neg(self) -> Self::Output {
+    Multivector::from(self.elements.map(|e| -e))
+  }
+}
+
 impl Neg for Empty {
   type Output = Empty;
 
@@ -25,20 +34,25 @@ impl Neg for Vector {
 
   #[inline]
   fn neg(self) -> Self::Output {
-    Vector::from([-self.e0(), -self.e1(), -self.e2(), -self.e3()])
+    Vector::from(self.elements.map(|e| -e))
   }
 }
 
 impl Neg for Bivector {
   type Output = Bivector;
 
-  #[rustfmt::skip]
   #[inline]
   fn neg(self) -> Self::Output {
-    Bivector::from([
-      -self.e23(), -self.e31(), -self.e12(),
-      -self.e01(), -self.e02(), -self.e03(),
-    ])
+    Bivector::from(self.elements.map(|e| -e))
+  }
+}
+
+impl Neg for Trivector {
+  type Output = Trivector;
+
+  #[inline]
+  fn neg(self) -> Self::Output {
+    Trivector::from(self.elements.map(|e| -e))
   }
 }
 
@@ -48,29 +62,5 @@ impl Neg for Pseudoscalar {
   #[inline]
   fn neg(self) -> Self::Output {
     Pseudoscalar::from([-self.e0123()])
-  }
-}
-
-impl Neg for Trivector {
-  type Output = Trivector;
-
-  #[inline]
-  fn neg(self) -> Self::Output {
-    Trivector::from([-self.e123(), -self.e032(), -self.e013(), -self.e021()])
-  }
-}
-
-impl Neg for Multivector {
-  type Output = Multivector;
-
-  #[rustfmt::skip]
-  #[inline]
-  fn neg(self) -> Self::Output {
-    Multivector::from([
-      -self.e0(), -self.e01(), -self.e02(), -self.e03(),
-      -self.scalar(), -self.e23(), -self.e31(), -self.e12(),
-      -self.e01(), -self.e02(), -self.e03(), -self.e0123(),
-      -self.e123(), -self.e032(), -self.e013(), -self.e021(),
-    ])
   }
 }

@@ -4,7 +4,7 @@ use core::fmt::{Debug, Formatter};
 #[derive(Copy, Clone, PartialEq)]
 pub struct Bivector {
   /// The components ordered as `[e23, e31, e12, e01, e02, e03]`
-  pub(crate) elements: [f32; 6],
+  pub elements: [f32; 6],
 }
 
 impl Bivector {

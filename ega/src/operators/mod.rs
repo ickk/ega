@@ -2,24 +2,19 @@ pub mod grade_select;
 pub mod meet;
 pub mod neg;
 pub mod nil;
+pub mod dot;
 pub use grade_select::*;
 pub use meet::*;
 pub use neg::*;
 pub use neg::*;
 pub use nil::*;
+pub use dot::*;
 
 pub trait GeometricProduct<Rhs> {
   type Output;
 
   /// The geometric product
   fn mul(&self, rhs: Rhs) -> Self::Output;
-}
-
-pub trait Dot<Rhs> {
-  type Output;
-
-  /// The inner product
-  fn dot(&self, rhs: Rhs) -> Self::Output;
 }
 
 pub trait Normalise {

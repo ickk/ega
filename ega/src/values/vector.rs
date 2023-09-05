@@ -20,12 +20,12 @@ impl From<[f32; 4]> for Vector {
 
 impl Debug for Vector {
   fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
-    fmt.write_fmt(format_args!(
-      "Vector {{ e0: {}, e1: {}, e2: {}, e3: {} }}",
-      &self.e0(),
-      &self.e1(),
-      &self.e2(),
-      &self.e3(),
-    ))
+    fmt
+      .debug_struct("Vector")
+      .field("e0", &self.e0())
+      .field("e1", &self.e1())
+      .field("e2", &self.e2())
+      .field("e3", &self.e3())
+      .finish()
   }
 }

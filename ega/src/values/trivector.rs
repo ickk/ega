@@ -21,12 +21,12 @@ impl From<[f32; 4]> for Trivector {
 
 impl Debug for Trivector {
   fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
-    fmt.write_fmt(format_args!(
-      "Trivector {{ e123: {}, e032: {}, e013: {}, e021: {} }}",
-      &self.e123(),
-      &self.e032(),
-      &self.e013(),
-      &self.e021(),
-    ))
+    fmt
+      .debug_struct("Trivector")
+      .field("e123", &self.e123())
+      .field("e032", &self.e032())
+      .field("e013", &self.e013())
+      .field("e021", &self.e021())
+      .finish()
   }
 }

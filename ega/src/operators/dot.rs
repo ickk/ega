@@ -128,10 +128,7 @@ fn multivector_dot_scalar(lhs: &Multivector, rhs: &Scalar) -> Multivector {
 
 #[rustfmt::skip]
 #[inline]
-fn multivector_dot_vector(
-  lhs: &Multivector,
-  rhs: &Vector,
-) -> Multivector {
+fn multivector_dot_vector(lhs: &Multivector, rhs: &Vector) -> Multivector {
   let (a, b) = (lhs, rhs);
 
   let scalar = a.e1()*b.e1() + a.e2()*b.e2() + a.e3()*b.e3();
@@ -161,10 +158,7 @@ fn multivector_dot_vector(
 
 #[rustfmt::skip]
 #[inline]
-fn multivector_dot_bivector(
-  lhs: &Multivector,
-  rhs: &Bivector,
-) -> Multivector {
+fn multivector_dot_bivector(lhs: &Multivector, rhs: &Bivector) -> Multivector {
   let (a, b) = (lhs, rhs);
   let [e123, e032, e013, e021, e0123] = [0f32; 5];
 
@@ -284,10 +278,7 @@ fn scalar_dot_pseudoscalar(lhs: &Scalar, rhs: &Pseudoscalar) -> Pseudoscalar {
 
 #[rustfmt::skip]
 #[inline]
-fn vector_dot_multivector(
-  lhs: &Vector,
-  rhs: &Multivector,
-) -> Multivector {
+fn vector_dot_multivector(lhs: &Vector, rhs: &Multivector) -> Multivector {
   let (a, b) = (lhs, rhs);
 
   let scalar = a.e1()*b.e1() + a.e2()*b.e2() + a.e3()*b.e3();
@@ -315,21 +306,14 @@ fn vector_dot_multivector(
   ])
 }
 
-#[rustfmt::skip]
 #[inline]
-fn vector_dot_scalar(
-  lhs: &Vector,
-  rhs: &Scalar,
-) -> Vector {
+fn vector_dot_scalar(lhs: &Vector, rhs: &Scalar) -> Vector {
   Vector::from(lhs.elements.map(|e| e * rhs.scalar()))
 }
 
 #[rustfmt::skip]
 #[inline]
-fn vector_dot_vector(
-  lhs: &Vector,
-  rhs: &Vector,
-) -> Scalar {
+fn vector_dot_vector(lhs: &Vector, rhs: &Vector) -> Scalar {
   let (a, b) = (lhs, rhs);
   let scalar = a.e1()*b.e1() + a.e2()*b.e2() + a.e3()*b.e3();
 
@@ -338,10 +322,7 @@ fn vector_dot_vector(
 
 #[rustfmt::skip]
 #[inline]
-fn vector_dot_bivector(
-  lhs: &Vector,
-  rhs: &Bivector,
-) -> Vector {
+fn vector_dot_bivector(lhs: &Vector, rhs: &Bivector) -> Vector {
   let (a, b) = (lhs, rhs);
 
   let e0 = -a.e1()*b.e01() - a.e2()*b.e02() - a.e3()*b.e03();
@@ -354,10 +335,7 @@ fn vector_dot_bivector(
 
 #[rustfmt::skip]
 #[inline]
-fn vector_dot_trivector(
-  lhs: &Vector,
-  rhs: &Trivector,
-) -> Bivector {
+fn vector_dot_trivector(lhs: &Vector, rhs: &Trivector) -> Bivector {
   let (a, b) = (lhs, rhs);
 
   let e01 = a.e3()*b.e013() - a.e2()*b.e021();
@@ -372,10 +350,7 @@ fn vector_dot_trivector(
 
 #[rustfmt::skip]
 #[inline]
-fn vector_dot_pseudoscalar(
-  lhs: &Vector,
-  rhs: &Pseudoscalar,
-) -> Trivector {
+fn vector_dot_pseudoscalar(lhs: &Vector, rhs: &Pseudoscalar) -> Trivector {
   let (a, b) = (lhs, rhs);
 
   let e123 = 0f32;
@@ -390,10 +365,7 @@ fn vector_dot_pseudoscalar(
 
 #[rustfmt::skip]
 #[inline]
-fn bivector_dot_multivector(
-  lhs: &Bivector,
-  rhs: &Multivector,
-) -> Multivector {
+fn bivector_dot_multivector(lhs: &Bivector, rhs: &Multivector) -> Multivector {
   let (a, b) = (lhs, rhs);
   let [e0123, e123, e032, e013, e021] = [0f32; 5];
 
@@ -425,10 +397,7 @@ fn bivector_dot_scalar(lhs: &Bivector, rhs: &Scalar) -> Bivector {
 
 #[rustfmt::skip]
 #[inline]
-fn bivector_dot_vector(
-  lhs: &Bivector,
-  rhs: &Vector,
-) -> Vector {
+fn bivector_dot_vector(lhs: &Bivector, rhs: &Vector) -> Vector {
   let (a, b) = (lhs, rhs);
 
   let e0 = a.e01()*b.e1() + a.e02()*b.e2() + a.e03()*b.e3();
@@ -441,10 +410,7 @@ fn bivector_dot_vector(
 
 #[rustfmt::skip]
 #[inline]
-fn bivector_dot_bivector(
-  lhs: &Bivector,
-  rhs: &Bivector,
-) -> Scalar {
+fn bivector_dot_bivector(lhs: &Bivector, rhs: &Bivector) -> Scalar {
   let (a, b) = (lhs, rhs);
   let scalar = -a.e23()*b.e23() - a.e31()*b.e31() - a.e12()*b.e12();
 
@@ -453,10 +419,7 @@ fn bivector_dot_bivector(
 
 #[rustfmt::skip]
 #[inline]
-fn bivector_dot_trivector(
-  lhs: &Bivector,
-  rhs: &Trivector,
-) -> Vector {
+fn bivector_dot_trivector(lhs: &Bivector, rhs: &Trivector) -> Vector {
   let (a, b) = (lhs, rhs);
 
   let e0 = a.e23()*b.e032() + a.e31()*b.e013() + a.e12()*b.e021();
@@ -469,10 +432,7 @@ fn bivector_dot_trivector(
 
 #[rustfmt::skip]
 #[inline]
-fn bivector_dot_pseudoscalar(
-  lhs: &Bivector,
-  rhs: &Pseudoscalar,
-) -> Bivector {
+fn bivector_dot_pseudoscalar(lhs: &Bivector, rhs: &Pseudoscalar) -> Bivector {
   let (a, b) = (lhs, rhs);
   let [e23, e31, e12] = [0f32; 3];
 
@@ -525,10 +485,7 @@ fn trivector_dot_scalar(lhs: &Trivector, rhs: &Scalar) -> Trivector {
 
 #[rustfmt::skip]
 #[inline]
-fn trivector_dot_vector(
-  lhs: &Trivector,
-  rhs: &Vector,
-) -> Bivector {
+fn trivector_dot_vector(lhs: &Trivector, rhs: &Vector) -> Bivector {
   let (a, b) = (lhs, rhs);
 
   let e01 = a.e013()*b.e3() - a.e021()*b.e2();
@@ -543,10 +500,7 @@ fn trivector_dot_vector(
 
 #[rustfmt::skip]
 #[inline]
-fn trivector_dot_bivector(
-  lhs: &Trivector,
-  rhs: &Bivector,
-) -> Vector {
+fn trivector_dot_bivector(lhs: &Trivector, rhs: &Bivector) -> Vector {
   let (a, b) = (lhs, rhs);
 
   let e0 = a.e032()*b.e23() + a.e013()*b.e31() + a.e021()*b.e12();
@@ -557,28 +511,20 @@ fn trivector_dot_bivector(
   Vector::from([e0, e1, e2, e3])
 }
 
-#[rustfmt::skip]
 #[inline]
-fn trivector_dot_trivector(
-  lhs: &Trivector,
-  rhs: &Trivector,
-) -> Scalar {
+fn trivector_dot_trivector(lhs: &Trivector, rhs: &Trivector) -> Scalar {
   let (a, b) = (lhs, rhs);
-  let scalar = -a.e123()*b.e123();
+  let scalar = -a.e123() * b.e123();
 
   Scalar::from(scalar)
 }
 
-#[rustfmt::skip]
 #[inline]
-fn trivector_dot_pseudoscalar(
-  lhs: &Trivector,
-  rhs: &Pseudoscalar,
-) -> Vector {
+fn trivector_dot_pseudoscalar(lhs: &Trivector, rhs: &Pseudoscalar) -> Vector {
   let (a, b) = (lhs, rhs);
   let [e1, e2, e3] = [0f32; 3];
 
-  let e0 = a.e123()*b.e0123();
+  let e0 = a.e123() * b.e0123();
 
   Vector::from([e0, e1, e2, e3])
 }

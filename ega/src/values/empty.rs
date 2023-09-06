@@ -1,6 +1,6 @@
 use core::fmt::{Debug, Formatter};
 
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, Default, PartialEq, Eq)]
 pub struct Empty;
 
 impl From<[f32; 0]> for Empty {

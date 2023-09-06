@@ -1,32 +1,66 @@
 use super::*;
 use core::fmt::{Debug, Formatter};
 
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, Default, PartialEq)]
+#[repr(C)]
 pub struct Pseudoscalar {
+  pub e0123: f32
+}
+
+#[derive(Copy, Clone, Default, PartialEq)]
+#[repr(C)]
+pub struct PseudoscalarArray {
   /// The component `[e0123]`
   pub elements: [f32; 1],
 }
 
 impl Pseudoscalar {
+  #[inline(always)]
+  pub const fn to_pseudoscalar_array(self) -> PseudoscalarArray {
+    // SAFETY: `Pseudoscalar` & `PseudoscalarArray` share identical layout due
+    // to repr(C)
+    unsafe { core::mem::transmute(self) }
+  }
+}
+
+impl PseudoscalarArray {
   accessors! { pub elements[f32]: pseudoscalar[0], e0123[0] }
+
+  #[inline(always)]
+  pub const fn to_pseudoscalar(self) -> Pseudoscalar {
+    // SAFETY: `Pseudoscalar` & `PseudoscalarArray` share identical layout due
+    // to repr(C)
+    unsafe { core::mem::transmute(self) }
+  }
 }
 
 impl From<f32> for Pseudoscalar {
   /// Construct a `Pseudoscalar` from an f32
+  #[inline]
   fn from(e0123: f32) -> Pseudoscalar {
-    Pseudoscalar { elements: [e0123] }
+    Pseudoscalar { e0123 }
   }
 }
 
-impl From<[f32; 1]> for Pseudoscalar {
+impl From<[f32; 1]> for PseudoscalarArray {
   /// Construct a `Pseudoscalar` from an array containing `[e0123]`
-  fn from([e0123]: [f32; 1]) -> Pseudoscalar {
-    Pseudoscalar { elements: [e0123] }
+  #[inline]
+  fn from([e0123]: [f32; 1]) -> PseudoscalarArray {
+    PseudoscalarArray { elements: [e0123] }
   }
 }
 
 impl Debug for Pseudoscalar {
   fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
-    fmt.write_fmt(format_args!("Pseudoscalar {{ {} }}", &self.e0123()))
+    fmt.write_str("PseudoScalar ")?;
+    fmt.debug_set().entry(&self.e0123).finish()
+  }
+}
+
+impl Debug for PseudoscalarArray {
+  fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
+    let width = fmt.width().unwrap_or(3);
+    let precision = fmt.precision().unwrap_or(0);
+    fmt.write_fmt(format_args!("Pseudoscalar [ {:width$.precision$} ]", self.e0123()))
   }
 }

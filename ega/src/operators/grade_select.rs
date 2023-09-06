@@ -21,33 +21,33 @@ pub trait GradeSelect {
 impl GradeSelect for Multivector {
   #[inline]
   fn grade_0(&self) -> Scalar {
-    Scalar::from(self.scalar())
+    Scalar::from(self.s)
   }
 
   #[inline]
   fn grade_1(&self) -> Vector {
     let mut a = [0f32; 4];
-    a.copy_from_slice(&self.elements[0..=3]);
-    Vector::from(a)
+    a.copy_from_slice(&self.to_multivector_array().elements[0..=3]);
+    VectorArray::from(a).to_vector()
   }
 
   #[inline]
   fn grade_2(&self) -> Bivector {
     let mut a = [0f32; 6];
-    a.copy_from_slice(&self.elements[5..=10]);
-    Bivector::from(a)
+    a.copy_from_slice(&self.to_multivector_array().elements[5..=10]);
+    BivectorArray::from(a).to_bivector()
   }
 
   #[inline]
   fn grade_3(&self) -> Trivector {
     let mut a = [0f32; 4];
-    a.copy_from_slice(&self.elements[12..=15]);
-    Trivector::from(a)
+    a.copy_from_slice(&self.to_multivector_array().elements[12..=15]);
+    TrivectorArray::from(a).to_trivector()
   }
 
   #[inline]
   fn grade_4(&self) -> Pseudoscalar {
-    Pseudoscalar::from(self.e0123())
+    Pseudoscalar::from(self.e0123)
   }
 }
 

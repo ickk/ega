@@ -7,7 +7,8 @@ impl Neg for Multivector {
 
   #[inline]
   fn neg(self) -> Self::Output {
-    Multivector::from(self.elements.map(|e| -e))
+    MultivectorArray::from(self.to_multivector_array().elements.map(|e| -e))
+      .to_multivector()
   }
 }
 
@@ -25,7 +26,7 @@ impl Neg for Scalar {
 
   #[inline]
   fn neg(self) -> Self::Output {
-    Scalar::from([-self.scalar()])
+    Scalar::from(-self.s)
   }
 }
 
@@ -34,7 +35,7 @@ impl Neg for Vector {
 
   #[inline]
   fn neg(self) -> Self::Output {
-    Vector::from(self.elements.map(|e| -e))
+    VectorArray::from(self.to_vector_array().elements.map(|e| -e)).to_vector()
   }
 }
 
@@ -43,7 +44,8 @@ impl Neg for Bivector {
 
   #[inline]
   fn neg(self) -> Self::Output {
-    Bivector::from(self.elements.map(|e| -e))
+    BivectorArray::from(self.to_bivector_array().elements.map(|e| -e))
+      .to_bivector()
   }
 }
 
@@ -52,7 +54,8 @@ impl Neg for Trivector {
 
   #[inline]
   fn neg(self) -> Self::Output {
-    Trivector::from(self.elements.map(|e| -e))
+    TrivectorArray::from(self.to_trivector_array().elements.map(|e| -e))
+      .to_trivector()
   }
 }
 
@@ -61,6 +64,6 @@ impl Neg for Pseudoscalar {
 
   #[inline]
   fn neg(self) -> Self::Output {
-    Pseudoscalar::from([-self.e0123()])
+    Pseudoscalar::from(-self.e0123)
   }
 }

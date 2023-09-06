@@ -14,7 +14,7 @@ macro_rules! impl_nil {
 
       #[inline]
       fn nil() -> Self::Output {
-        Self::Output::from([0f32; $count])
+        Self::Output::default()
       }
     }
   };

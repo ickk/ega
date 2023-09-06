@@ -2,13 +2,13 @@ pub mod dot;
 pub mod grade_select;
 pub mod meet;
 pub mod neg;
-pub mod nil;
+pub mod zero;
 pub use dot::*;
 pub use grade_select::*;
 pub use meet::*;
 pub use neg::*;
 pub use neg::*;
-pub use nil::*;
+pub use zero::*;
 
 pub trait GeometricProduct<Rhs> {
   type Output;

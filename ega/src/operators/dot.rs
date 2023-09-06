@@ -610,26 +610,28 @@ fn pseudoscalar_dot_scalar(lhs: &Pseudoscalar, rhs: &Scalar) -> Pseudoscalar {
   Pseudoscalar { e0123 }
 }
 
+#[rustfmt::skip]
 #[inline]
 fn pseudoscalar_dot_vector(lhs: &Pseudoscalar, rhs: &Vector) -> Trivector {
   let (a, b) = (lhs, rhs);
 
-  let e123 = -a.e0123 * 0f32;
-  let e032 = -a.e0123 * b.e1;
-  let e013 = -a.e0123 * b.e2;
-  let e021 = -a.e0123 * b.e3;
+  let e123 = -a.e0123*0f32;
+  let e032 = -a.e0123*b.e1;
+  let e013 = -a.e0123*b.e2;
+  let e021 = -a.e0123*b.e3;
 
   Trivector { e123, e032, e013, e021 }
 }
 
+#[rustfmt::skip]
 #[inline]
 fn pseudoscalar_dot_bivector(lhs: &Pseudoscalar, rhs: &Bivector) -> Bivector {
   let (a, b) = (lhs, rhs);
   let [e23, e31, e12] = [0f32; 3];
 
-  let e01 = -a.e0123 * b.e23;
-  let e02 = -a.e0123 * b.e31;
-  let e03 = -a.e0123 * b.e12;
+  let e01 = -a.e0123*b.e23;
+  let e02 = -a.e0123*b.e31;
+  let e03 = -a.e0123*b.e12;
 
   Bivector { e23, e31, e12, e01, e02, e03 }
 }

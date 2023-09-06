@@ -4,7 +4,7 @@ use core::fmt::{Debug, Formatter};
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
 pub struct Pseudoscalar {
-  pub e0123: f32
+  pub e0123: f32,
 }
 
 #[derive(Copy, Clone, Default, PartialEq)]
@@ -61,6 +61,9 @@ impl Debug for PseudoscalarArray {
   fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
     let width = fmt.width().unwrap_or(3);
     let precision = fmt.precision().unwrap_or(0);
-    fmt.write_fmt(format_args!("Pseudoscalar [ {:width$.precision$} ]", self.e0123()))
+    fmt.write_fmt(format_args!(
+      "Pseudoscalar [ {:width$.precision$} ]",
+      self.e0123()
+    ))
   }
 }

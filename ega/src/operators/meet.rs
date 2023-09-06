@@ -452,70 +452,103 @@ fn pseudoscalar_meet_scalar(lhs: &Pseudoscalar, rhs: &Scalar) -> Pseudoscalar {
 #[cfg(any(test, doctest))]
 mod tests {
   use super::*;
-
-  #[test]
-  fn vector_meet_vector() {
-    {
-      // null
-      let u = Vector::from([0., 0., 0., 0.]);
-      let v = Vector::from([1., 1., 1., 1.]);
-      let u_meet_v = u.meet(&v);
-      let expected = Bivector::from([0., 0., 0., 0., 0., 0.]);
-      assert_eq!(u_meet_v, expected)
-    }
-    {
-      // x & y planes meet at a line in z
-      let u = Vector::from([0., 1., 0., 0.]);
-      let v = Vector::from([0., 0., 1., 0.]);
-      let u_meet_v = u.meet(&v);
-      let expected = Bivector::from([0., 0., 1., 0., 0., 0.]);
-      assert_eq!(u_meet_v, expected)
-    }
-    {
-      // x & z planes meet at a line in -y
-      let u = Vector::from([0., 1., 0., 0.]);
-      let v = Vector::from([0., 0., 0., 1.]);
-      let u_meet_v = u.meet(&v);
-      let expected = Bivector::from([0., -1., 0., 0., 0., 0.]);
-      assert_eq!(u_meet_v, expected)
-    }
-    {
-      let u = Vector::from([-1., 1., 0., 0.]);
-      let v = Vector::from([-1., 0., 1., 0.]);
-      let u_meet_v = u.meet(&v);
-      let expected = Bivector::from([0., 0., 1., 1., -1., 0.]);
-      assert_eq!(u_meet_v, expected)
-    }
-  }
-
+  /// [
+  ///       e0,    e1,    e2,    e3,
+  ///   scalar,   e23,   e31,   e12,
+  ///      e01,   e02,   e03, e0123,
+  ///     e123,  e032,  e013,  e021,
+  /// ]
   #[rustfmt::skip]
   #[test]
   fn multivector_meet_multivector() {
-    // {
-    //   let a = Multivector::from([
-    //       2.,   3.,   5.,   7.,
-    //      11.,  13.,  17.,  19.,
-    //      23.,  29.,  31.,  37.,
-    //      41.,  43.,  47.,  53.,
-    //   ]);
-    //   let b = Multivector::from([
-    //      59.,  61.,  67.,  71.,
-    //      73.,  79.,  83.,  89.,
-    //      97., 101., 103., 107.,
-    //     109., 113., 127., 131.,
-    //   ]);
-    // }
-  }
+    {
+      // [bivector.net evaluator](https://bivector.net/tools.html#seven)
+      // (
+      //      2e0   +  3e1   +  5e2   +  7e3
+      //   + 11     + 13e23  + 17e31  + 19e12
+      //   + 23e01  + 29e02  + 31e03  + 37e0123
+      //   + 41e123 + 43e032 + 47e013 + 53e021
+      // )
+      // ^
+      // (
+      //      59e0   +  61e1   + 67e2    + 71e3
+      //   +  73     +  79e23  + 83e31   + 89e12
+      //   +  97e01  + 101e02  + 103e03  + 107e0123
+      //   + 109e123 + 113e032 + 127e013 + 131e021
+      // )
+      // =
+      // [
+      //    795e0,    890e1,   1102e2,   1292e3,
+      //    803,     1704e23,  2368e31,  2262e12,
+      //   2692e01,  3067e02,  3125e03,  5951e0123,
+      //   8748e123, 3283e032, 3771e013, 4057e021,
+      // ];
+      let a = Multivector::from([
+         2.,   3.,   5.,   7.,
+        11.,  13.,  17.,  19.,
+        23.,  29.,  31.,  37.,
+        41.,  43.,  47.,  53.,
+      ]);
+      let b = Multivector::from([
+         59.,  61.,  67.,  71.,
+         73.,  79.,  83.,  89.,
+         97., 101., 103., 107.,
+        109., 113., 127., 131.,
+      ]);
+      let result = a.meet(&b);
+      let expected = Multivector::from([
+         795.,  890., 1102., 1292.,
+         803., 1704., 2368., 2262.,
+        2691., 3067., 3125., 5951.,
+        8748., 3283., 3771., 4057.,
+      ]);
 
-  // #[test]
-  // fn vector_meet_bivector() {
-  //   {
-  //     // null
-  //     let p = VectorVal::from((0., 0., 0., 0.));
-  //     let l = BivectorVal::from((0., 0., 0., 0., 0., 0.));
-  //     let p_meet_l = p.meet(l);
-  //     let expected = TrivectorVal::from((0., 0., 0., 0., 0., 0.));
-  //     assert_eq!(u_meet_v, expected)
-  //   }
-  // }
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+
+    {
+      // [bivector.net evaluator](https://bivector.net/tools.html#seven)
+      // (
+      //      2e0   +  3e1   +  5e2   +  7e3
+      //   + 11     + 13e23  + 17e31  + 19e12
+      //   + 23e01  + 29e02  + 31e03  + 37e0123
+      //   + 41e123 + 43e032 + 47e013 + 53e021
+      // )
+      // ^
+      // (
+      //   -  59e0   +  61e1   - 67e2    + 71e3
+      //   -  73     +  79e23  - 83e31   + 89e12
+      //   -  97e01  + 101e02  - 103e03  + 107e0123
+      //   - 109e123 + 113e032 - 127e013 + 131e021
+      // )
+      // =
+      // [
+      //    -795e0,     452e1,   -1102e2,    270e3,
+      //   -803,        744e23,  -1940e31,  -914e12,
+      //   -2447e01,   -845e02,  -2841e03, -1271e0123,
+      //   -2744e123, -6645e032, -4287e013, 2613e021,
+      // ];
+      let a = Multivector::from([
+         2.,   3.,   5.,   7.,
+        11.,  13.,  17.,  19.,
+        23.,  29.,  31.,  37.,
+        41.,  43.,  47.,  53.,
+      ]);
+      let b = Multivector::from([
+         -59.,   61.,  -67.,   71.,
+         -73.,   79.,  -83.,   89.,
+         -97.,  101., -103.,  107.,
+        -109.,  113., -127.,  131.,
+      ]);
+      let result = a.meet(&b);
+      let expected = Multivector::from([
+         -795.,   452., -1102.,   270.,
+         -803.,   744., -1940.,  -914.,
+        -2447.,  -845., -2841., -1271.,
+        -2744., -6645., -4287.,  2613.,
+      ]);
+
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
 }

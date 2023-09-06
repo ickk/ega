@@ -1,3 +1,4 @@
+use super::return_empty;
 use crate::values::*;
 
 pub trait Dot<Rhs> {
@@ -54,12 +55,26 @@ impl_dot! { trivector_dot_bivector: Trivector, Bivector => Vector }
 impl_dot! { trivector_dot_trivector: Trivector, Trivector => Scalar }
 impl_dot! { trivector_dot_pseudoscalar: Trivector, Pseudoscalar => Vector }
 
-// impl_dot! { pseudoscalar_dot_multivector: Pseudoscalar, Multivector => Pseudoscalar }
-// impl_dot! { pseudoscalar_dot_scalar: Pseudoscalar, Scalar => Pseudoscalar }
-// impl_dot! { pseudoscalar_dot_vector: Pseudoscalar, Vector => Empty }
-// impl_dot! { pseudoscalar_dot_bivector: Pseudoscalar, Bivector => Empty }
-// impl_dot! { pseudoscalar_dot_trivector: Pseudoscalar, Trivector => Empty }
-// impl_dot! { pseudoscalar_dot_pseudoscalar: Pseudoscalar, Pseudoscalar => Empty }
+impl_dot! { pseudoscalar_dot_multivector: Pseudoscalar, Multivector => Multivector }
+impl_dot! { pseudoscalar_dot_scalar: Pseudoscalar, Scalar => Pseudoscalar }
+impl_dot! { pseudoscalar_dot_vector: Pseudoscalar, Vector => Trivector }
+impl_dot! { pseudoscalar_dot_bivector: Pseudoscalar, Bivector => Bivector }
+impl_dot! { pseudoscalar_dot_trivector: Pseudoscalar, Trivector => Vector }
+impl_dot! { pseudoscalar_dot_pseudoscalar: Pseudoscalar, Pseudoscalar => Empty }
+
+impl_dot! { return_empty: Empty, Empty => Empty }
+impl_dot! { return_empty: Multivector, Empty => Empty }
+impl_dot! { return_empty: Scalar, Empty => Empty }
+impl_dot! { return_empty: Vector, Empty => Empty }
+impl_dot! { return_empty: Bivector, Empty => Empty }
+impl_dot! { return_empty: Trivector, Empty => Empty }
+impl_dot! { return_empty: Pseudoscalar, Empty => Empty }
+impl_dot! { return_empty: Empty, Multivector => Empty }
+impl_dot! { return_empty: Empty, Scalar => Empty }
+impl_dot! { return_empty: Empty, Vector => Empty }
+impl_dot! { return_empty: Empty, Bivector => Empty }
+impl_dot! { return_empty: Empty, Trivector => Empty }
+impl_dot! { return_empty: Empty, Pseudoscalar => Empty }
 
 // Multivector
 
@@ -104,13 +119,19 @@ fn multivector_dot_multivector(
           + a.e2()*b.e032() + a.e032()*b.e2()
           - a.e1()*b.e013() - a.e013()*b.e1()
           - a.e0123()*b.e12() - a.e12()*b.e0123();
-  let e23 = a.s()*b.e23() + a.e23()*b.s() + a.e1()*b.e123() + a.e123()*b.e1();
-  let e31 = a.s()*b.e31() + a.e31()*b.s() + a.e2()*b.e123() + a.e123()*b.e2();
-  let e12 = a.s()*b.e12() + a.e12()*b.s() + a.e3()*b.e123() + a.e123()*b.e3();
+  let e23 = a.s()*b.e23() + a.e23()*b.s()
+          + a.e1()*b.e123() + a.e123()*b.e1();
+  let e31 = a.s()*b.e31() + a.e31()*b.s()
+          + a.e2()*b.e123() + a.e123()*b.e2();
+  let e12 = a.s()*b.e12() + a.e12()*b.s()
+          + a.e3()*b.e123() + a.e123()*b.e3();
   let e123 = a.s()*b.e123() + a.e123()*b.s();
-  let e032 = a.s()*b.e032() + a.e032()*b.s() + a.e1()*b.e0123() - a.e0123()*b.e1();
-  let e013 = a.s()*b.e013() + a.e013()*b.s() + a.e2()*b.e0123() - a.e0123()*b.e2();
-  let e021 = a.s()*b.e021() + a.e021()*b.s() + a.e3()*b.e0123() - a.e0123()*b.e3();
+  let e032 = a.s()*b.e032() + a.e032()*b.s()
+           + a.e1()*b.e0123() - a.e0123()*b.e1();
+  let e013 = a.s()*b.e013() + a.e013()*b.s()
+           + a.e2()*b.e0123() - a.e0123()*b.e2();
+  let e021 = a.s()*b.e021() + a.e021()*b.s()
+           + a.e3()*b.e0123() - a.e0123()*b.e3();
   let e0123 = a.s()*b.e0123() + a.e0123()*b.s();
 
   Multivector::from([
@@ -132,10 +153,14 @@ fn multivector_dot_vector(lhs: &Multivector, rhs: &Vector) -> Multivector {
   let (a, b) = (lhs, rhs);
 
   let scalar = a.e1()*b.e1() + a.e2()*b.e2() + a.e3()*b.e3();
-  let e0 = a.s()*b.e0() + a.e01()*b.e1() + a.e02()*b.e2() + a.e03()*b.e3();
-  let e1 = a.s()*b.e1() + a.e12()*b.e2() - a.e31()*b.e3();
-  let e2 = a.s()*b.e2() + a.e23()*b.e3() - a.e12()*b.e1();
-  let e3 = a.s()*b.e3() + a.e31()*b.e1() - a.e23()*b.e2();
+  let e0 = a.s()*b.e0()
+         + a.e01()*b.e1() + a.e02()*b.e2() + a.e03()*b.e3();
+  let e1 = a.s()*b.e1()
+         + a.e12()*b.e2() - a.e31()*b.e3();
+  let e2 = a.s()*b.e2()
+         + a.e23()*b.e3() - a.e12()*b.e1();
+  let e3 = a.s()*b.e3()
+         + a.e31()*b.e1() - a.e23()*b.e2();
   let e01 = a.e013()*b.e3() - a.e021()*b.e2();
   let e02 = a.e021()*b.e1() - a.e032()*b.e3();
   let e03 = a.e032()*b.e2() - a.e013()*b.e1();
@@ -192,7 +217,8 @@ fn multivector_dot_trivector(
   let (a, b) = (lhs, rhs);
 
   let scalar = -a.e123()*b.e123();
-  let e0 = a.e23()*b.e032() + a.e31()*b.e013() + a.e12()*b.e021() - a.e0123()*b.e123();
+  let e0 = a.e23()*b.e032() + a.e31()*b.e013() + a.e12()*b.e021()
+         - a.e0123()*b.e123();
   let e1 = -a.e23()*b.e123();
   let e2 = -a.e31()*b.e123();
   let e3 = -a.e12()*b.e123();
@@ -282,10 +308,14 @@ fn vector_dot_multivector(lhs: &Vector, rhs: &Multivector) -> Multivector {
   let (a, b) = (lhs, rhs);
 
   let scalar = a.e1()*b.e1() + a.e2()*b.e2() + a.e3()*b.e3();
-  let e0 = a.e0()*b.s() - a.e1()*b.e01() - a.e2()*b.e02() - a.e3()*b.e03();
-  let e1 = a.e1()*b.s() + a.e3()*b.e31() - a.e2()*b.e12();
-  let e2 = a.e2()*b.s() + a.e1()*b.e12() - a.e3()*b.e23();
-  let e3 = a.e3()*b.s() + a.e2()*b.e23() - a.e1()*b.e31();
+  let e0 = a.e0()*b.s()
+         - a.e1()*b.e01() - a.e2()*b.e02() - a.e3()*b.e03();
+  let e1 = a.e1()*b.s()
+         + a.e3()*b.e31() - a.e2()*b.e12();
+  let e2 = a.e2()*b.s()
+         + a.e1()*b.e12() - a.e3()*b.e23();
+  let e3 = a.e3()*b.s()
+         + a.e2()*b.e23() - a.e1()*b.e31();
   let e01 = a.e3()*b.e013() - a.e2()*b.e021();
   let e02 = a.e1()*b.e021() - a.e3()*b.e032();
   let e03 = a.e2()*b.e032() - a.e1()*b.e013();
@@ -454,7 +484,8 @@ fn trivector_dot_multivector(
   let (a, b) = (lhs, rhs);
 
   let scalar = -a.e123()*b.e123();
-  let e0 = a.e123()*b.e0123() + a.e032()*b.e23() + a.e013()*b.e31() + a.e021()*b.e12();
+  let e0 = a.e123()*b.e0123()
+         + a.e032()*b.e23() + a.e013()*b.e31() + a.e021()*b.e12();
   let e1 = -a.e123()*b.e23();
   let e2 = -a.e123()*b.e31();
   let e3 = -a.e123()*b.e12();
@@ -527,4 +558,79 @@ fn trivector_dot_pseudoscalar(lhs: &Trivector, rhs: &Pseudoscalar) -> Vector {
   let e0 = a.e123() * b.e0123();
 
   Vector::from([e0, e1, e2, e3])
+}
+
+// Pseudoscalar
+
+#[rustfmt::skip]
+#[inline]
+fn pseudoscalar_dot_multivector(
+  lhs: &Pseudoscalar,
+  rhs: &Multivector,
+) -> Multivector {
+  let (a, b) = (lhs, rhs);
+  let [e1, e2, e3, scalar, e23, e31, e12, e123] = [0f32; 8];
+
+  let e0 = -a.e0123()*b.e123();
+  let e01 = -a.e0123()*b.e23();
+  let e02 = -a.e0123()*b.e31();
+  let e03 = -a.e0123()*b.e12();
+  let e032 = -a.e0123()*b.e1();
+  let e013 = -a.e0123()*b.e2();
+  let e021 = -a.e0123()*b.e3();
+  let e0123 = a.e0123()*b.s();
+
+  Multivector::from([
+        e0,    e1,    e2,    e3,
+    scalar,   e23,   e31,   e12,
+       e01,   e02,   e03, e0123,
+      e123,  e032,  e013,  e021,
+  ])
+}
+
+#[inline]
+fn pseudoscalar_dot_scalar(lhs: &Pseudoscalar, rhs: &Scalar) -> Pseudoscalar {
+  let (a, b) = (lhs, rhs);
+  let e0123 = a.e0123() * b.s();
+
+  Pseudoscalar::from(e0123)
+}
+
+#[inline]
+fn pseudoscalar_dot_vector(lhs: &Pseudoscalar, rhs: &Vector) -> Trivector {
+  let (a, b) = (lhs, rhs);
+
+  let e123 = -a.e0123() * 0f32;
+  let e032 = -a.e0123() * b.e1();
+  let e013 = -a.e0123() * b.e2();
+  let e021 = -a.e0123() * b.e3();
+
+  Trivector::from([e123, e032, e013, e021])
+}
+
+#[inline]
+fn pseudoscalar_dot_bivector(lhs: &Pseudoscalar, rhs: &Bivector) -> Bivector {
+  let (a, b) = (lhs, rhs);
+  let [e23, e31, e12] = [0f32; 3];
+
+  let e01 = -a.e0123() * b.e23();
+  let e02 = -a.e0123() * b.e31();
+  let e03 = -a.e0123() * b.e12();
+
+  Bivector::from([e23, e31, e12, e01, e02, e03])
+}
+
+#[inline]
+fn pseudoscalar_dot_trivector(lhs: &Pseudoscalar, rhs: &Trivector) -> Vector {
+  let (a, b) = (lhs, rhs);
+
+  let e0 = -a.e0123() * b.e123();
+  let [e1, e2, e3] = [0f32; 3];
+
+  Vector::from([e0, e1, e2, e3])
+}
+
+#[inline]
+fn pseudoscalar_dot_pseudoscalar(_: &Pseudoscalar, _: &Pseudoscalar) -> Empty {
+  Empty
 }

@@ -1,14 +1,14 @@
+pub mod dot;
 pub mod grade_select;
 pub mod meet;
 pub mod neg;
 pub mod nil;
-pub mod dot;
+pub use dot::*;
 pub use grade_select::*;
 pub use meet::*;
 pub use neg::*;
 pub use neg::*;
 pub use nil::*;
-pub use dot::*;
 
 pub trait GeometricProduct<Rhs> {
   type Output;
@@ -48,4 +48,10 @@ pub trait Exponent<Rhs> {
 
   /// Exponentiation
   fn exp(&self, rhs: Rhs) -> Self::Output;
+}
+
+use crate::values::Empty;
+#[inline]
+fn return_empty<Lhs, Rhs>(_: &Lhs, _: &Rhs) -> Empty {
+  Empty
 }

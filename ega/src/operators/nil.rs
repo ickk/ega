@@ -1,29 +1,29 @@
 use crate::values::*;
 
-pub trait Nil {
+pub trait Zero {
   type Output;
 
   /// The zero value
-  fn nil() -> Self::Output;
+  fn zero() -> Self::Output;
 }
 
-macro_rules! impl_nil {
+macro_rules! impl_zero {
   ($type:ty, $count:literal) => {
-    impl Nil for $type {
+    impl Zero for $type {
       type Output = $type;
 
       #[inline]
-      fn nil() -> Self::Output {
+      fn zero() -> Self::Output {
         Self::Output::default()
       }
     }
   };
 }
 
-impl_nil! { Multivector, 16 }
-impl_nil! { Empty, 0 }
-impl_nil! { Scalar, 1 }
-impl_nil! { Vector, 4 }
-impl_nil! { Bivector, 6 }
-impl_nil! { Trivector, 4 }
-impl_nil! { Pseudoscalar, 1 }
+impl_zero! { Multivector, 16 }
+impl_zero! { Empty, 0 }
+impl_zero! { Scalar, 1 }
+impl_zero! { Vector, 4 }
+impl_zero! { Bivector, 6 }
+impl_zero! { Trivector, 4 }
+impl_zero! { Pseudoscalar, 1 }

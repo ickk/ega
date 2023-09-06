@@ -23,7 +23,7 @@ pub trait EgaVector:
   + Clone
   + core::fmt::Debug
   + PartialEq
-  + Nil
+  + Zero
   + Neg
   + GradeSelect
   + Meet<Multivector>

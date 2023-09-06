@@ -22,6 +22,7 @@ pub trait EgaVector:
   + Copy
   + Clone
   + core::fmt::Debug
+  + PartialEq
   + Nil
   + Neg
   + GradeSelect
@@ -32,6 +33,13 @@ pub trait EgaVector:
   + Meet<Bivector>
   + Meet<Trivector>
   + Meet<Pseudoscalar>
+  + Dot<Multivector>
+  + Dot<Empty>
+  + Dot<Scalar>
+  + Dot<Vector>
+  + Dot<Bivector>
+  + Dot<Trivector>
+  + Dot<Pseudoscalar>
 {
 }
 

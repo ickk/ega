@@ -5,6 +5,8 @@ mod join;
 mod meet;
 mod neg;
 mod zero;
+mod reverse;
+pub use reverse::Reverse;
 pub use dot::Dot;
 pub use geometric_product::GeometricProduct;
 pub use grade_select::GradeSelect;
@@ -25,14 +27,6 @@ pub trait Dual {
 
   /// The dual
   fn dual(&self) -> Self::Output;
-}
-
-/// The reverse
-pub trait Reverse {
-  type Output;
-
-  /// The reverse
-  fn reverse(&self) -> Self::Output;
 }
 
 /// Exponentiation

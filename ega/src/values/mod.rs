@@ -26,6 +26,7 @@ pub trait EgaVector:
   + Zero
   + Neg
   + GradeSelect
+  + Reverse
   + Meet<Multivector>
   + Meet<Empty>
   + Meet<Scalar>

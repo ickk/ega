@@ -756,103 +756,115 @@ mod tests {
       };
       assert_eq!(dbg!(result), dbg!(expected));
     }
-    // #[test]
-    // fn dot_scalar_1() {
-    //   let result = MULTIVECTOR_A.dot(&SCALAR_A);
-    //   let expected = Multivector {
-    //       e0:   274.,   e1:   411.,   e2:   685.,    e3:   959.,
-    //        s:  1507.,  e23:  1781.,  e31:  2329.,   e12:  2603.,
-    //      e01:  3151.,  e02:  3973.,  e03:  4247., e0123:  5069.,
-    //     e123:  5617., e032:  5891., e013:  6439.,  e021:  7261.,
-    //   };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
-    // #[test]
-    // fn dot_scalar_2() {
-    //   let result = MULTIVECTOR_A.dot(&SCALAR_C);
-    //   let expected = Multivector {
-    //       e0:  -298.,   e1:  -447.,   e2:  -745.,    e3: -1043.,
-    //        s: -1639.,  e23: -1937.,  e31: -2533.,   e12: -2831.,
-    //      e01: -3427.,  e02: -4321.,  e03: -4619., e0123: -5513.,
-    //     e123: -6109., e032: -6407., e013: -7003.,  e021: -7897.,
-    //   };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
-    // #[test]
-    // fn dot_vector_1() {
-    //   let result = MULTIVECTOR_A.dot(&VECTOR_A);
-    //   let expected = Multivector {
-    //       e0:  1661.,   e1:  1727.,   e2:  1793.,    e3:   1837.,
-    //        s:     0.,  e23:  -306.,  e31:   598.,   e12:   -296.,
-    //      e01:  -139.,  e02:  -429.,  e03:  -723., e0123: -29454.,
-    //     e123:  7985., e032: -1753., e013: -3593.,  e021:  -2065.,
-    //   };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
-    // #[test]
-    // fn dot_vector_2() {
-    //   let result = MULTIVECTOR_A.dot(&VECTOR_C);
-    //   let expected = Multivector {
-    //       e0: -2123.,   e1: -2167.,   e2: -2189.,    e3:  -2321.,
-    //        s:     0.,  e23:   338.,  e31:  -746.,   e12:    388.,
-    //      e01:   185.,  e02:   567.,  e03:   929., e0123:  36920.,
-    //     e123: -9953., e032:  2459., e013:  4535.,  e021:   2531.,
-    //   };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
-    // #[test]
-    // fn dot_bivector_1() {
-    //   let result = MULTIVECTOR_A.dot(&BIVECTOR_A);
-    //   let expected = Multivector {
-    //        s:     0.,  e23:  2453.,  e31:  2497.,   e12:   2519.,
-    //      e01:  2563.,  e02:  2629.,  e03:  2651., e0123:  30482.,
-    //     e123:  3407., e032:  -914., e013:   454.,  e021:   -906.,
-    //     ..Multivector::zero()
-    //   };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
-    // #[test]
-    // fn dot_bivector_2() {
-    //   let result = MULTIVECTOR_A.dot(&BIVECTOR_C);
-    //   let expected = Multivector {
-    //        s:     0.,  e23: -3091.,  e31: -3113.,   e12:  -3223.,
-    //      e01: -3377.,  e02: -3421.,  e03: -3443., e0123: -38978.,
-    //     e123: -4309., e032:  1174., e013:  -644.,  e021:   1188.,
-    //     ..Multivector::zero()
-    //   };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
-    // #[test]
-    // fn dot_trivector_1() {
-    //   let result = MULTIVECTOR_A.dot(&TRIVECTOR_A);
-    //   let expected = Multivector {
-    //     e123: 3487., e032: 3641., e013: 3707., e021: 3817.,
-    //     e0123: 5741.,
-    //     ..Multivector::zero()
-    //   };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
-    // #[test]
-    // fn dot_trivector_2() {
-    //   let result = MULTIVECTOR_A.dot(&TRIVECTOR_C);
-    //   let expected = Multivector {
-    //     e123: -4103., e032: -4169., e013: -4213., e021: -4279.,
-    //     e0123: -6521.,
-    //     ..Multivector::zero()
-    //   };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
-    // #[test]
-    // fn dot_pseudoscalar_1() {
-    //   let result = MULTIVECTOR_A.dot(&PSEUDOSCALAR_A);
-    //   let expected = Pseudoscalar { e0123: 4367. };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
-    // #[test]
-    // fn dot_pseudoscalar_2() {
-    //   let result = MULTIVECTOR_A.dot(&PSEUDOSCALAR_C);
-    //   let expected = Pseudoscalar { e0123: -4499. };
-    //   assert_eq!(dbg!(result), dbg!(expected));
-    // }
+    #[test]
+    fn dot_scalar_1() {
+      let result = MULTIVECTOR_A.dot(&SCALAR_A);
+      let expected = Multivector {
+          e0:   274.,   e1:   411.,   e2:   685.,    e3:   959.,
+           s:  1507.,  e23:  1781.,  e31:  2329.,   e12:  2603.,
+         e01:  3151.,  e02:  3973.,  e03:  4247., e0123:  5069.,
+        e123:  5617., e032:  5891., e013:  6439.,  e021:  7261.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_scalar_2() {
+      let result = MULTIVECTOR_A.dot(&SCALAR_C);
+      let expected = Multivector {
+          e0:  -298.,   e1:  -447.,   e2:  -745.,    e3: -1043.,
+           s: -1639.,  e23: -1937.,  e31: -2533.,   e12: -2831.,
+         e01: -3427.,  e02: -4321.,  e03: -4619., e0123: -5513.,
+        e123: -6109., e032: -6407., e013: -7003.,  e021: -7897.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_1() {
+      let result = MULTIVECTOR_A.dot(&VECTOR_A);
+      let expected = Multivector {
+          e0: 15176.,   e1:  1985.,   e2:   981.,    e3:   2387.,
+           s:  2455.,  e23:  6437.,  e31:  6683.,   e12:   6847.,
+         e01:  -790.,  e02:  1140.,  e03:  -370., e0123:      0.,
+        e123:     0., e032: -5809., e013: -6031.,  e021:  -6179.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_2() {
+      let result = MULTIVECTOR_A.dot(&VECTOR_C);
+      let expected = Multivector {
+          e0: -18966.,   e1: -2361.,   e2: -1189.,    e3:  -3083.,
+           s:  -3063.,  e23: -8077.,  e31: -8159.,   e12:  -8651.,
+         e01:    630.,  e02: -1368.,  e03:   702., e0123:      0.,
+        e123:      0., e032:  7289., e013:  7363.,  e021:   7807.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_bivector_1() {
+      let result = MULTIVECTOR_A.dot(&BIVECTOR_A);
+      let expected = Multivector {
+          e0:  28814.,   e1: -8699.,   e2: -10181.,    e3: -8955.,
+           s: -11109.,  e23:  2453.,  e31:   2497.,   e12:  2519.,
+         e01:  -5688.,  e02: -5770.,  e03:  -5822.,
+        ..Multivector::zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_bivector_2() {
+      let result = MULTIVECTOR_A.dot(&BIVECTOR_C);
+      let expected = Multivector {
+          e0: -36246.,   e1: 11005.,   e2: 12691.,    e3: 11457.,
+           s:  14031.,  e23: -3091.,  e31: -3113.,   e12: -3223.,
+         e01:  7020.,  e02:   7050.,  e03:  7398.,
+        ..Multivector::zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_trivector_1() {
+      let result = MULTIVECTOR_A.dot(&TRIVECTOR_A);
+      let expected = Multivector {
+          e0:   4896.,   e1: -4121.,   e2: -5389.,    e3:  -6023.,
+           s: -12997.,  e23:   951.,  e31:  1585.,   e12:   2219.,
+         e01:    624.,  e02: -1276.,  e03:   644., e0123:      0.,
+        e123:   3487., e032:  3641., e013:  3707.,  e021:   3817.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_trivector_2() {
+      let result = MULTIVECTOR_A.dot(&TRIVECTOR_C);
+      let expected = Multivector {
+          e0:  -5028.,   e1:  4849.,   e2:  6341.,    e3:   7087.,
+           s:  15293.,  e23: -1119.,  e31: -1865.,   e12:  -2611.,
+         e01:   -736.,  e02:  1486.,  e03:  -746., e0123:      0.,
+        e123:  -4103., e032: -4169., e013: -4213.,  e021:  -4279.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_pseudoscalar_1() {
+      let result = MULTIVECTOR_A.dot(&PSEUDOSCALAR_A);
+      let expected = Multivector {
+          e0: 16277.,
+         e01: -5161.,  e02: -6749.,  e03: -7543., e0123:  4367.,
+        e032:  1191., e013:  1985., e021:  2779.,
+        ..Multivector::zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_pseudoscalar_2() {
+      let result = MULTIVECTOR_A.dot(&PSEUDOSCALAR_C);
+      let expected = Multivector {
+          e0: -16769.,
+         e01:   5317.,  e02:  6953.,  e03:  7771., e0123:  -4499.,
+        e032:  -1227., e013: -2045., e021: -2863.,
+        ..Multivector::zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
   }
 }

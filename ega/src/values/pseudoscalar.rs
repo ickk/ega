@@ -4,25 +4,28 @@ use core::fmt::{Debug, Formatter};
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
 pub struct Pseudoscalar {
+  /// Pseudoscalar component
   pub e0123: f32,
 }
 
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
-pub struct PseudoscalarArray {
+pub(crate) struct PseudoscalarArray {
   /// The component `[e0123]`
   pub elements: [f32; 1],
 }
 
 impl Pseudoscalar {
+  #[allow(unused)]
   #[inline(always)]
-  pub const fn to_pseudoscalar_array(self) -> PseudoscalarArray {
+  pub(crate) const fn to_pseudoscalar_array(self) -> PseudoscalarArray {
     // SAFETY: `Pseudoscalar` & `PseudoscalarArray` share identical layout due
     // to repr(C)
     unsafe { core::mem::transmute(self) }
   }
 }
 
+#[allow(unused)]
 impl PseudoscalarArray {
   accessors! { pub elements[f32]: pseudoscalar[0], e0123[0] }
 

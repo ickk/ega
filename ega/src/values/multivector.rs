@@ -26,7 +26,7 @@ pub struct Multivector {
 
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
-pub struct MultivectorArray {
+pub(crate) struct MultivectorArray {
   /// The components ordered as
   /// ```skip
   /// [
@@ -41,13 +41,14 @@ pub struct MultivectorArray {
 
 impl Multivector {
   #[inline(always)]
-  pub const fn to_multivector_array(self) -> MultivectorArray {
+  pub(crate) const fn to_multivector_array(self) -> MultivectorArray {
     // SAFETY: `Multivector` & `MultivectorArray` share identical layouts due
     // to repr(C)
     unsafe { core::mem::transmute(self) }
   }
 }
 
+#[allow(unused)]
 impl MultivectorArray {
   accessors! { pub elements[f32]:
        e0[0],     e1[1],     e2[2],     e3[3],

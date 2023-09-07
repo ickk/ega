@@ -1,29 +1,25 @@
-pub mod dot;
-pub mod grade_select;
-pub mod join;
-pub mod meet;
-pub mod neg;
-pub mod zero;
-pub use dot::*;
-pub use grade_select::*;
-pub use join::*;
-pub use meet::*;
-pub use neg::*;
-pub use neg::*;
-pub use zero::*;
+mod dot;
+mod geometric_product;
+mod grade_select;
+mod join;
+mod meet;
+mod neg;
+mod zero;
+pub use dot::Dot;
+pub use geometric_product::GeometricProduct;
+pub use grade_select::GradeSelect;
+pub use join::Join;
+pub use meet::Meet;
+pub use neg::Neg;
+pub use zero::Zero;
 
-pub trait GeometricProduct<Rhs> {
-  type Output;
-
-  /// The geometric product
-  fn mul(&self, rhs: Rhs) -> Self::Output;
-}
-
+/// The norm
 pub trait Normalise {
   /// The norm
   fn norm(&self) -> Self;
 }
 
+/// The dual
 pub trait Dual {
   type Output;
 
@@ -31,6 +27,7 @@ pub trait Dual {
   fn dual(&self) -> Self::Output;
 }
 
+/// The reverse
 pub trait Reverse {
   type Output;
 
@@ -38,6 +35,7 @@ pub trait Reverse {
   fn reverse(&self) -> Self::Output;
 }
 
+/// Exponentiation
 pub trait Exponent<Rhs> {
   type Output;
 

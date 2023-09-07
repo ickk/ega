@@ -1,6 +1,7 @@
 use super::Zero;
 use crate::values::*;
 
+/// The grade selection operator
 pub trait GradeSelect {
   /// Get the grade 0 [`Scalar`] element
   fn grade_0(&self) -> Scalar;

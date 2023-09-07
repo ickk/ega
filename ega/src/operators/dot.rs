@@ -1,6 +1,7 @@
 use super::return_empty;
 use crate::values::*;
 
+/// The inner product
 pub trait Dot<Rhs> {
   type Output;
 

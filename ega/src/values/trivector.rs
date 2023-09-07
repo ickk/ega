@@ -12,14 +12,14 @@ pub struct Trivector {
 
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
-pub struct TrivectorArray {
+pub(crate) struct TrivectorArray {
   /// The components ordered as `[e123, e032, e013, e021]`
   pub elements: [f32; 4],
 }
 
 impl Trivector {
   #[inline(always)]
-  pub const fn to_trivector_array(self) -> TrivectorArray {
+  pub(crate) const fn to_trivector_array(self) -> TrivectorArray {
     // SAFETY: `Trivector` & `TrivectorArray` have identical layout due to
     // repr(C)
     unsafe { core::mem::transmute(self) }

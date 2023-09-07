@@ -1,5 +1,6 @@
 use crate::values::*;
 
+/// The zero value
 pub trait Zero {
   type Output;
 

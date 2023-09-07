@@ -4,24 +4,27 @@ use core::fmt::{Debug, Formatter};
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
 pub struct Scalar {
+  /// Scalar component
   pub s: f32,
 }
 
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
-pub struct ScalarArray {
+pub(crate) struct ScalarArray {
   /// The component `[scalar]`
   pub elements: [f32; 1],
 }
 
 impl Scalar {
+  #[allow(unused)]
   #[inline(always)]
-  pub const fn to_scalar_array(self) -> ScalarArray {
+  pub(crate) const fn to_scalar_array(self) -> ScalarArray {
     // SAFETY: `Scalar` & `ScalarArray` have identical layout due to repr(C)
     unsafe { core::mem::transmute(self) }
   }
 }
 
+#[allow(unused)]
 impl ScalarArray {
   accessors! { pub elements[f32]: scalar[0], s[0] }
 

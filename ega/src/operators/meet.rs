@@ -1,6 +1,7 @@
 use super::return_empty;
 use crate::values::*;
 
+/// The outer product
 pub trait Meet<Rhs> {
   type Output;
 

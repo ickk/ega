@@ -12,14 +12,14 @@ pub struct Vector {
 
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
-pub struct VectorArray {
+pub(crate) struct VectorArray {
   /// The components ordered as `[e0, e1, e2, e3]`
   pub elements: [f32; 4],
 }
 
 impl Vector {
   #[inline(always)]
-  pub const fn to_vector_array(self) -> VectorArray {
+  pub(crate) const fn to_vector_array(self) -> VectorArray {
     // SAFETY: `Vector` & `VectorArray` share identical layout due to repr(C)
     unsafe { core::mem::transmute(self) }
   }

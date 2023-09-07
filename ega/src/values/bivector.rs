@@ -14,14 +14,14 @@ pub struct Bivector {
 
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
-pub struct BivectorArray {
+pub(crate) struct BivectorArray {
   /// The components ordered as `[e23, e31, e12, e01, e02, e03]`
   pub elements: [f32; 6],
 }
 
 impl Bivector {
   #[inline(always)]
-  pub const fn to_bivector_array(self) -> BivectorArray {
+  pub(crate) const fn to_bivector_array(self) -> BivectorArray {
     // SAFETY: `Bivector` & `BivectorArray` share identical layout due to
     // repr(C)
     unsafe { core::mem::transmute(self) }
@@ -32,7 +32,7 @@ impl BivectorArray {
   accessors! { pub elements[f32]: e23[0], e31[1], e12[2], e01[3], e02[4], e03[5] }
 
   #[inline(always)]
-  pub const fn to_bivector(self) -> Bivector {
+  pub(crate) const fn to_bivector(self) -> Bivector {
     // SAFETY: `Bivector` & `BivectorArray` share identical layout due to
     // repr(C)
     unsafe { core::mem::transmute(self) }

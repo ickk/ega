@@ -1,10 +1,12 @@
 pub mod dot;
 pub mod grade_select;
+pub mod join;
 pub mod meet;
 pub mod neg;
 pub mod zero;
 pub use dot::*;
 pub use grade_select::*;
+pub use join::*;
 pub use meet::*;
 pub use neg::*;
 pub use neg::*;
@@ -20,13 +22,6 @@ pub trait GeometricProduct<Rhs> {
 pub trait Normalise {
   /// The norm
   fn norm(&self) -> Self;
-}
-
-pub trait Join<Rhs> {
-  type Output;
-
-  /// The regressive product
-  fn join(&self, rhs: Rhs) -> Self::Output;
 }
 
 pub trait Dual {

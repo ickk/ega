@@ -1,11 +1,11 @@
-pub mod bivector;
-pub mod empty;
-pub mod multivector;
-pub mod pseudoscalar;
-pub mod reflectors;
-pub mod scalar;
-pub mod trivector;
-pub mod vector;
+mod bivector;
+mod empty;
+mod multivector;
+mod pseudoscalar;
+mod reflectors;
+mod scalar;
+mod trivector;
+mod vector;
 
 pub use bivector::*;
 pub use empty::*;

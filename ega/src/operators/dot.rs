@@ -135,10 +135,10 @@ fn multivector_dot_multivector(
   let e0123 = a.s*b.e0123 + a.e0123*b.s;
 
   Multivector {
-        e0,    e1,    e2,    e3,
-         s,   e23,   e31,   e12,
-       e01,   e02,   e03, e0123,
-      e123,  e032,  e013,  e021,
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
   }
 }
 
@@ -177,10 +177,10 @@ fn multivector_dot_vector(lhs: &Multivector, rhs: &Vector) -> Multivector {
   let e0123 = 0f32;
 
   Multivector {
-        e0,    e1,    e2,    e3,
-         s,   e23,   e31,   e12,
-       e01,   e02,   e03, e0123,
-      e123,  e032,  e013,  e021,
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
   }
 }
 
@@ -204,10 +204,10 @@ fn multivector_dot_bivector(lhs: &Multivector, rhs: &Bivector) -> Multivector {
   let e12 = a.s*b.e12;
 
   Multivector {
-        e0,    e1,    e2,    e3,
-         s,   e23,   e31,   e12,
-       e01,   e02,   e03, e0123,
-      e123,  e032,  e013,  e021,
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
   }
 }
 
@@ -238,10 +238,10 @@ fn multivector_dot_trivector(
   let e0123 = 0f32;
 
   Multivector {
-        e0,    e1,    e2,    e3,
-         s,   e23,   e31,   e12,
-       e01,   e02,   e03, e0123,
-      e123,  e032,  e013,  e021,
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
   }
 }
 
@@ -264,10 +264,10 @@ fn multivector_dot_pseudoscalar(
   let e0123 = a.s*b.e0123;
 
   Multivector {
-        e0,    e1,    e2,    e3,
-         s,   e23,   e31,   e12,
-       e01,   e02,   e03, e0123,
-      e123,  e032,  e013,  e021,
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
   }
 }
 
@@ -340,10 +340,10 @@ fn vector_dot_multivector(lhs: &Vector, rhs: &Multivector) -> Multivector {
   let e0123 = 0f32;
 
   Multivector {
-        e0,    e1,    e2,    e3,
-         s,   e23,   e31,   e12,
-       e01,   e02,   e03, e0123,
-      e123,  e032,  e013,  e021,
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
   }
 }
 
@@ -425,10 +425,10 @@ fn bivector_dot_multivector(lhs: &Bivector, rhs: &Multivector) -> Multivector {
   let e12 = a.e12*b.s;
 
   Multivector {
-        e0,    e1,    e2,    e3,
-         s,   e23,   e31,   e12,
-       e01,   e02,   e03, e0123,
-      e123,  e032,  e013,  e021,
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
   }
 }
 
@@ -515,10 +515,10 @@ fn trivector_dot_multivector(
   let e0123 = 0f32;
 
   Multivector {
-        e0,    e1,    e2,    e3,
-         s,   e23,   e31,   e12,
-       e01,   e02,   e03, e0123,
-      e123,  e032,  e013,  e021,
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
   }
 }
 
@@ -595,10 +595,10 @@ fn pseudoscalar_dot_multivector(
   let e0123 = a.e0123*b.s;
 
   Multivector {
-        e0,    e1,    e2,    e3,
-         s,   e23,   e31,   e12,
-       e01,   e02,   e03, e0123,
-      e123,  e032,  e013,  e021,
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
   }
 }
 

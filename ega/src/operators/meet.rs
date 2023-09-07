@@ -154,11 +154,11 @@ fn multivector_meet_vector(lhs: &Multivector, rhs: &Vector) -> Multivector {
   let e0123 = -a.e123*b.e0 - a.e032*b.e1 - a.e013*b.e2 - a.e021*b.e3;
 
   Multivector {
-    e0,    e1,    e2,    e3,
-     s,   e23,   e31,   e12,
-   e01,   e02,   e03, e0123,
-  e123,  e032,  e013,  e021,
-}
+      e0,    e1,    e2,    e3,
+       s,   e23,   e31,   e12,
+     e01,   e02,   e03, e0123,
+    e123,  e032,  e013,  e021,
+  }
 }
 
 #[rustfmt::skip]

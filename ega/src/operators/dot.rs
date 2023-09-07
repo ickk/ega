@@ -655,8 +655,6 @@ fn pseudoscalar_dot_pseudoscalar(_: &Pseudoscalar, _: &Pseudoscalar) -> Empty {
 #[cfg(any(test, doctest))]
 mod tests {
   use super::*;
-
-  use super::*;
   use crate::operators::Zero;
 
   // we use prime numbers to reduce the chances of a falsely passing test.
@@ -685,12 +683,12 @@ mod tests {
     e123: -109., e032: -113., e013: -127.,  e021: -131.,
   };
   const SCALAR_A: Scalar = Scalar { s:  137. };
-  const SCALAR_B: Scalar = Scalar { s:  139. };
+  const _SCALAR_B: Scalar = Scalar { s:  139. };
   const SCALAR_C: Scalar = Scalar { s: -149. };
   const VECTOR_A: Vector = Vector {
     e0:  151., e1:  157., e2:  163., e3:  167.
   };
-  const VECTOR_B: Vector = Vector {
+  const _VECTOR_B: Vector = Vector {
     e0:  173., e1:  179., e2:  181., e3:  191.
   };
   const VECTOR_C: Vector = Vector {
@@ -700,7 +698,7 @@ mod tests {
     e23:  223., e31:  227., e12:  229.,
     e01:  233., e02:  239., e03:  241.,
   };
-  const BIVECTOR_B: Bivector = Bivector {
+  const _BIVECTOR_B: Bivector = Bivector {
     e23:  251., e31:  257., e12:  263.,
     e01:  269., e02:  271., e03:  277.,
   };

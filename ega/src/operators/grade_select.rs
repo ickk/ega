@@ -135,3 +135,54 @@ impl GradeSelect for Pseudoscalar {
   #[inline]
   fn grade_4(&self) -> Pseudoscalar { *self }
 }
+
+#[rustfmt::skip]
+#[cfg(any(test, doctest))]
+mod tests {
+  use super::*;
+
+  const MULTIVECTOR_A: Multivector = Multivector {
+      e0:    2.,   e1:    3.,   e2:    5.,    e3:    7.,
+       s:   11.,  e23:   13.,  e31:   17.,   e12:   19.,
+     e01:   23.,  e02:   29.,  e03:   31., e0123:   37.,
+    e123:   41., e032:   43., e013:   47.,  e021:   53.,
+  };
+
+  #[test]
+  fn multivector_grade_0() {
+    let result = MULTIVECTOR_A.grade_0();
+    let expected = Scalar { s: 11. };
+    assert_eq!(dbg!(result), dbg!(expected));
+  }
+
+  #[test]
+  fn multivector_grade_1() {
+    let result = MULTIVECTOR_A.grade_1();
+    let expected = Vector { e0: 2., e1: 3., e2: 5., e3: 7. };
+    assert_eq!(dbg!(result), dbg!(expected));
+  }
+
+  #[test]
+  fn multivector_grade_2() {
+    let result = MULTIVECTOR_A.grade_2();
+    let expected = Bivector {
+      e23: 13., e31: 17., e12: 19.,
+      e01: 23., e02: 29., e03: 31.,
+    };
+    assert_eq!(dbg!(result), dbg!(expected));
+  }
+
+  #[test]
+  fn multivector_grade_3() {
+    let result = MULTIVECTOR_A.grade_3();
+    let expected = Trivector { e123: 41., e032: 43., e013: 47., e021: 53. };
+    assert_eq!(dbg!(result), dbg!(expected));
+  }
+
+  #[test]
+  fn multivector_grade_4() {
+    let result = MULTIVECTOR_A.grade_4();
+    let expected = Pseudoscalar { e0123: 37. };
+    assert_eq!(dbg!(result), dbg!(expected));
+  }
+}

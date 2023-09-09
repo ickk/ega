@@ -660,6 +660,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
   }
+
   mod scalar {
     use super::*;
     #[test]
@@ -760,6 +761,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
   }
+
   mod vector {
     use super::*;
     #[test]
@@ -860,6 +862,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
   }
+
   mod bivector {
     use super::*;
     #[test]
@@ -949,6 +952,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
   }
+
   mod trivector {
     use super::*;
     #[test]
@@ -1016,6 +1020,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
   }
+
   mod pseudoscalar {
     use super::*;
     #[test]

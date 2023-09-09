@@ -91,7 +91,6 @@ mod tests {
   };
   const PSEUDOSCALAR_A: Pseudoscalar = Pseudoscalar { e0123:  397. };
 
-
   #[test]
   fn reverse_multivector() {
     let result = MULTIVECTOR_A.reverse();
@@ -102,18 +101,21 @@ mod tests {
     };
     assert_eq!(dbg!(result), dbg!(expected));
   }
+
   #[test]
   fn reverse_scalar() {
     let result = SCALAR_A.reverse();
     let expected = Scalar { s: 137. };
     assert_eq!(dbg!(result), dbg!(expected));
   }
+
   #[test]
   fn reverse_vector() {
     let result = VECTOR_A.reverse();
     let expected = Vector { e0: 151., e1: 157., e2: 163., e3: 167. };
     assert_eq!(dbg!(result), dbg!(expected));
   }
+
   #[test]
   fn reverse_bivector() {
     let result = BIVECTOR_A.reverse();
@@ -123,12 +125,14 @@ mod tests {
     };
     assert_eq!(dbg!(result), dbg!(expected));
   }
+
   #[test]
   fn reverse_trivector() {
     let result = TRIVECTOR_A.reverse();
     let expected = Trivector { e021: -347., e013: -337., e032: -331., e123: -317.};
     assert_eq!(dbg!(result), dbg!(expected));
   }
+
   #[test]
   fn reverse_pseudoscalar() {
     let result = PSEUDOSCALAR_A.reverse();

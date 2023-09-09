@@ -1,6 +1,6 @@
 mod add;
 mod dot;
-mod dual;
+mod hodge_dual;
 mod geometric_product;
 mod grade_select;
 mod join;
@@ -12,7 +12,7 @@ mod sub;
 mod zero;
 pub use add::Add;
 pub use dot::Dot;
-pub use dual::Dual;
+pub use hodge_dual::HodgeDual;
 pub use geometric_product::GeometricProduct;
 pub use grade_select::GradeSelect;
 pub use join::Join;

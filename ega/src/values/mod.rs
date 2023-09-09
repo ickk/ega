@@ -27,7 +27,7 @@ pub trait EgaVector:
   + Neg
   + Add
   + Sub
-  // + Mul
+  // + Mul & variants
   + GradeSelect
   + Reverse
   + Meet<Multivector>
@@ -44,6 +44,7 @@ pub trait EgaVector:
   + Dot<Bivector>
   + Dot<Trivector>
   + Dot<Pseudoscalar>
+  // + Join variants
 {
 }
 

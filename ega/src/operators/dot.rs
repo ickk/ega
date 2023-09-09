@@ -658,7 +658,6 @@ mod tests {
   use super::*;
   use crate::operators::Zero;
 
-  // we use prime numbers to reduce the chances of a falsely passing test.
   const MULTIVECTOR_A: Multivector = Multivector {
       e0:    2.,   e1:    3.,   e2:    5.,    e3:    7.,
        s:   11.,  e23:   13.,  e31:   17.,   e12:   19.,
@@ -684,12 +683,12 @@ mod tests {
     e123: -109., e032: -113., e013: -127.,  e021: -131.,
   };
   const SCALAR_A: Scalar = Scalar { s:  137. };
-  const _SCALAR_B: Scalar = Scalar { s:  139. };
+  const SCALAR_B: Scalar = Scalar { s:  139. };
   const SCALAR_C: Scalar = Scalar { s: -149. };
   const VECTOR_A: Vector = Vector {
     e0:  151., e1:  157., e2:  163., e3:  167.
   };
-  const _VECTOR_B: Vector = Vector {
+  const VECTOR_B: Vector = Vector {
     e0:  173., e1:  179., e2:  181., e3:  191.
   };
   const VECTOR_C: Vector = Vector {
@@ -699,7 +698,7 @@ mod tests {
     e23:  223., e31:  227., e12:  229.,
     e01:  233., e02:  239., e03:  241.,
   };
-  const _BIVECTOR_B: Bivector = Bivector {
+  const BIVECTOR_B: Bivector = Bivector {
     e23:  251., e31:  257., e12:  263.,
     e01:  269., e02:  271., e03:  277.,
   };
@@ -710,14 +709,13 @@ mod tests {
   const TRIVECTOR_A: Trivector = Trivector {
     e123:  317., e032:  331., e013:  337., e021:  347.
   };
-  const _TRIVECTOR_B: Trivector = Trivector {
+  const TRIVECTOR_B: Trivector = Trivector {
     e123:  349., e032:  353., e013:  359., e021:  367.
   };
   const TRIVECTOR_C: Trivector = Trivector {
     e123: -373., e032: -379., e013: -383., e021: -389.
   };
   const PSEUDOSCALAR_A: Pseudoscalar = Pseudoscalar { e0123:  397. };
-  const _PSEUDOSCALAR_B: Pseudoscalar = Pseudoscalar { e0123:  401. };
   const PSEUDOSCALAR_C: Pseudoscalar = Pseudoscalar { e0123: -409. };
 
   mod multivector {
@@ -863,6 +861,313 @@ mod tests {
         e032:  -1227., e013: -2045., e021: -2863.,
         ..Multivector::zero()
       };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod scalar {
+    use super::*;
+    #[test]
+    fn dot_multivector_1() {
+      let result = SCALAR_A.dot(MULTIVECTOR_A);
+      let expected = Multivector {
+          e0:  274.,   e1:  411.,   e2:  685.,    e3:  959.,
+           s: 1507.,  e23: 1781.,  e31: 2329.,   e12: 2603.,
+         e01: 3151.,  e02: 3973.,  e03: 4247., e0123: 5069.,
+        e123: 5617., e032: 5891., e013: 6439.,  e021: 7261.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_scalar_1() {
+      let result = SCALAR_A.dot(SCALAR_B);
+      let expected = Scalar { s: 19043. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_scalar_2() {
+      let result = SCALAR_A.dot(SCALAR_C);
+      let expected = Scalar { s: -20413. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_1() {
+      let result = SCALAR_A.dot(VECTOR_A);
+      let expected = Vector {
+        e0: 20687., e1: 21509., e2: 22331., e3: 22879.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_bivector_1() {
+      let result = SCALAR_A.dot(BIVECTOR_A);
+      let expected = Bivector {
+        e01: 31921., e02: 32743., e03: 33017.,
+        e12: 31373., e31: 31099., e23: 30551.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_trivector_1() {
+      let result = SCALAR_A.dot(TRIVECTOR_A);
+      let expected = Trivector {
+        e021: 47539., e013: 46169., e032: 45347., e123: 43429.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_pseudoscalar_1() {
+      let result = SCALAR_A.dot(PSEUDOSCALAR_A);
+      let expected = Pseudoscalar { e0123: 54389. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod vector {
+    use super::*;
+    #[test]
+    fn dot_multivector_1() {
+      let result = VECTOR_A.dot(MULTIVECTOR_A);
+      let expected = Multivector {
+          e0: -11854.,   e1:  1469.,   e2:  2605.,    e3: 1287.,
+           s:   2455.,  e23:  6437.,  e31:  6683.,   e12: 6847.,
+         e01:   -790.,  e02:  1140.,  e03:  -370., e0123:    0.,
+        e123:      0., e032:  5809., e013:  6031.,  e021: 6179.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_scalar_1() {
+      let result = VECTOR_A.dot(SCALAR_A);
+      let expected = Vector {
+        e0: 20687., e1: 21509., e2: 22331., e3: 22879.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_1() {
+      let result = VECTOR_A.dot(VECTOR_A);
+      let expected = Scalar { s: 79107. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_2() {
+      let result = VECTOR_A.dot(VECTOR_B);
+      let expected = Scalar { s: 89503. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_3() {
+      let result = VECTOR_A.dot(VECTOR_C);
+      let expected = Scalar { s: -98603. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_bivector_1() {
+      let result = VECTOR_A.dot(BIVECTOR_A);
+      let expected = Vector { e0: -115785., e1: 582., e2: -1288., e3: 710. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_trivector_1() {
+      let result = VECTOR_A.dot(TRIVECTOR_A);
+      let expected = Bivector {
+        e01: -282., e02: -798., e03: 1044.,
+        e12: 52939., e31: 51671., e23: 49769.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_pseudoscalar() {
+      let result = VECTOR_A.dot(PSEUDOSCALAR_A);
+      let expected = Trivector {
+        e021: 66299., e013: 64711., e032: 62329.,
+        ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod bivector {
+    use super::*;
+    #[test]
+    fn dot_multivector_1() {
+      let result = BIVECTOR_A.dot(MULTIVECTOR_A);
+      let expected = Multivector {
+          e0:  35976.,   e1: -9587.,   e2: -8433.,    e3: -9823.,
+           s: -11109.,  e23:  2453.,  e31:  2497.,   e12:  2519.,
+         e01:  -5688.,  e02: -5770.,  e03: -5822.,
+         ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_scalar_1() {
+      let result = BIVECTOR_A.dot(SCALAR_A);
+      let expected = Bivector {
+        e01: 31921., e02: 32743., e03: 33017.,
+        e12: 31373., e31: 31099., e23: 30551.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_1() {
+      let result = BIVECTOR_A.dot(VECTOR_A);
+      let expected = Vector {
+        e0: 115785., e1: -582., e2: 1288., e3: -710.,
+       };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_2() {
+      let result = BIVECTOR_A.dot(BIVECTOR_A);
+      let expected = Scalar { s: -153699. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_3() {
+      let result = BIVECTOR_A.dot(BIVECTOR_B);
+      let expected = Scalar { s: -174539. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_bivector_1() {
+      let result = BIVECTOR_A.dot(BIVECTOR_C);
+      let expected = Scalar { s: 194001. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_trivector_1() {
+      let result = BIVECTOR_A.dot(TRIVECTOR_A);
+      let expected = Vector {
+        e0: 229775., e1: -70691., e2: -71959., e3: -72593.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_pseudoscalar() {
+      let result = BIVECTOR_A.dot(PSEUDOSCALAR_A);
+      let expected = Bivector {
+        e01: -88531., e02: -90119., e03: -90913.,
+        ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod trivector {
+    use super::*;
+    #[test]
+    fn dot_multivector_1() {
+      let result = TRIVECTOR_A.dot(MULTIVECTOR_A);
+      let expected = Multivector {
+          e0:  28354.,   e1: -4121.,   e2: -5389.,    e3: -6023.,
+           s: -12997.,  e23:   951.,  e31:  1585.,   e12:  2219.,
+         e01:    624.,  e02: -1276.,  e03:   644., e0123:     0.,
+        e123:   3487., e032:  3641., e013:  3707.,  e021:  3817.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_scalar_1() {
+      let result = TRIVECTOR_A.dot(SCALAR_A);
+      let expected = Trivector {
+        e021: 47539., e013: 46169., e032: 45347., e123: 43429.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_1() {
+      let result = TRIVECTOR_A.dot(VECTOR_A);
+      let expected = Bivector {
+        e01: -282., e02: -798., e03: 1044.,
+        e12: 52939., e31: 51671., e23: 49769.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_2() {
+      let result = TRIVECTOR_A.dot(BIVECTOR_A);
+      let expected = Vector {
+        e0: 229775., e1: -70691., e2: -71959., e3: -72593.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_3() {
+      let result = TRIVECTOR_A.dot(TRIVECTOR_A);
+      let expected = Scalar { s: -100489. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_bivector_1() {
+      let result = TRIVECTOR_A.dot(TRIVECTOR_B);
+      let expected = Scalar { s: -110633. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_trivector_1() {
+      let result = TRIVECTOR_A.dot(TRIVECTOR_C);
+      let expected = Scalar { s: 118241. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_pseudoscalar() {
+      let result = TRIVECTOR_A.dot(PSEUDOSCALAR_A);
+      let expected = Vector { e0: 125849., ..zero() };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod pseudoscalar {
+    use super::*;
+    #[test]
+    fn dot_multivector_1() {
+      let result = PSEUDOSCALAR_A.dot(MULTIVECTOR_A);
+      let expected = Multivector {
+           e0: -16277.,
+          e01:  -5161.,  e02: -6749.,  e03: -7543.,
+         e032:  -1191., e013: -1985., e021: -2779.,
+        e0123:   4367.,
+        ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_scalar_1() {
+      let result = PSEUDOSCALAR_A.dot(SCALAR_A);
+      let expected = Pseudoscalar { e0123: 54389. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_1() {
+      let result = PSEUDOSCALAR_A.dot(VECTOR_A);
+      let expected = Trivector {
+        e032: -62329., e013: -64711., e021: -66299., e123: 0.
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_2() {
+      let result = PSEUDOSCALAR_A.dot(BIVECTOR_A);
+      let expected = Bivector {
+        e01: -88531., e02: -90119., e03: -90913.,
+        ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_vector_3() {
+      let result = PSEUDOSCALAR_A.dot(TRIVECTOR_A);
+      let expected = Vector {
+        e0: -125849., ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn dot_bivector_1() {
+      let result = PSEUDOSCALAR_A.dot(PSEUDOSCALAR_A);
+      let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
   }

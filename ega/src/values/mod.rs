@@ -25,6 +25,9 @@ pub trait EgaVector:
   + PartialEq
   + Zero
   + Neg
+  + Add
+  + Sub
+  // + Mul
   + GradeSelect
   + Reverse
   + Meet<Multivector>

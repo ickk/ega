@@ -3,15 +3,15 @@ use crate::*;
 /// Duals
 pub trait Dual {
   /// The poincare dual
-  fn poincare_dual(&self) -> Self;
+  fn poincare_dual(self) -> Self;
 
   /// The Hodge dual relative to the pseudoscalar e0123
-  fn dual(&self) -> Self;
+  fn hodge_dual(self) -> Self;
 }
 
 impl Dual for Multivector {
   #[inline]
-  fn poincare_dual(&self) -> Self {
+  fn poincare_dual(self) -> Self {
     Multivector {
       s: self.e0123,
       e0: self.e123,
@@ -33,7 +33,7 @@ impl Dual for Multivector {
   }
 
   #[inline]
-  fn dual(&self) -> Self {
+  fn hodge_dual(self) -> Self {
     Multivector {
       s: self.e0123,
       e0: -self.e123,
@@ -69,7 +69,7 @@ mod tests {
 
   #[test]
   fn multivector_dual() {
-    let result = MULTIVECTOR_A.dual();
+    let result = MULTIVECTOR_A.hodge_dual();
     let expected = Multivector {
         e0: -41.,   e1: -43.,   e2: -47.,    e3: -53.,
          s:  37.,  e23:  23.,  e31:  29.,   e12:  31.,

@@ -1,21 +1,21 @@
-use crate::values::*;
+use crate::*;
+
+pub fn zero<T: Zero>() -> T {
+  <T as Zero>::zero()
+}
 
 /// The zero value
 pub trait Zero {
-  type Output;
-
   /// The zero value
-  fn zero() -> Self::Output;
+  fn zero() -> Self;
 }
 
 macro_rules! impl_zero {
   ($type:ty, $count:literal) => {
     impl Zero for $type {
-      type Output = $type;
-
       #[inline]
-      fn zero() -> Self::Output {
-        Self::Output::default()
+      fn zero() -> Self {
+        Self::default()
       }
     }
   };

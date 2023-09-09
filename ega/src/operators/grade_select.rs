@@ -1,53 +1,52 @@
-use super::Zero;
-use crate::values::*;
+use crate::*;
 
 /// The grade selection operator
 pub trait GradeSelect {
   /// Get the grade 0 [`Scalar`] element
-  fn grade_0(&self) -> Scalar;
+  fn grade_0(self) -> Scalar;
 
   /// Get the grade 1 [`Vector`] elements
-  fn grade_1(&self) -> Vector;
+  fn grade_1(self) -> Vector;
 
   /// Get the grade 2 [`Bivector`] elements
-  fn grade_2(&self) -> Bivector;
+  fn grade_2(self) -> Bivector;
 
   /// Get the grade 3 [`Trivector`] elements
-  fn grade_3(&self) -> Trivector;
+  fn grade_3(self) -> Trivector;
 
   /// Get the grade 4 [`Pseudoscalar`] element
-  fn grade_4(&self) -> Pseudoscalar;
+  fn grade_4(self) -> Pseudoscalar;
 }
 
 impl GradeSelect for Multivector {
   #[inline]
-  fn grade_0(&self) -> Scalar {
+  fn grade_0(self) -> Scalar {
     Scalar::from(self.s)
   }
 
   #[inline]
-  fn grade_1(&self) -> Vector {
+  fn grade_1(self) -> Vector {
     let mut a = [0f32; 4];
     a.copy_from_slice(&self.to_multivector_array().elements[0..=3]);
     VectorArray::from(a).to_vector()
   }
 
   #[inline]
-  fn grade_2(&self) -> Bivector {
+  fn grade_2(self) -> Bivector {
     let mut a = [0f32; 6];
     a.copy_from_slice(&self.to_multivector_array().elements[5..=10]);
     BivectorArray::from(a).to_bivector()
   }
 
   #[inline]
-  fn grade_3(&self) -> Trivector {
+  fn grade_3(self) -> Trivector {
     let mut a = [0f32; 4];
     a.copy_from_slice(&self.to_multivector_array().elements[12..=15]);
     TrivectorArray::from(a).to_trivector()
   }
 
   #[inline]
-  fn grade_4(&self) -> Pseudoscalar {
+  fn grade_4(self) -> Pseudoscalar {
     Pseudoscalar::from(self.e0123)
   }
 }
@@ -55,85 +54,85 @@ impl GradeSelect for Multivector {
 #[rustfmt::skip]
 impl GradeSelect for Empty {
   #[inline]
-  fn grade_0(&self) -> Scalar { Scalar::zero() }
+  fn grade_0(self) -> Scalar { Scalar::zero() }
   #[inline]
-  fn grade_1(&self) -> Vector { Vector::zero() }
+  fn grade_1(self) -> Vector { Vector::zero() }
   #[inline]
-  fn grade_2(&self) -> Bivector { Bivector::zero() }
+  fn grade_2(self) -> Bivector { Bivector::zero() }
   #[inline]
-  fn grade_3(&self) -> Trivector { Trivector::zero() }
+  fn grade_3(self) -> Trivector { Trivector::zero() }
   #[inline]
-  fn grade_4(&self) -> Pseudoscalar { Pseudoscalar::zero() }
+  fn grade_4(self) -> Pseudoscalar { Pseudoscalar::zero() }
 }
 
 #[rustfmt::skip]
 impl GradeSelect for Scalar {
   #[inline]
-  fn grade_0(&self) -> Scalar { *self }
+  fn grade_0(self) -> Scalar { self }
   #[inline]
-  fn grade_1(&self) -> Vector { Vector::zero() }
+  fn grade_1(self) -> Vector { Vector::zero() }
   #[inline]
-  fn grade_2(&self) -> Bivector { Bivector::zero() }
+  fn grade_2(self) -> Bivector { Bivector::zero() }
   #[inline]
-  fn grade_3(&self) -> Trivector { Trivector::zero() }
+  fn grade_3(self) -> Trivector { Trivector::zero() }
   #[inline]
-  fn grade_4(&self) -> Pseudoscalar { Pseudoscalar::zero() }
+  fn grade_4(self) -> Pseudoscalar { Pseudoscalar::zero() }
 }
 
 #[rustfmt::skip]
 impl GradeSelect for Vector {
   #[inline]
-  fn grade_0(&self) -> Scalar { Scalar::zero() }
+  fn grade_0(self) -> Scalar { Scalar::zero() }
   #[inline]
-  fn grade_1(&self) -> Vector { *self }
+  fn grade_1(self) -> Vector { self }
   #[inline]
-  fn grade_2(&self) -> Bivector { Bivector::zero() }
+  fn grade_2(self) -> Bivector { Bivector::zero() }
   #[inline]
-  fn grade_3(&self) -> Trivector { Trivector::zero() }
+  fn grade_3(self) -> Trivector { Trivector::zero() }
   #[inline]
-  fn grade_4(&self) -> Pseudoscalar { Pseudoscalar::zero() }
+  fn grade_4(self) -> Pseudoscalar { Pseudoscalar::zero() }
 }
 
 #[rustfmt::skip]
 impl GradeSelect for Bivector {
   #[inline]
-  fn grade_0(&self) -> Scalar { Scalar::zero() }
+  fn grade_0(self) -> Scalar { Scalar::zero() }
   #[inline]
-  fn grade_1(&self) -> Vector { Vector::zero() }
+  fn grade_1(self) -> Vector { Vector::zero() }
   #[inline]
-  fn grade_2(&self) -> Bivector { *self }
+  fn grade_2(self) -> Bivector { self }
   #[inline]
-  fn grade_3(&self) -> Trivector { Trivector::zero() }
+  fn grade_3(self) -> Trivector { Trivector::zero() }
   #[inline]
-  fn grade_4(&self) -> Pseudoscalar { Pseudoscalar::zero() }
+  fn grade_4(self) -> Pseudoscalar { Pseudoscalar::zero() }
 }
 
 #[rustfmt::skip]
 impl GradeSelect for Trivector {
   #[inline]
-  fn grade_0(&self) -> Scalar { Scalar::zero() }
+  fn grade_0(self) -> Scalar { Scalar::zero() }
   #[inline]
-  fn grade_1(&self) -> Vector { Vector::zero() }
+  fn grade_1(self) -> Vector { Vector::zero() }
   #[inline]
-  fn grade_2(&self) -> Bivector { Bivector::zero() }
+  fn grade_2(self) -> Bivector { Bivector::zero() }
   #[inline]
-  fn grade_3(&self) -> Trivector { *self }
+  fn grade_3(self) -> Trivector { self }
   #[inline]
-  fn grade_4(&self) -> Pseudoscalar { Pseudoscalar::zero() }
+  fn grade_4(self) -> Pseudoscalar { Pseudoscalar::zero() }
 }
 
 #[rustfmt::skip]
 impl GradeSelect for Pseudoscalar {
   #[inline]
-  fn grade_0(&self) -> Scalar { Scalar::zero() }
+  fn grade_0(self) -> Scalar { Scalar::zero() }
   #[inline]
-  fn grade_1(&self) -> Vector { Vector::zero() }
+  fn grade_1(self) -> Vector { Vector::zero() }
   #[inline]
-  fn grade_2(&self) -> Bivector { Bivector::zero() }
+  fn grade_2(self) -> Bivector { Bivector::zero() }
   #[inline]
-  fn grade_3(&self) -> Trivector { Trivector::zero() }
+  fn grade_3(self) -> Trivector { Trivector::zero() }
   #[inline]
-  fn grade_4(&self) -> Pseudoscalar { *self }
+  fn grade_4(self) -> Pseudoscalar { self }
 }
 
 #[rustfmt::skip]

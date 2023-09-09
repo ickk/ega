@@ -1,11 +1,11 @@
-use crate::values::*;
+use crate::*;
 
 /// The geometric product
 pub trait GeometricProduct<Rhs> {
   type Output;
 
   /// The geometric product
-  fn mul(&self, rhs: &Rhs) -> Self::Output;
+  fn geometric_product(self, rhs: Rhs) -> Self::Output;
 }
 
 macro_rules! impl_geometric_product {
@@ -13,7 +13,7 @@ macro_rules! impl_geometric_product {
     impl GeometricProduct<$rhs> for $lhs {
       type Output = $output;
       #[inline]
-      fn mul(&self, rhs: &$rhs) -> Self::Output {
+      fn geometric_product(self, rhs: $rhs) -> Self::Output {
         $mul_fn(self, rhs)
       }
     }
@@ -27,8 +27,8 @@ impl_geometric_product! { multivector_mul_multivector: Multivector, Multivector 
 #[rustfmt::skip]
 #[inline]
 fn multivector_mul_multivector(
-  lhs: &Multivector,
-  rhs: &Multivector,
+  lhs: Multivector,
+  rhs: Multivector,
 ) -> Multivector {
   let (a, b) = (lhs, rhs);
 
@@ -163,7 +163,7 @@ mod tests {
     use super::*;
     #[test]
     fn mul_multivector_1() {
-      let result = MULTIVECTOR_A.mul(&MULTIVECTOR_B);
+      let result = MULTIVECTOR_A.geometric_product(MULTIVECTOR_B);
       let expected = Multivector {
           e0: 23311.,   e1: -3564.,   e2: -4676.,    e3: -4116.,
            s: -6780.,  e23:  4596.,  e31:  5316.,   e12:  6200.,

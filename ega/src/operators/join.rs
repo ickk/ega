@@ -1,11 +1,11 @@
-use crate::values::*;
+use crate::*;
 
 /// The regressive product
 pub trait Join<Rhs> {
   type Output;
 
   /// The regressive product
-  fn join(&self, rhs: &Rhs) -> Self::Output;
+  fn join(self, rhs: Rhs) -> Self::Output;
 }
 
 macro_rules! impl_join {
@@ -13,7 +13,7 @@ macro_rules! impl_join {
     impl Join<$rhs> for $lhs {
       type Output = $output;
       #[inline]
-      fn join(&self, rhs: &$rhs) -> Self::Output {
+      fn join(self, rhs: $rhs) -> Self::Output {
         $join_fn(self, rhs)
       }
     }
@@ -27,8 +27,8 @@ impl_join! { multivector_join_multivector: Multivector, Multivector => Multivect
 #[rustfmt::skip]
 #[inline]
 fn multivector_join_multivector(
-  lhs: &Multivector,
-  rhs: &Multivector,
+  lhs: Multivector,
+  rhs: Multivector,
 ) -> Multivector {
   let (a, b) = (lhs, rhs);
 
@@ -106,7 +106,7 @@ mod tests {
     use super::*;
     #[test]
     fn join_multivector_1() {
-      let result = MULTIVECTOR_A.join(&MULTIVECTOR_B);
+      let result = MULTIVECTOR_A.join(MULTIVECTOR_B);
       let expected = Multivector {
           e0: -22323.,   e1:  9092.,   e2: 10400.,    e3: 10852.,
            s:  25641.,  e23:  4368.,  e31:  4806.,   e12:  5732.,

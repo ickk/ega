@@ -1,12 +1,12 @@
 use super::return_empty;
-use crate::values::*;
+use crate::*;
 
 /// The outer product
 pub trait Meet<Rhs> {
   type Output;
 
   /// The outer product
-  fn meet(&self, rhs: &Rhs) -> Self::Output;
+  fn meet(self, rhs: Rhs) -> Self::Output;
 }
 
 macro_rules! impl_meet {
@@ -14,7 +14,7 @@ macro_rules! impl_meet {
     impl Meet<$rhs> for $lhs {
       type Output = $output;
       #[inline]
-      fn meet(&self, rhs: &$rhs) -> Self::Output {
+      fn meet(self, rhs: $rhs) -> Self::Output {
         $meet_fn(self, rhs)
       }
     }
@@ -82,8 +82,8 @@ impl_meet! { return_empty: Empty, Pseudoscalar => Empty }
 #[rustfmt::skip]
 #[inline]
 fn multivector_meet_multivector(
-  lhs: &Multivector,
-  rhs: &Multivector,
+  lhs: Multivector,
+  rhs: Multivector,
 ) -> Multivector {
   let (a, b) = (lhs, rhs);
 
@@ -127,14 +127,14 @@ fn multivector_meet_multivector(
 }
 
 #[inline]
-fn multivector_meet_scalar(lhs: &Multivector, rhs: &Scalar) -> Multivector {
+fn multivector_meet_scalar(lhs: Multivector, rhs: Scalar) -> Multivector {
   let elements = lhs.to_multivector_array().elements.map(|e| e * rhs.s);
   MultivectorArray::from(elements).to_multivector()
 }
 
 #[rustfmt::skip]
 #[inline]
-fn multivector_meet_vector(lhs: &Multivector, rhs: &Vector) -> Multivector {
+fn multivector_meet_vector(lhs: Multivector, rhs: Vector) -> Multivector {
   let (a, b) = (lhs, rhs);
   let s = 0f32;
 
@@ -165,8 +165,8 @@ fn multivector_meet_vector(lhs: &Multivector, rhs: &Vector) -> Multivector {
 #[rustfmt::skip]
 #[inline]
 fn multivector_meet_bivector(
-  lhs: &Multivector,
-  rhs: &Bivector,
+  lhs: Multivector,
+  rhs: Bivector,
 ) -> Multivector {
   let (a, b) = (lhs, rhs);
   let [e0, e1, e2, e3, s] = [0f32; 5];
@@ -195,8 +195,8 @@ fn multivector_meet_bivector(
 #[rustfmt::skip]
 #[inline]
 fn multivector_meet_trivector(
-  lhs: &Multivector,
-  rhs: &Trivector,
+  lhs: Multivector,
+  rhs: Trivector,
 ) -> Multivector {
   let (a, b) = (lhs, rhs);
   let [e0, e1, e2, e3, s, e23, e31, e12, e01, e02, e03] = [0f32; 11];
@@ -217,8 +217,8 @@ fn multivector_meet_trivector(
 
 #[inline]
 fn multivector_meet_pseudoscalar(
-  lhs: &Multivector,
-  rhs: &Pseudoscalar,
+  lhs: Multivector,
+  rhs: Pseudoscalar,
 ) -> Pseudoscalar {
   Pseudoscalar {
     e0123: lhs.s * rhs.e0123,
@@ -228,35 +228,35 @@ fn multivector_meet_pseudoscalar(
 // Scalar
 
 #[inline]
-fn scalar_meet_scalar(lhs: &Scalar, rhs: &Scalar) -> Scalar {
+fn scalar_meet_scalar(lhs: Scalar, rhs: Scalar) -> Scalar {
   Scalar { s: lhs.s * rhs.s }
 }
 
 #[inline]
-fn scalar_meet_vector(lhs: &Scalar, rhs: &Vector) -> Vector {
+fn scalar_meet_vector(lhs: Scalar, rhs: Vector) -> Vector {
   let elements = rhs.to_vector_array().elements.map(|e| lhs.s * e);
   VectorArray::from(elements).to_vector()
 }
 
 #[inline]
-fn scalar_meet_bivector(lhs: &Scalar, rhs: &Bivector) -> Bivector {
+fn scalar_meet_bivector(lhs: Scalar, rhs: Bivector) -> Bivector {
   let elements = rhs.to_bivector_array().elements.map(|e| lhs.s * e);
   BivectorArray::from(elements).to_bivector()
 }
 
 #[inline]
-fn scalar_meet_trivector(lhs: &Scalar, rhs: &Trivector) -> Trivector {
+fn scalar_meet_trivector(lhs: Scalar, rhs: Trivector) -> Trivector {
   let elements = rhs.to_trivector_array().elements.map(|e| lhs.s * e);
   TrivectorArray::from(elements).to_trivector()
 }
 
 #[inline]
-fn scalar_meet_pseudoscalar(lhs: &Scalar, rhs: &Pseudoscalar) -> Pseudoscalar {
+fn scalar_meet_pseudoscalar(lhs: Scalar, rhs: Pseudoscalar) -> Pseudoscalar {
   Pseudoscalar::from(lhs.s * rhs.e0123)
 }
 
 #[inline]
-fn scalar_meet_multivector(lhs: &Scalar, rhs: &Multivector) -> Multivector {
+fn scalar_meet_multivector(lhs: Scalar, rhs: Multivector) -> Multivector {
   let elements = rhs.to_multivector_array().elements.map(|e| lhs.s * e);
   MultivectorArray::from(elements).to_multivector()
 }
@@ -264,14 +264,14 @@ fn scalar_meet_multivector(lhs: &Scalar, rhs: &Multivector) -> Multivector {
 // Vector
 
 #[inline]
-fn vector_meet_scalar(lhs: &Vector, rhs: &Scalar) -> Vector {
+fn vector_meet_scalar(lhs: Vector, rhs: Scalar) -> Vector {
   let elements = lhs.to_vector_array().elements.map(|e| rhs.s * e);
   VectorArray::from(elements).to_vector()
 }
 
 #[rustfmt::skip]
 #[inline]
-fn vector_meet_vector(lhs: &Vector, rhs: &Vector) -> Bivector {
+fn vector_meet_vector(lhs: Vector, rhs: Vector) -> Bivector {
   let (p, q) = (lhs, rhs);
 
   let e23 = p.e2*q.e3 - p.e3*q.e2;
@@ -286,7 +286,7 @@ fn vector_meet_vector(lhs: &Vector, rhs: &Vector) -> Bivector {
 
 #[rustfmt::skip]
 #[inline]
-fn vector_meet_bivector(lhs: &Vector, rhs: &Bivector) -> Trivector {
+fn vector_meet_bivector(lhs: Vector, rhs: Bivector) -> Trivector {
   let (p, l) = (lhs, rhs);
 
   let e123 = p.e1*l.e23 + p.e2*l.e31 + p.e3*l.e12;
@@ -299,7 +299,7 @@ fn vector_meet_bivector(lhs: &Vector, rhs: &Bivector) -> Trivector {
 
 #[rustfmt::skip]
 #[inline]
-fn vector_meet_trivector(lhs: &Vector, rhs: &Trivector) -> Pseudoscalar {
+fn vector_meet_trivector(lhs: Vector, rhs: Trivector) -> Pseudoscalar {
   let (p, x) = (lhs, rhs);
   let e0123 = p.e0*x.e123 + p.e1*x.e032 + p.e2*x.e013 + p.e3*x.e021;
 
@@ -308,7 +308,7 @@ fn vector_meet_trivector(lhs: &Vector, rhs: &Trivector) -> Pseudoscalar {
 
 #[rustfmt::skip]
 #[inline]
-fn vector_meet_multivector(lhs: &Vector, rhs: &Multivector) -> Multivector {
+fn vector_meet_multivector(lhs: Vector, rhs: Multivector) -> Multivector {
   let (a, b) = (lhs, rhs);
   let s = 0f32;
 
@@ -339,14 +339,14 @@ fn vector_meet_multivector(lhs: &Vector, rhs: &Multivector) -> Multivector {
 // Bivector
 
 #[inline]
-fn bivector_meet_scalar(lhs: &Bivector, rhs: &Scalar) -> Bivector {
+fn bivector_meet_scalar(lhs: Bivector, rhs: Scalar) -> Bivector {
   let elements = lhs.to_bivector_array().elements.map(|e| rhs.s * e);
   BivectorArray::from(elements).to_bivector()
 }
 
 #[rustfmt::skip]
 #[inline]
-fn bivector_meet_vector(lhs: &Bivector, rhs: &Vector) -> Trivector {
+fn bivector_meet_vector(lhs: Bivector, rhs: Vector) -> Trivector {
   let (a, b) = (lhs, rhs);
 
   let e123 = a.e23*b.e1 + a.e31*b.e2 + a.e12*b.e3;
@@ -359,7 +359,7 @@ fn bivector_meet_vector(lhs: &Bivector, rhs: &Vector) -> Trivector {
 
 #[rustfmt::skip]
 #[inline]
-fn bivector_meet_bivector(lhs: &Bivector, rhs: &Bivector) -> Pseudoscalar {
+fn bivector_meet_bivector(lhs: Bivector, rhs: Bivector) -> Pseudoscalar {
   let (l, m) = (lhs, rhs);
   let e0123 = l.e01*m.e23 + l.e02*m.e31 + l.e03*m.e12
             + l.e23*m.e01 + l.e31*m.e02 + l.e12*m.e03;
@@ -370,8 +370,8 @@ fn bivector_meet_bivector(lhs: &Bivector, rhs: &Bivector) -> Pseudoscalar {
 #[rustfmt::skip]
 #[inline]
 fn bivector_meet_multivector(
-  lhs: &Bivector,
-  rhs: &Multivector,
+  lhs: Bivector,
+  rhs: Multivector,
 ) -> Multivector {
   let (a, b) = (lhs, rhs);
   let [e0, e1, e2, e3, s] = [0f32; 5];
@@ -400,7 +400,7 @@ fn bivector_meet_multivector(
 // Trivector
 
 #[inline]
-fn trivector_meet_scalar(lhs: &Trivector, rhs: &Scalar) -> Trivector {
+fn trivector_meet_scalar(lhs: Trivector, rhs: Scalar) -> Trivector {
   let elements = lhs.to_trivector_array().elements.map(|e| rhs.s * e);
   TrivectorArray::from(elements).to_trivector()
 }
@@ -408,8 +408,8 @@ fn trivector_meet_scalar(lhs: &Trivector, rhs: &Scalar) -> Trivector {
 #[rustfmt::skip]
 #[inline]
 fn trivector_meet_multivector(
-  lhs: &Trivector,
-  rhs: &Multivector,
+  lhs: Trivector,
+  rhs: Multivector,
 ) -> Multivector {
   let (a, b) = (lhs, rhs);
   let [e0, e1, e2, e3, s, e23, e31, e12, e01, e02, e03] = [0f32; 11];
@@ -430,7 +430,7 @@ fn trivector_meet_multivector(
 
 #[rustfmt::skip]
 #[inline]
-fn trivector_meet_vector(lhs: &Trivector, rhs: &Vector) -> Pseudoscalar {
+fn trivector_meet_vector(lhs: Trivector, rhs: Vector) -> Pseudoscalar {
   let (a, b) = (lhs, rhs);
   let e0123 = -a.e123*b.e0 - a.e032*b.e1 - a.e013*b.e2 - a.e021*b.e3;
 
@@ -441,8 +441,8 @@ fn trivector_meet_vector(lhs: &Trivector, rhs: &Vector) -> Pseudoscalar {
 
 #[inline]
 fn pseudoscalar_meet_multivector(
-  lhs: &Pseudoscalar,
-  rhs: &Multivector,
+  lhs: Pseudoscalar,
+  rhs: Multivector,
 ) -> Pseudoscalar {
   Pseudoscalar {
     e0123: lhs.e0123 * rhs.s,
@@ -450,7 +450,7 @@ fn pseudoscalar_meet_multivector(
 }
 
 #[inline]
-fn pseudoscalar_meet_scalar(lhs: &Pseudoscalar, rhs: &Scalar) -> Pseudoscalar {
+fn pseudoscalar_meet_scalar(lhs: Pseudoscalar, rhs: Scalar) -> Pseudoscalar {
   Pseudoscalar {
     e0123: lhs.e0123 * rhs.s,
   }
@@ -530,7 +530,7 @@ mod tests {
     use super::*;
     #[test]
     fn meet_multivector_1() {
-      let result = MULTIVECTOR_A.meet(&MULTIVECTOR_B);
+      let result = MULTIVECTOR_A.meet(MULTIVECTOR_B);
       let expected = Multivector {
           e0:  795.,   e1:  890.,   e2: 1102.,    e3: 1292.,
            s:  803.,  e23: 1704.,  e31: 2368.,   e12: 2262.,
@@ -541,7 +541,7 @@ mod tests {
     }
     #[test]
     fn meet_multivector_2() {
-      let result = MULTIVECTOR_A.meet(&MULTIVECTOR_C);
+      let result = MULTIVECTOR_A.meet(MULTIVECTOR_C);
       let expected = Multivector {
           e0:  -795.,   e1:   452.,   e2: -1102.,    e3:   270.,
            s:  -803.,  e23:   744.,  e31: -1940.,   e12:  -914.,
@@ -552,7 +552,7 @@ mod tests {
     }
     #[test]
     fn meet_multivector_3() {
-      let result = MULTIVECTOR_A.meet(&MULTIVECTOR_D);
+      let result = MULTIVECTOR_A.meet(MULTIVECTOR_D);
       let expected = Multivector {
           e0:  -795.,   e1:  -890.,   e2: -1102.,    e3: -1292.,
            s:  -803.,  e23: -1704.,  e31: -2368.,   e12: -2262.,
@@ -563,7 +563,7 @@ mod tests {
     }
     #[test]
     fn meet_scalar_1() {
-      let result = MULTIVECTOR_A.meet(&SCALAR_A);
+      let result = MULTIVECTOR_A.meet(SCALAR_A);
       let expected = Multivector {
           e0:   274.,   e1:   411.,   e2:   685.,    e3:   959.,
            s:  1507.,  e23:  1781.,  e31:  2329.,   e12:  2603.,
@@ -574,7 +574,7 @@ mod tests {
     }
     #[test]
     fn meet_scalar_2() {
-      let result = MULTIVECTOR_A.meet(&SCALAR_C);
+      let result = MULTIVECTOR_A.meet(SCALAR_C);
       let expected = Multivector {
           e0:  -298.,   e1:  -447.,   e2:  -745.,    e3: -1043.,
            s: -1639.,  e23: -1937.,  e31: -2533.,   e12: -2831.,
@@ -585,7 +585,7 @@ mod tests {
     }
     #[test]
     fn meet_vector_1() {
-      let result = MULTIVECTOR_A.meet(&VECTOR_A);
+      let result = MULTIVECTOR_A.meet(VECTOR_A);
       let expected = Multivector {
           e0:  1661.,   e1:  1727.,   e2:  1793.,    e3:   1837.,
            s:     0.,  e23:  -306.,  e31:   598.,   e12:   -296.,
@@ -596,7 +596,7 @@ mod tests {
     }
     #[test]
     fn meet_vector_2() {
-      let result = MULTIVECTOR_A.meet(&VECTOR_C);
+      let result = MULTIVECTOR_A.meet(VECTOR_C);
       let expected = Multivector {
           e0: -2123.,   e1: -2167.,   e2: -2189.,    e3:  -2321.,
            s:     0.,  e23:   338.,  e31:  -746.,   e12:    388.,
@@ -607,7 +607,7 @@ mod tests {
     }
     #[test]
     fn meet_bivector_1() {
-      let result = MULTIVECTOR_A.meet(&BIVECTOR_A);
+      let result = MULTIVECTOR_A.meet(BIVECTOR_A);
       let expected = Multivector {
            s:     0.,  e23:  2453.,  e31:  2497.,   e12:   2519.,
          e01:  2563.,  e02:  2629.,  e03:  2651., e0123:  30482.,
@@ -618,7 +618,7 @@ mod tests {
     }
     #[test]
     fn meet_bivector_2() {
-      let result = MULTIVECTOR_A.meet(&BIVECTOR_C);
+      let result = MULTIVECTOR_A.meet(BIVECTOR_C);
       let expected = Multivector {
            s:     0.,  e23: -3091.,  e31: -3113.,   e12:  -3223.,
          e01: -3377.,  e02: -3421.,  e03: -3443., e0123: -38978.,
@@ -629,7 +629,7 @@ mod tests {
     }
     #[test]
     fn meet_trivector_1() {
-      let result = MULTIVECTOR_A.meet(&TRIVECTOR_A);
+      let result = MULTIVECTOR_A.meet(TRIVECTOR_A);
       let expected = Multivector {
         e123: 3487., e032: 3641., e013: 3707., e021: 3817.,
         e0123: 5741.,
@@ -639,7 +639,7 @@ mod tests {
     }
     #[test]
     fn meet_trivector_2() {
-      let result = MULTIVECTOR_A.meet(&TRIVECTOR_C);
+      let result = MULTIVECTOR_A.meet(TRIVECTOR_C);
       let expected = Multivector {
         e123: -4103., e032: -4169., e013: -4213., e021: -4279.,
         e0123: -6521.,
@@ -649,13 +649,13 @@ mod tests {
     }
     #[test]
     fn meet_pseudoscalar_1() {
-      let result = MULTIVECTOR_A.meet(&PSEUDOSCALAR_A);
+      let result = MULTIVECTOR_A.meet(PSEUDOSCALAR_A);
       let expected = Pseudoscalar { e0123: 4367. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_pseudoscalar_2() {
-      let result = MULTIVECTOR_A.meet(&PSEUDOSCALAR_C);
+      let result = MULTIVECTOR_A.meet(PSEUDOSCALAR_C);
       let expected = Pseudoscalar { e0123: -4499. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
@@ -664,7 +664,7 @@ mod tests {
     use super::*;
     #[test]
     fn meet_multivector_1() {
-      let result = SCALAR_A.meet(&MULTIVECTOR_A);
+      let result = SCALAR_A.meet(MULTIVECTOR_A);
       let expected = Multivector {
           e0:  274.,   e1:  411.,   e2:  685.,    e3:  959.,
            s: 1507.,  e23: 1781.,  e31: 2329.,   e12: 2603.,
@@ -675,7 +675,7 @@ mod tests {
     }
     #[test]
     fn meet_multivector_2() {
-      let result = SCALAR_A.meet(&MULTIVECTOR_D);
+      let result = SCALAR_A.meet(MULTIVECTOR_D);
       let expected = Multivector {
           e0:  -8083.,   e1:  -8357.,   e2:  -9179.,    e3:  -9727.,
            s: -10001.,  e23: -10823.,  e31: -11371.,   e12: -12193.,
@@ -687,19 +687,19 @@ mod tests {
     }
     #[test]
     fn meet_scalar_1() {
-      let result = SCALAR_A.meet(&SCALAR_B);
+      let result = SCALAR_A.meet(SCALAR_B);
       let expected = Scalar { s: 19043. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_scalar_2() {
-      let result = SCALAR_A.meet(&SCALAR_C);
+      let result = SCALAR_A.meet(SCALAR_C);
       let expected = Scalar { s: -20413. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_vector_1() {
-      let result = SCALAR_A.meet(&VECTOR_A);
+      let result = SCALAR_A.meet(VECTOR_A);
       let expected = Vector {
         e0: 20687., e1: 21509., e2: 22331., e3: 22879.,
       };
@@ -707,7 +707,7 @@ mod tests {
     }
     #[test]
     fn meet_vector_2() {
-      let result = SCALAR_A.meet(&VECTOR_C);
+      let result = SCALAR_A.meet(VECTOR_C);
       let expected = Vector {
         e0: -26441., e1: -26989., e2: -27263., e3: -28907.,
       };
@@ -715,7 +715,7 @@ mod tests {
     }
     #[test]
     fn meet_bivector_1() {
-      let result = SCALAR_A.meet(&BIVECTOR_A);
+      let result = SCALAR_A.meet(BIVECTOR_A);
       let expected = Bivector {
         e01: 31921., e02: 32743., e03: 33017.,
         e12: 31373., e31: 31099., e23: 30551.,
@@ -724,7 +724,7 @@ mod tests {
     }
     #[test]
     fn meet_bivector_2() {
-      let result = SCALAR_A.meet(&BIVECTOR_C);
+      let result = SCALAR_A.meet(BIVECTOR_C);
       let expected = Bivector {
         e01: -42059., e02: -42607., e03: -42881.,
         e12: -40141., e31: -38771., e23: -38497.,
@@ -733,7 +733,7 @@ mod tests {
     }
     #[test]
     fn meet_trivector_1() {
-      let result = SCALAR_A.meet(&TRIVECTOR_A);
+      let result = SCALAR_A.meet(TRIVECTOR_A);
       let expected = Trivector {
         e021: 47539., e013: 46169., e032: 45347., e123: 43429.,
       };
@@ -741,7 +741,7 @@ mod tests {
     }
     #[test]
     fn meet_trivector_2() {
-      let result = SCALAR_A.meet(&TRIVECTOR_C);
+      let result = SCALAR_A.meet(TRIVECTOR_C);
       let expected = Trivector {
         e021: -53293., e013: -52471., e032: -51923., e123: -51101.,
       };
@@ -749,13 +749,13 @@ mod tests {
     }
     #[test]
     fn meet_pseudoscalar_1() {
-      let result = SCALAR_A.meet(&PSEUDOSCALAR_A);
+      let result = SCALAR_A.meet(PSEUDOSCALAR_A);
       let expected = Pseudoscalar { e0123: 54389. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_pseudoscalar_2() {
-      let result = SCALAR_A.meet(&PSEUDOSCALAR_C);
+      let result = SCALAR_A.meet(PSEUDOSCALAR_C);
       let expected = Pseudoscalar { e0123: -56033. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
@@ -764,7 +764,7 @@ mod tests {
     use super::*;
     #[test]
     fn meet_multivector_1() {
-      let result = VECTOR_A.meet(&MULTIVECTOR_A);
+      let result = VECTOR_A.meet(MULTIVECTOR_A);
       let expected = Multivector {
           e0: 1661.,   e1:  1727.,   e2:  1793.,    e3:  1837.,
            s:    0.,  e23:   306.,  e31:  -598.,   e12:   296.,
@@ -775,7 +775,7 @@ mod tests {
     }
     #[test]
     fn meet_multivector_2() {
-      let result = VECTOR_A.meet(&MULTIVECTOR_D);
+      let result = VECTOR_A.meet(MULTIVECTOR_D);
       let expected = Multivector {
           e0: -11023.,   e1: -11461.,   e2: -11899.,    e3: -12191.,
            s:      0.,  e23:   -384.,  e31:    960.,   e12:   -576.,
@@ -787,7 +787,7 @@ mod tests {
     }
     #[test]
     fn meet_scalar_1() {
-      let result = VECTOR_A.meet(&SCALAR_A);
+      let result = VECTOR_A.meet(SCALAR_A);
       let expected = Vector {
         e0: 20687., e1: 21509., e2: 22331., e3: 22879.,
       };
@@ -795,7 +795,7 @@ mod tests {
     }
     #[test]
     fn meet_scalar_2() {
-      let result = VECTOR_A.meet(&SCALAR_C);
+      let result = VECTOR_A.meet(SCALAR_C);
       let expected = Vector {
         e0: -22499., e1: -23393., e2: -24287., e3: -24883.,
       };
@@ -803,13 +803,13 @@ mod tests {
     }
     #[test]
     fn meet_vector_1() {
-      let result = VECTOR_A.meet(&VECTOR_A);
+      let result = VECTOR_A.meet(VECTOR_A);
       let expected = Bivector::zero();
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_vector_2() {
-      let result = VECTOR_A.meet(&VECTOR_B);
+      let result = VECTOR_A.meet(VECTOR_B);
       let expected = Bivector {
         e01: -132., e02: -868., e03: -50.,
         e12: -760., e31:  -94., e23: 906.,
@@ -818,7 +818,7 @@ mod tests {
     }
     #[test]
     fn meet_vector_3() {
-      let result = VECTOR_A.meet(&VECTOR_C);
+      let result = VECTOR_A.meet(VECTOR_C);
       let expected = Bivector {
         e01: 554., e02: 1410., e03:   370.,
         e12: 868., e31:  228., e23: -1160.,
@@ -827,7 +827,7 @@ mod tests {
     }
     #[test]
     fn meet_bivector_1() {
-      let result = VECTOR_A.meet(&BIVECTOR_A);
+      let result = VECTOR_A.meet(BIVECTOR_A);
       let expected = Trivector {
         e021: -35035., e013: -33203., e032: -34303., e123: 110255.,
       };
@@ -835,7 +835,7 @@ mod tests {
     }
     #[test]
     fn meet_bivector_2() {
-      let result = VECTOR_A.meet(&BIVECTOR_C);
+      let result = VECTOR_A.meet(BIVECTOR_C);
       let expected = Trivector {
         e021: 45457., e013: 40605., e032: 43349., e123: -139177.,
       };
@@ -843,19 +843,19 @@ mod tests {
     }
     #[test]
     fn meet_trivector_1() {
-      let result = VECTOR_A.meet(&TRIVECTOR_A);
+      let result = VECTOR_A.meet(TRIVECTOR_A);
       let expected = Pseudoscalar { e0123: 212714. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_trivector_2() {
-      let result = VECTOR_A.meet(&TRIVECTOR_C);
+      let result = VECTOR_A.meet(TRIVECTOR_C);
       let expected = Pseudoscalar { e0123: -243218. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_pseudoscalar() {
-      let result = VECTOR_A.meet(&PSEUDOSCALAR_A);
+      let result = VECTOR_A.meet(PSEUDOSCALAR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
@@ -864,7 +864,7 @@ mod tests {
     use super::*;
     #[test]
     fn meet_multivector_1() {
-      let result = BIVECTOR_A.meet(&MULTIVECTOR_A);
+      let result = BIVECTOR_A.meet(MULTIVECTOR_A);
       let expected = Multivector {
            s:    0.,  e23:  2453.,  e31:  2497.,   e12:  2519.,
          e01: 2563.,  e02:  2629.,  e03:  2651., e0123: 30482.,
@@ -875,7 +875,7 @@ mod tests {
     }
     #[test]
     fn meet_multivector_2() {
-      let result = BIVECTOR_A.meet(&MULTIVECTOR_D);
+      let result = BIVECTOR_A.meet(MULTIVECTOR_D);
       let expected = Multivector {
            s:      0.,  e23: -16279.,  e31: -16571.,   e12:  -16717.,
          e01: -17009.,  e02: -17447.,  e03: -17593., e0123: -127838.,
@@ -886,7 +886,7 @@ mod tests {
     }
     #[test]
     fn meet_scalar_1() {
-      let result = BIVECTOR_A.meet(&SCALAR_A);
+      let result = BIVECTOR_A.meet(SCALAR_A);
       let expected = Bivector {
         e01: 31921., e02: 32743., e03: 33017.,
         e12: 31373., e31: 31099., e23: 30551.,
@@ -895,7 +895,7 @@ mod tests {
     }
     #[test]
     fn meet_scalar_2() {
-      let result = BIVECTOR_A.meet(&SCALAR_C);
+      let result = BIVECTOR_A.meet(SCALAR_C);
       let expected = Bivector {
         e01: -34717., e02: -35611., e03: -35909.,
         e12: -34121., e31: -33823., e23: -33227.,
@@ -904,7 +904,7 @@ mod tests {
     }
     #[test]
     fn meet_vector_1() {
-      let result = BIVECTOR_A.meet(&VECTOR_A);
+      let result = BIVECTOR_A.meet(VECTOR_A);
       let expected = Trivector {
         e021: -35035., e013: -33203., e032: -34303., e123: 110255.,
       };
@@ -912,7 +912,7 @@ mod tests {
     }
     #[test]
     fn meet_vector_2() {
-      let result = BIVECTOR_A.meet(&VECTOR_C);
+      let result = BIVECTOR_A.meet(VECTOR_C);
       let expected = Trivector {
         e021: 43481., e013: 42125., e032: 45509., e123: -137423.,
       };
@@ -920,31 +920,31 @@ mod tests {
     }
     #[test]
     fn meet_bivector_1() {
-      let result = BIVECTOR_A.meet(&BIVECTOR_A);
+      let result = BIVECTOR_A.meet(BIVECTOR_A);
       let expected = Pseudoscalar { e0123: 322802. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_bivector_2() {
-      let result = BIVECTOR_A.meet(&BIVECTOR_B);
+      let result = BIVECTOR_A.meet(BIVECTOR_B);
       let expected = Pseudoscalar { e0123: 368226. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_bivector_3() {
-      let result = BIVECTOR_A.meet(&BIVECTOR_C);
+      let result = BIVECTOR_A.meet(BIVECTOR_C);
       let expected = Pseudoscalar { e0123: -414458. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_trivector() {
-      let result = BIVECTOR_A.meet(&TRIVECTOR_A);
+      let result = BIVECTOR_A.meet(TRIVECTOR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_pseudoscalar() {
-      let result = BIVECTOR_A.meet(&PSEUDOSCALAR_A);
+      let result = BIVECTOR_A.meet(PSEUDOSCALAR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
@@ -953,7 +953,7 @@ mod tests {
     use super::*;
     #[test]
     fn meet_multivector_1() {
-      let result = TRIVECTOR_A.meet(&MULTIVECTOR_A);
+      let result = TRIVECTOR_A.meet(MULTIVECTOR_A);
       let expected = Multivector {
         e123: 3487., e032: 3641., e013: 3707., e021: 3817.,
         e0123: -5741., ..Multivector::zero()
@@ -962,7 +962,7 @@ mod tests {
     }
     #[test]
     fn meet_multivector_2() {
-      let result = TRIVECTOR_A.meet(&MULTIVECTOR_D);
+      let result = TRIVECTOR_A.meet(MULTIVECTOR_D);
       let expected = Multivector {
         e123: -23141., e032: -24163., e013: -24601., e021: -25331.,
         e0123: 86110., ..Multivector::zero()
@@ -971,7 +971,7 @@ mod tests {
     }
     #[test]
     fn meet_scalar_1() {
-      let result = TRIVECTOR_A.meet(&SCALAR_A);
+      let result = TRIVECTOR_A.meet(SCALAR_A);
       let expected = Trivector {
         e021: 47539., e013: 46169., e032: 45347., e123: 43429.,
       };
@@ -979,7 +979,7 @@ mod tests {
     }
     #[test]
     fn meet_scalar_2() {
-      let result = TRIVECTOR_A.meet(&SCALAR_C);
+      let result = TRIVECTOR_A.meet(SCALAR_C);
       let expected = Trivector {
         e021: -51703., e013: -50213., e032: -49319., e123: -47233.,
       };
@@ -987,31 +987,31 @@ mod tests {
     }
     #[test]
     fn meet_vector_1() {
-      let result = TRIVECTOR_A.meet(&VECTOR_A);
+      let result = TRIVECTOR_A.meet(VECTOR_A);
       let expected = Pseudoscalar { e0123: -212714. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_vector_2() {
-      let result = TRIVECTOR_A.meet(&VECTOR_C);
+      let result = TRIVECTOR_A.meet(VECTOR_C);
       let expected = Pseudoscalar { e0123: 266668. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_bivector() {
-      let result = TRIVECTOR_A.meet(&BIVECTOR_A);
+      let result = TRIVECTOR_A.meet(BIVECTOR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_trivector() {
-      let result = TRIVECTOR_A.meet(&TRIVECTOR_A);
+      let result = TRIVECTOR_A.meet(TRIVECTOR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_pseudoscalar() {
-      let result = TRIVECTOR_A.meet(&PSEUDOSCALAR_A);
+      let result = TRIVECTOR_A.meet(PSEUDOSCALAR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
@@ -1020,49 +1020,49 @@ mod tests {
     use super::*;
     #[test]
     fn meet_multivector_1() {
-      let result = PSEUDOSCALAR_A.meet(&MULTIVECTOR_A);
+      let result = PSEUDOSCALAR_A.meet(MULTIVECTOR_A);
       let expected = Pseudoscalar { e0123: 4367. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_multivector_2() {
-      let result = PSEUDOSCALAR_A.meet(&MULTIVECTOR_D);
+      let result = PSEUDOSCALAR_A.meet(MULTIVECTOR_D);
       let expected = Pseudoscalar { e0123: -28981. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_scalar_1() {
-      let result = PSEUDOSCALAR_A.meet(&SCALAR_A);
+      let result = PSEUDOSCALAR_A.meet(SCALAR_A);
       let expected = Pseudoscalar { e0123: 54389. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_scalar_2() {
-      let result = PSEUDOSCALAR_A.meet(&SCALAR_C);
+      let result = PSEUDOSCALAR_A.meet(SCALAR_C);
       let expected = Pseudoscalar { e0123: -59153. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_vector() {
-      let result = PSEUDOSCALAR_A.meet(&VECTOR_A);
+      let result = PSEUDOSCALAR_A.meet(VECTOR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_bivector() {
-      let result = PSEUDOSCALAR_A.meet(&BIVECTOR_A);
+      let result = PSEUDOSCALAR_A.meet(BIVECTOR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_trivector() {
-      let result = PSEUDOSCALAR_A.meet(&TRIVECTOR_A);
+      let result = PSEUDOSCALAR_A.meet(TRIVECTOR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
     fn meet_pseudoscalar() {
-      let result = PSEUDOSCALAR_A.meet(&PSEUDOSCALAR_A);
+      let result = PSEUDOSCALAR_A.meet(PSEUDOSCALAR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));
     }

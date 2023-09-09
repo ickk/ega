@@ -21,7 +21,7 @@ pub use mul::Mul;
 pub use neg::Neg;
 pub use reverse::Reverse;
 pub use sub::Sub;
-pub use {zero::Zero, zero::zero};
+pub use {zero::zero, zero::Zero};
 
 use crate::{values::Empty, Scalar};
 

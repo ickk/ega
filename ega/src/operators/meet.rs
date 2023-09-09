@@ -458,13 +458,10 @@ fn pseudoscalar_meet_scalar(lhs: Pseudoscalar, rhs: Scalar) -> Pseudoscalar {
 
 #[rustfmt::skip]
 #[cfg(any(test, doctest))]
-// expected results from bivector.net's evaluator
-// https://bivector.net/tools.html#seven
 mod tests {
   use super::*;
   use crate::operators::Zero;
 
-  // we use prime numbers to reduce the chances of a falsely passing test.
   const MULTIVECTOR_A: Multivector = Multivector {
       e0:    2.,   e1:    3.,   e2:    5.,    e3:    7.,
        s:   11.,  e23:   13.,  e31:   17.,   e12:   19.,
@@ -516,14 +513,10 @@ mod tests {
   const TRIVECTOR_A: Trivector = Trivector {
     e123:  317., e032:  331., e013:  337., e021:  347.
   };
-  const _TRIVECTOR_B: Trivector = Trivector {
-    e123:  349., e032:  353., e013:  359., e021:  367.
-  };
   const TRIVECTOR_C: Trivector = Trivector {
     e123: -373., e032: -379., e013: -383., e021: -389.
   };
   const PSEUDOSCALAR_A: Pseudoscalar = Pseudoscalar { e0123:  397. };
-  const _PSEUDOSCALAR_B: Pseudoscalar = Pseudoscalar { e0123:  401. };
   const PSEUDOSCALAR_C: Pseudoscalar = Pseudoscalar { e0123: -409. };
 
   mod multivector {

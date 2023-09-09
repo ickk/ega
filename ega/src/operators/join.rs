@@ -84,8 +84,6 @@ fn multivector_join_multivector(
 
 #[rustfmt::skip]
 #[cfg(any(test, doctest))]
-// expected results from bivector.net's evaluator
-// https://bivector.net/tools.html#seven
 mod tests {
   use super::*;
 

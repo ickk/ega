@@ -10,7 +10,7 @@ macro_rules! impl_mul {
 
       /// The `GeometricProduct`
       #[inline]
-      fn mul(self, rhs: lhs) -> Self::Output {
+      fn mul(self, rhs: f32) -> Self::Output {
         self.geometric_product(Scalar { s: rhs })
       }
     }
@@ -39,73 +39,74 @@ macro_rules! impl_mul {
   };
 }
 
-// impl_mul! { f32, Multivector => Multivector }
-// impl_mul! { f32, Scalar => Scalar }
-// impl_mul! { f32, Vector => Multivector }
-// impl_mul! { f32, Bivector => Multivector }
-// impl_mul! { f32, Trivector => Multivector }
-// impl_mul! { f32, Pseudoscalar => Multivector }
-// impl_mul! { f32, Empty => Scalar }
+impl_mul! { f32, Multivector => Multivector }
+impl_mul! { f32, Scalar => Scalar }
+impl_mul! { f32, Vector => Vector }
+impl_mul! { f32, Bivector => Bivector }
+impl_mul! { f32, Trivector => Trivector }
+impl_mul! { f32, Pseudoscalar => Pseudoscalar }
+impl_mul! { f32, Empty => Empty }
 
-// impl_mul! { Multivector, f32 => Multivector }
-// impl_mul! { Scalar, f32 => Scalar }
-// impl_mul! { Vector, f32 => Multivector }
-// impl_mul! { Bivector, f32 => Multivector }
-// impl_mul! { Trivector, f32 => Multivector }
-// impl_mul! { Pseudoscalar, f32 => Multivector }
-// impl_mul! { Empty, f32 => Scalar }
+impl_mul! { Multivector, f32 => Multivector }
+impl_mul! { Scalar, f32 => Scalar }
+impl_mul! { Vector, f32 => Vector }
+impl_mul! { Bivector, f32 => Bivector }
+impl_mul! { Trivector, f32 => Trivector }
+impl_mul! { Pseudoscalar, f32 => Pseudoscalar }
+impl_mul! { Empty, f32 => Empty }
 
 impl_mul! { Multivector, Multivector => Multivector }
-// impl_mul! { Multivector, Scalar => Multivector }
-// impl_mul! { Multivector, Vector => Multivector }
-// impl_mul! { Multivector, Bivector => Multivector }
-// impl_mul! { Multivector, Trivector => Multivector }
-// impl_mul! { Multivector, Pseudoscalar => Multivector }
-// impl_mul! { Multivector, Empty => Multivector }
+impl_mul! { Multivector, Scalar => Multivector }
+impl_mul! { Multivector, Vector => Multivector }
+impl_mul! { Multivector, Bivector => Multivector }
+impl_mul! { Multivector, Trivector => Multivector }
+impl_mul! { Multivector, Pseudoscalar => Multivector }
+impl_mul! { Multivector, Empty => Empty }
 
-// impl_mul! { Scalar, Multivector => Multivector }
-// impl_mul! { Scalar, Scalar => Scalar }
-// impl_mul! { Scalar, Vector => Multivector }
-// impl_mul! { Scalar, Bivector => Multivector }
-// impl_mul! { Scalar, Trivector => Multivector }
-// impl_mul! { Scalar, Pseudoscalar => Multivector }
-// impl_mul! { Scalar, Empty => Scalar }
+impl_mul! { Scalar, Multivector => Multivector }
+impl_mul! { Scalar, Scalar => Scalar }
+impl_mul! { Scalar, Vector => Vector }
+impl_mul! { Scalar, Bivector => Bivector }
+impl_mul! { Scalar, Trivector => Trivector }
+impl_mul! { Scalar, Pseudoscalar => Pseudoscalar }
+impl_mul! { Scalar, Empty => Empty }
 
-// impl_mul! { Vector, Multivector => Multivector }
-// impl_mul! { Vector, Scalar => Multivector }
-// impl_mul! { Vector, Vector => Vector }
-// impl_mul! { Vector, Bivector => Multivector }
-// impl_mul! { Vector, Trivector => Multivector }
-// impl_mul! { Vector, Pseudoscalar => Multivector }
-// impl_mul! { Vector, Empty => Vector }
+impl_mul! { Vector, Multivector => Multivector }
+impl_mul! { Vector, Scalar => Vector }
+impl_mul! { Vector, Vector => Multivector }
+impl_mul! { Vector, Bivector => Multivector }
+impl_mul! { Vector, Trivector => Multivector }
+impl_mul! { Vector, Pseudoscalar => Trivector }
+impl_mul! { Vector, Empty => Empty }
 
-// impl_mul! { Bivector, Multivector => Multivector }
-// impl_mul! { Bivector, Scalar => Multivector }
-// impl_mul! { Bivector, Vector => Multivector }
-// impl_mul! { Bivector, Bivector => Bivector }
-// impl_mul! { Bivector, Trivector => Multivector }
-// impl_mul! { Bivector, Pseudoscalar => Multivector }
-// impl_mul! { Bivector, Empty => Bivector }
+impl_mul! { Bivector, Multivector => Multivector }
+impl_mul! { Bivector, Scalar => Bivector }
+impl_mul! { Bivector, Vector => Multivector }
+impl_mul! { Bivector, Bivector => Multivector }
+impl_mul! { Bivector, Trivector => Multivector }
+impl_mul! { Bivector, Pseudoscalar => Bivector }
+impl_mul! { Bivector, Empty => Empty }
 
-// impl_mul! { Trivector, Multivector => Multivector }
-// impl_mul! { Trivector, Scalar => Multivector }
-// impl_mul! { Trivector, Vector => Multivector }
-// impl_mul! { Trivector, Bivector => Multivector }
-// impl_mul! { Trivector, Trivector => Trivector }
-// impl_mul! { Trivector, Pseudoscalar => Multivector }
-// impl_mul! { Trivector, Empty => Trivector }
+impl_mul! { Trivector, Multivector => Multivector }
+impl_mul! { Trivector, Scalar => Trivector }
+impl_mul! { Trivector, Vector => Multivector }
+impl_mul! { Trivector, Bivector => Multivector }
+impl_mul! { Trivector, Trivector => Multivector }
+impl_mul! { Trivector, Pseudoscalar => Vector }
+impl_mul! { Trivector, Empty => Empty }
 
-// impl_mul! { Pseudoscalar, Multivector => Multivector }
-// impl_mul! { Pseudoscalar, Scalar => Multivector }
-// impl_mul! { Pseudoscalar, Vector => Multivector }
-// impl_mul! { Pseudoscalar, Bivector => Multivector }
-// impl_mul! { Pseudoscalar, Trivector => Multivector }
-// impl_mul! { Pseudoscalar, Pseudoscalar => Pseudoscalar }
-// impl_mul! { Pseudoscalar, Empty => Pseudoscalar }
+impl_mul! { Pseudoscalar, Multivector => Multivector }
+impl_mul! { Pseudoscalar, Scalar => Pseudoscalar }
+impl_mul! { Pseudoscalar, Vector => Trivector }
+impl_mul! { Pseudoscalar, Bivector => Bivector }
+impl_mul! { Pseudoscalar, Trivector => Vector }
+impl_mul! { Pseudoscalar, Pseudoscalar => Empty }
+impl_mul! { Pseudoscalar, Empty => Empty }
 
-// impl_mul! { Empty, Empty => Empty }
-// impl_mul! { Empty, Scalar => Scalar }
-// impl_mul! { Empty, Vector => Vector }
-// impl_mul! { Empty, Bivector => Bivector }
-// impl_mul! { Empty, Trivector => Trivector }
-// impl_mul! { Empty, Pseudoscalar => Pseudoscalar }
+impl_mul! { Empty, Multivector => Empty }
+impl_mul! { Empty, Scalar => Empty }
+impl_mul! { Empty, Vector => Empty }
+impl_mul! { Empty, Bivector => Empty }
+impl_mul! { Empty, Trivector => Empty }
+impl_mul! { Empty, Pseudoscalar => Empty }
+impl_mul! { Empty, Empty => Empty }

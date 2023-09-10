@@ -62,6 +62,7 @@ impl_add! { pseudoscalar_add_trivector: Pseudoscalar, Trivector => Multivector }
 impl_add! { pseudoscalar_add_pseudoscalar: Pseudoscalar, Pseudoscalar => Pseudoscalar }
 impl_add! { return_lhs: Pseudoscalar, Empty => Pseudoscalar }
 
+impl_add! { return_rhs: Empty, Multivector => Multivector }
 impl_add! { return_rhs: Empty, Empty => Empty }
 impl_add! { return_rhs: Empty, Scalar => Scalar }
 impl_add! { return_rhs: Empty, Vector => Vector }

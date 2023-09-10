@@ -6,6 +6,7 @@ mod reflectors;
 mod scalar;
 mod trivector;
 mod vector;
+mod zero;
 
 pub use bivector::*;
 pub use empty::*;
@@ -15,6 +16,7 @@ pub use reflectors::*;
 pub use scalar::*;
 pub use trivector::*;
 pub use vector::*;
+pub use {zero::zero, zero::Zero};
 
 use crate::operators::*;
 pub trait EgaValue:
@@ -25,11 +27,23 @@ pub trait EgaValue:
   + PartialEq
   + Zero
   + Neg
-  + Add
-  + Sub
   // + Mul & variants
   + GradeSelect
   + Reverse
+  + Add<Multivector>
+  + Add<Empty>
+  + Add<Scalar>
+  + Add<Vector>
+  + Add<Bivector>
+  + Add<Trivector>
+  + Add<Pseudoscalar>
+  + Sub<Multivector>
+  + Sub<Empty>
+  + Sub<Scalar>
+  + Sub<Vector>
+  + Sub<Bivector>
+  + Sub<Trivector>
+  + Sub<Pseudoscalar>
   + Meet<Multivector>
   + Meet<Empty>
   + Meet<Scalar>

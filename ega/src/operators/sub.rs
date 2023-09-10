@@ -1,4 +1,4 @@
-use super::{return_lhs, return_rhs};
+use super::{return_lhs, return_neg_rhs};
 use crate::*;
 pub use core::ops::Sub;
 
@@ -62,12 +62,13 @@ impl_sub! { pseudoscalar_sub_trivector: Pseudoscalar, Trivector => Multivector }
 impl_sub! { pseudoscalar_sub_pseudoscalar: Pseudoscalar, Pseudoscalar => Pseudoscalar }
 impl_sub! { return_lhs: Pseudoscalar, Empty => Pseudoscalar }
 
-impl_sub! { return_rhs: Empty, Empty => Empty }
-impl_sub! { return_rhs: Empty, Scalar => Scalar }
-impl_sub! { return_rhs: Empty, Vector => Vector }
-impl_sub! { return_rhs: Empty, Bivector => Bivector }
-impl_sub! { return_rhs: Empty, Trivector => Trivector }
-impl_sub! { return_rhs: Empty, Pseudoscalar => Pseudoscalar }
+impl_sub! { return_neg_rhs: Empty, Multivector => Multivector }
+impl_sub! { return_neg_rhs: Empty, Empty => Empty }
+impl_sub! { return_neg_rhs: Empty, Scalar => Scalar }
+impl_sub! { return_neg_rhs: Empty, Vector => Vector }
+impl_sub! { return_neg_rhs: Empty, Bivector => Bivector }
+impl_sub! { return_neg_rhs: Empty, Trivector => Trivector }
+impl_sub! { return_neg_rhs: Empty, Pseudoscalar => Pseudoscalar }
 
 // Multivector
 

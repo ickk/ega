@@ -9,7 +9,7 @@ mod mul;
 mod neg;
 mod reverse;
 mod sub;
-mod zero;
+
 pub use add::Add;
 pub use dot::Dot;
 pub use geometric_product::GeometricProduct;
@@ -21,7 +21,6 @@ pub use mul::Mul;
 pub use neg::Neg;
 pub use reverse::Reverse;
 pub use sub::Sub;
-pub use {zero::zero, zero::Zero};
 
 use crate::{values::Empty, Scalar};
 
@@ -48,17 +47,26 @@ pub trait Exponent<Rhs> {
   fn exp(self, rhs: Rhs) -> Self::Output;
 }
 
+/// return `Empty`
 #[inline]
 fn return_empty<Lhs, Rhs>(_: Lhs, _: Rhs) -> Empty {
   Empty
 }
 
+/// return the left-hand-side
 #[inline]
 fn return_lhs<Lhs, Rhs>(lhs: Lhs, _: Rhs) -> Lhs {
   lhs
 }
 
+/// return the right-hand-side
 #[inline]
 fn return_rhs<Lhs, Rhs>(_: Lhs, rhs: Rhs) -> Rhs {
   rhs
+}
+
+/// negate and return the right-hand-side
+#[inline]
+fn return_neg_rhs<Lhs, Rhs: Neg<Output = Rhs>>(_: Lhs, rhs: Rhs) -> Rhs {
+  -rhs
 }

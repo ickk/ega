@@ -662,7 +662,6 @@ fn pseudoscalar_dot_pseudoscalar(_: Pseudoscalar, _: Pseudoscalar) -> Empty {
 #[cfg(any(test, doctest))]
 mod tests {
   use super::*;
-  use crate::operators::Zero;
 
   const MULTIVECTOR_A: Multivector = Multivector {
       e0:    2.,   e1:    3.,   e2:    5.,    e3:    7.,

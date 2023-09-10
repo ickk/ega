@@ -7,6 +7,7 @@ pub trait HodgeDual {
   /// The Hodge dual
   fn hodge_dual(self) -> Self::Output;
 
+  /// The inverse of the Hodge dual
   fn hodge_undual(self) -> Self::Output;
 }
 

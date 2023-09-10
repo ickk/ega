@@ -36,9 +36,9 @@ fn multivector_mul_multivector(
         + a.e1*b.e1
         + a.e2*b.e2
         + a.e3*b.e3
-        - a.e12*b.e12
-        - a.e31*b.e31
         - a.e23*b.e23
+        - a.e31*b.e31
+        - a.e12*b.e12
         - a.e123*b.e123;
   let e0 = a.e0*b.s + a.s*b.e0
          + a.e01*b.e1 - a.e1*b.e01

@@ -92,31 +92,42 @@ fn multivector_meet_multivector(
   let e1 = a.s*b.e1 + a.e1*b.s;
   let e2 = a.s*b.e2 + a.e2*b.s;
   let e3 = a.s*b.e3 + a.e3*b.s;
-  let e23 = a.s*b.e23 + a.e2*b.e3
-          + a.e23*b.s - a.e3*b.e2;
-  let e31 = a.s*b.e31 - a.e1*b.e3
-          + a.e31*b.s + a.e3*b.e1;
-  let e12 = a.s*b.e12 + a.e1*b.e2
-          + a.e12*b.s - a.e2*b.e1;
+  let e23 = a.s*b.e23 + a.e23*b.s
+          + a.e2*b.e3 - a.e3*b.e2;
+  let e31 = a.s*b.e31 + a.e31*b.s
+          - a.e1*b.e3 + a.e3*b.e1;
+  let e12 = a.s*b.e12 + a.e12*b.s
+          + a.e1*b.e2 - a.e2*b.e1;
   let e01 = a.s*b.e01 + a.e0*b.e1
           + a.e01*b.s - a.e1*b.e0;
   let e02 = a.s*b.e02 + a.e0*b.e2
           + a.e02*b.s - a.e2*b.e0;
   let e03 = a.s*b.e03 + a.e0*b.e3
           + a.e03*b.s - a.e3*b.e0;
-  let e123 = a.s*b.e123 + a.e1*b.e23 + a.e2*b.e31 + a.e3*b.e12
-           + a.e123*b.s + a.e23*b.e1 + a.e31*b.e2 + a.e12*b.e3;
-  let e032 = a.s*b.e032 - a.e0*b.e23 + a.e2*b.e03 - a.e3*b.e02
-           + a.e032*b.s - a.e23*b.e0 - a.e02*b.e3 + a.e03*b.e2;
-  let e013 = a.s*b.e013 - a.e0*b.e31 - a.e1*b.e03 + a.e3*b.e01
-           + a.e013*b.s - a.e31*b.e0 + a.e01*b.e3 - a.e03*b.e1;
-  let e021 = a.s*b.e021 - a.e0*b.e12 + a.e1*b.e02 - a.e2*b.e01
-           + a.e021*b.s - a.e12*b.e0 - a.e01*b.e2 + a.e02*b.e1;
+  let e123 = a.s*b.e123 + a.e123*b.s
+           + a.e1*b.e23 + a.e23*b.e1
+           + a.e2*b.e31 + a.e31*b.e2
+           + a.e3*b.e12 + a.e12*b.e3;
+  let e032 = a.s*b.e032 + a.e032*b.s
+           - a.e0*b.e23 - a.e23*b.e0
+           + a.e2*b.e03 + a.e03*b.e2
+           - a.e3*b.e02 - a.e02*b.e3;
+  let e013 = a.s*b.e013 + a.e013*b.s
+           - a.e0*b.e31 - a.e31*b.e0
+           - a.e1*b.e03 - a.e03*b.e1
+           + a.e3*b.e01 + a.e01*b.e3;
+  let e021 = a.s*b.e021 + a.e021*b.s
+           - a.e0*b.e12 - a.e12*b.e0
+           + a.e1*b.e02 + a.e02*b.e1
+           - a.e2*b.e01 - a.e01*b.e2;
   let e0123 = a.e0123*b.s + a.s*b.e0123
-            + a.e0*b.e123 + a.e1*b.e032 + a.e2*b.e013 + a.e3*b.e021
-            - a.e123*b.e0 - a.e032*b.e1 - a.e013*b.e2 - a.e021*b.e3
-            + a.e23*b.e01 + a.e31*b.e02 + a.e12*b.e03
-            + a.e01*b.e23 + a.e02*b.e31 + a.e03*b.e12;
+            + a.e0*b.e123 - a.e123*b.e0
+            + a.e1*b.e032 - a.e032*b.e1
+            + a.e2*b.e013 - a.e013*b.e2
+            + a.e3*b.e021 - a.e021*b.e3
+            + a.e23*b.e01 + a.e01*b.e23
+            + a.e31*b.e02 + a.e02*b.e31
+            + a.e12*b.e03 + a.e03*b.e12;
 
   Multivector {
       e0,    e1,    e2,    e3,
@@ -148,7 +159,9 @@ fn multivector_meet_vector(lhs: Multivector, rhs: Vector) -> Multivector {
   let e01 = a.e0*b.e1 - a.e1*b.e0;
   let e02 = a.e0*b.e2 - a.e2*b.e0;
   let e03  = a.e0*b.e3 - a.e3*b.e0;
-  let e123 = a.e23*b.e1 + a.e31*b.e2 + a.e12*b.e3;
+  let e123 = a.e23*b.e1
+           + a.e31*b.e2
+           + a.e12*b.e3;
   let e032 = a.e03*b.e2 - a.e23*b.e0 - a.e02*b.e3;
   let e013 = a.e01*b.e3 - a.e31*b.e0 - a.e03*b.e1;
   let e021 = a.e02*b.e1 - a.e12*b.e0 - a.e01*b.e2;
@@ -181,8 +194,9 @@ fn multivector_meet_bivector(
   let e032 = a.e2*b.e03 - a.e0*b.e23 - a.e3*b.e02;
   let e013 = a.e3*b.e01 - a.e0*b.e31 - a.e1*b.e03;
   let e021 = a.e1*b.e02 - a.e0*b.e12 - a.e2*b.e01;
-  let e0123 = a.e23*b.e01 + a.e31*b.e02 + a.e12*b.e03
-            + a.e01*b.e23 + a.e02*b.e31 + a.e03*b.e12;
+  let e0123 = a.e23*b.e01 + a.e01*b.e23
+            + a.e31*b.e02 + a.e02*b.e31
+            + a.e12*b.e03 + a.e03*b.e12;
 
   Multivector {
       e0,    e1,    e2,    e3,
@@ -361,8 +375,9 @@ fn bivector_meet_vector(lhs: Bivector, rhs: Vector) -> Trivector {
 #[inline]
 fn bivector_meet_bivector(lhs: Bivector, rhs: Bivector) -> Pseudoscalar {
   let (l, m) = (lhs, rhs);
-  let e0123 = l.e01*m.e23 + l.e02*m.e31 + l.e03*m.e12
-            + l.e23*m.e01 + l.e31*m.e02 + l.e12*m.e03;
+  let e0123 = l.e01*m.e23 + l.e23*m.e01
+            + l.e02*m.e31 + l.e31*m.e02
+            + l.e03*m.e12 + l.e12*m.e03;
 
   Pseudoscalar { e0123 }
 }
@@ -386,8 +401,9 @@ fn bivector_meet_multivector(
   let e032 = a.e03*b.e2 - a.e23*b.e0 - a.e02*b.e3;
   let e013 = a.e01*b.e3 - a.e31*b.e0 - a.e03*b.e1;
   let e021 = a.e02*b.e1 - a.e12*b.e0 - a.e01*b.e2;
-  let e0123 = a.e23*b.e01 + a.e31*b.e02 + a.e12*b.e03
-            + a.e01*b.e23 + a.e02*b.e31 + a.e03*b.e12;
+  let e0123 = a.e23*b.e01 + a.e01*b.e23
+            + a.e02*b.e31 + a.e31*b.e02
+            + a.e03*b.e12 + a.e12*b.e03;
 
   Multivector {
       e0,    e1,    e2,    e3,

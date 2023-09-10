@@ -44,7 +44,13 @@ pub trait EgaVector:
   + Dot<Bivector>
   + Dot<Trivector>
   + Dot<Pseudoscalar>
-  // + Join variants
+  + Join<Multivector>
+  + Join<Empty>
+  + Join<Scalar>
+  + Join<Vector>
+  + Join<Bivector>
+  + Join<Trivector>
+  + Join<Pseudoscalar>
 {
 }
 

@@ -17,7 +17,7 @@ pub use trivector::*;
 pub use vector::*;
 
 use crate::operators::*;
-pub trait EgaVector:
+pub trait EgaValue:
   private::Sealed
   + Copy
   + Clone
@@ -54,13 +54,13 @@ pub trait EgaVector:
 {
 }
 
-impl EgaVector for Multivector {}
-impl EgaVector for Empty {}
-impl EgaVector for Scalar {}
-impl EgaVector for Vector {}
-impl EgaVector for Bivector {}
-impl EgaVector for Trivector {}
-impl EgaVector for Pseudoscalar {}
+impl EgaValue for Multivector {}
+impl EgaValue for Empty {}
+impl EgaValue for Scalar {}
+impl EgaValue for Vector {}
+impl EgaValue for Bivector {}
+impl EgaValue for Trivector {}
+impl EgaValue for Pseudoscalar {}
 
 impl private::Sealed for Multivector {}
 impl private::Sealed for Empty {}

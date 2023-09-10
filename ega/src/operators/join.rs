@@ -1,5 +1,5 @@
-use crate::*;
 use super::return_empty;
+use crate::*;
 
 /// The regressive product
 pub trait Join<Rhs> {
@@ -915,6 +915,251 @@ mod tests {
         e021: -21677., e013: -19223., e032: -17587., e123: -16769.,
         e0123: -15133.,
       };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod scalar {
+    use super::*;
+    #[test]
+    fn join_multivector_1() {
+      let result = SCALAR_A.join(MULTIVECTOR_A);
+      let expected = Scalar { s: 5069. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_scalar_1() {
+      let result = SCALAR_A.join(SCALAR_B);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_vector_1() {
+      let result = SCALAR_A.join(VECTOR_A);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_bivector_1() {
+      let result = SCALAR_A.join(BIVECTOR_A);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_trivector_1() {
+      let result = SCALAR_A.join(TRIVECTOR_A);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_pseudoscalar_1() {
+      let result = SCALAR_A.join(PSEUDOSCALAR_A);
+      let expected = Scalar { s: 54389. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod vector {
+    use super::*;
+    #[test]
+    fn join_multivector_1() {
+      let result = VECTOR_A.join(MULTIVECTOR_A);
+      let expected = Multivector {
+        s: -29454.,
+        e0: 5587., e1: 5809., e2: 6031., e3: 6179.,
+        ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_scalar_1() {
+      let result = VECTOR_A.join(SCALAR_A);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_vector_1() {
+      let result = VECTOR_A.join(VECTOR_B);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_bivector_1() {
+      let result = VECTOR_A.join(BIVECTOR_A);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_trivector_1() {
+      let result = VECTOR_A.join(TRIVECTOR_A);
+      let expected = Scalar { s: -212714. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_pseudoscalar_1() {
+      let result = VECTOR_A.join(PSEUDOSCALAR_A);
+      let expected = Vector {
+        e0: 59947., e1: 62329., e2: 64711., e3: 66299.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod bivector {
+    use super::*;
+    #[test]
+    fn join_multivector_1() {
+      let result = BIVECTOR_A.join(MULTIVECTOR_A);
+      let expected = Multivector {
+        s: 30482.,
+        e0: -34025., e1: 10821., e2: 7827., e3: 10601.,
+        e01: 8621., e02: 8843., e03: 8917., e12: 8473., e31: 8399., e23: 8251.,
+        ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_scalar_1() {
+      let result = BIVECTOR_A.join(SCALAR_A);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_vector_1() {
+      let result = BIVECTOR_A.join(VECTOR_A);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_bivector_1() {
+      let result = BIVECTOR_A.join(BIVECTOR_C);
+      let expected = Scalar { s: -414458. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_trivector_1() {
+      let result = BIVECTOR_A.join(TRIVECTOR_A);
+      let expected = Vector {
+        e0: -241293., e1: 75457., e2: 74181., e3: 76411.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_pseudoscalar_1() {
+      let result = BIVECTOR_A.join(PSEUDOSCALAR_A);
+      let expected = Bivector {
+        e01: 92501., e02: 94883., e03: 95677.,
+        e12: 90913., e31: 90119., e23: 88531.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod trivector {
+    use super::*;
+    #[test]
+    fn join_multivector_1() {
+      let result = TRIVECTOR_A.join(MULTIVECTOR_A);
+      let expected = Multivector {
+        s: 5741.,
+        e0: -28143., e1: 6787., e2: 10971., e3: 8581.,
+        e01: -1552., e02: 2622., e03: -1066.,
+        e12: -2574., e31: -1082., e23: -60.,
+        e021: 12839., e013: 12469., e032: 12247., e123: 11729.,
+        ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_scalar_1() {
+      let result = TRIVECTOR_A.join(SCALAR_A);
+      let expected = Empty;
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_vector_1() {
+      let result = TRIVECTOR_A.join(VECTOR_A);
+      let expected = Scalar { s: 212714. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_bivector_1() {
+      let result = TRIVECTOR_A.join(BIVECTOR_A);
+      let expected = Vector {
+        e0: -241293., e1: 75457., e2: 74181., e3: 76411.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_trivector_1() {
+      let result = TRIVECTOR_A.join(TRIVECTOR_C);
+      let expected = Bivector {
+        e01: -1808., e02: 2754., e03: -950.,
+        e12: -6118., e31: -4290., e23: -3320.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_pseudoscalar_1() {
+      let result = TRIVECTOR_A.join(PSEUDOSCALAR_A);
+      let expected = Trivector {
+        e021: 137759., e013: 133789., e032: 131407., e123: 125849.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod pseudoscalar {
+    use super::*;
+    #[test]
+    fn join_multivector_1() {
+      let result = PSEUDOSCALAR_A.join(MULTIVECTOR_A);
+      let expected = Multivector {
+        s: 4367.,
+        e0: 794., e1: 1191., e2: 1985., e3: 2779.,
+        e01: 9131., e02: 11513., e03: 12307.,
+        e12: 7543., e31: 6749., e23: 5161.,
+        e021: 21041., e013: 18659., e032: 17071., e123: 16277.,
+        e0123: 14689.,
+        ..zero()
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_scalar_1() {
+      let result = PSEUDOSCALAR_A.join(SCALAR_A);
+      let expected = Scalar { s: 54389. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_vector_1() {
+      let result = PSEUDOSCALAR_A.join(VECTOR_A);
+      let expected = Vector {
+        e0: 59947., e1: 62329., e2: 64711., e3: 66299.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_vector_2() {
+      let result = PSEUDOSCALAR_A.join(BIVECTOR_A);
+      let expected = Bivector {
+        e01: 92501., e02: 94883., e03: 95677.,
+        e12: 90913., e31: 90119., e23: 88531.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_vector_3() {
+      let result = PSEUDOSCALAR_A.join(TRIVECTOR_A);
+      let expected = Trivector {
+        e021: 137759., e013: 133789., e032: 131407., e123: 125849.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn join_bivector_1() {
+      let result = PSEUDOSCALAR_A.join(PSEUDOSCALAR_C);
+      let expected = Pseudoscalar { e0123: -162373. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
   }

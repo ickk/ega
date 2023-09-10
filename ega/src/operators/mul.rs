@@ -1,6 +1,5 @@
 use crate::*;
 
-/// The `GeometricProduct` as the multiplication operator `*`.
 pub use core::ops::Mul;
 
 macro_rules! impl_mul {
@@ -8,6 +7,8 @@ macro_rules! impl_mul {
   ($lhs:ty, f32 => $output:ty) => {
     impl Mul<f32> for $lhs {
       type Output = $output;
+
+      /// The `GeometricProduct`
       #[inline]
       fn mul(self, rhs: lhs) -> Self::Output {
         self.geometric_product(Scalar { s: rhs })
@@ -17,6 +18,8 @@ macro_rules! impl_mul {
   (f32, $rhs:ty => $output:ty) => {
     impl Mul<$rhs> for f32 {
       type Output = $output;
+
+      /// The `GeometricProduct`
       #[inline]
       fn mul(self, rhs: $rhs) -> Self::Output {
         Scalar { s: self }.geometric_product(rhs)
@@ -26,6 +29,8 @@ macro_rules! impl_mul {
   ($lhs:ty, $rhs:ty => $output:ty) => {
     impl Mul<$rhs> for $lhs {
       type Output = $output;
+
+      /// The `GeometricProduct`
       #[inline]
       fn mul(self, rhs: $rhs) -> Self::Output {
         self.geometric_product(rhs)

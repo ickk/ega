@@ -1025,19 +1025,19 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_vector_2() {
+    fn dot_bivector_1() {
       let result = BIVECTOR_A.dot(BIVECTOR_A);
       let expected = Scalar { s: -153699. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_vector_3() {
+    fn dot_bivector_2() {
       let result = BIVECTOR_A.dot(BIVECTOR_B);
       let expected = Scalar { s: -174539. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_bivector_1() {
+    fn dot_bivector_3() {
       let result = BIVECTOR_A.dot(BIVECTOR_C);
       let expected = Scalar { s: 194001. };
       assert_eq!(dbg!(result), dbg!(expected));
@@ -1092,7 +1092,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_vector_2() {
+    fn dot_bivector_1() {
       let result = TRIVECTOR_A.dot(BIVECTOR_A);
       let expected = Vector {
         e0: 229775., e1: -70691., e2: -71959., e3: -72593.,
@@ -1100,19 +1100,19 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_vector_3() {
+    fn dot_trivector_1() {
       let result = TRIVECTOR_A.dot(TRIVECTOR_A);
       let expected = Scalar { s: -100489. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_bivector_1() {
+    fn dot_trivector_2() {
       let result = TRIVECTOR_A.dot(TRIVECTOR_B);
       let expected = Scalar { s: -110633. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_trivector_1() {
+    fn dot_trivector_3() {
       let result = TRIVECTOR_A.dot(TRIVECTOR_C);
       let expected = Scalar { s: 118241. };
       assert_eq!(dbg!(result), dbg!(expected));
@@ -1154,7 +1154,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_vector_2() {
+    fn dot_bivector_1() {
       let result = PSEUDOSCALAR_A.dot(BIVECTOR_A);
       let expected = Bivector {
         e01: -88531., e02: -90119., e03: -90913.,
@@ -1163,7 +1163,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_vector_3() {
+    fn dot_trivector_1() {
       let result = PSEUDOSCALAR_A.dot(TRIVECTOR_A);
       let expected = Vector {
         e0: -125849., ..zero()
@@ -1171,7 +1171,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn dot_bivector_1() {
+    fn dot_pseudoscalar_1() {
       let result = PSEUDOSCALAR_A.dot(PSEUDOSCALAR_A);
       let expected = Empty;
       assert_eq!(dbg!(result), dbg!(expected));

@@ -71,25 +71,7 @@ impl Reverse for Pseudoscalar {
 #[cfg(any(test, doctest))]
 mod tests {
   use super::*;
-
-  const MULTIVECTOR_A: Multivector = Multivector {
-      e0:    2.,   e1:    3.,   e2:    5.,    e3:    7.,
-       s:   11.,  e23:   13.,  e31:   17.,   e12:   19.,
-     e01:   23.,  e02:   29.,  e03:   31., e0123:   37.,
-    e123:   41., e032:   43., e013:   47.,  e021:   53.,
-  };
-  const SCALAR_A: Scalar = Scalar { s:  137. };
-  const VECTOR_A: Vector = Vector {
-    e0:  151., e1:  157., e2:  163., e3:  167.
-  };
-  const BIVECTOR_A: Bivector = Bivector {
-    e23:  223., e31:  227., e12:  229.,
-    e01:  233., e02:  239., e03:  241.,
-  };
-  const TRIVECTOR_A: Trivector = Trivector {
-    e123:  317., e032:  331., e013:  337., e021:  347.
-  };
-  const PSEUDOSCALAR_A: Pseudoscalar = Pseudoscalar { e0123:  397. };
+  use crate::test_values::*;
 
   #[test]
   fn reverse_multivector() {

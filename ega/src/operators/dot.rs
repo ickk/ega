@@ -663,66 +663,7 @@ fn pseudoscalar_dot_pseudoscalar(_: Pseudoscalar, _: Pseudoscalar) -> Empty {
 #[cfg(any(test, doctest))]
 mod tests {
   use super::*;
-
-  const MULTIVECTOR_A: Multivector = Multivector {
-      e0:    2.,   e1:    3.,   e2:    5.,    e3:    7.,
-       s:   11.,  e23:   13.,  e31:   17.,   e12:   19.,
-     e01:   23.,  e02:   29.,  e03:   31., e0123:   37.,
-    e123:   41., e032:   43., e013:   47.,  e021:   53.,
-  };
-  const MULTIVECTOR_B: Multivector = Multivector {
-      e0:   59.,   e1:   61.,   e2:   67.,    e3:   71.,
-       s:   73.,  e23:   79.,  e31:   83.,   e12:   89.,
-     e01:   97.,  e02:  101.,  e03:  103., e0123:  107.,
-    e123:  109., e032:  113., e013:  127.,  e021:  131.,
-  };
-  const MULTIVECTOR_C: Multivector = Multivector {
-      e0:  -59.,   e1:   61.,   e2:  -67.,    e3:   71.,
-       s:  -73.,  e23:   79.,  e31:  -83.,   e12:   89.,
-     e01:  -97.,  e02:  101.,  e03: -103., e0123:  107.,
-    e123: -109., e032:  113., e013: -127.,  e021:  131.,
-  };
-  const MULTIVECTOR_D: Multivector = Multivector {
-      e0:  -59.,   e1:  -61.,   e2:  -67.,    e3:  -71.,
-       s:  -73.,  e23:  -79.,  e31:  -83.,   e12:  -89.,
-     e01:  -97.,  e02: -101.,  e03: -103., e0123: -107.,
-    e123: -109., e032: -113., e013: -127.,  e021: -131.,
-  };
-  const SCALAR_A: Scalar = Scalar { s:  137. };
-  const SCALAR_B: Scalar = Scalar { s:  139. };
-  const SCALAR_C: Scalar = Scalar { s: -149. };
-  const VECTOR_A: Vector = Vector {
-    e0:  151., e1:  157., e2:  163., e3:  167.
-  };
-  const VECTOR_B: Vector = Vector {
-    e0:  173., e1:  179., e2:  181., e3:  191.
-  };
-  const VECTOR_C: Vector = Vector {
-    e0:  -193., e1: -197., e2:  -199., e3: -211.
-  };
-  const BIVECTOR_A: Bivector = Bivector {
-    e23:  223., e31:  227., e12:  229.,
-    e01:  233., e02:  239., e03:  241.,
-  };
-  const BIVECTOR_B: Bivector = Bivector {
-    e23:  251., e31:  257., e12:  263.,
-    e01:  269., e02:  271., e03:  277.,
-  };
-  const BIVECTOR_C: Bivector = Bivector {
-    e23: -281., e31: -283., e12: -293.,
-    e01: -307., e02: -311., e03: -313.,
-  };
-  const TRIVECTOR_A: Trivector = Trivector {
-    e123:  317., e032:  331., e013:  337., e021:  347.
-  };
-  const TRIVECTOR_B: Trivector = Trivector {
-    e123:  349., e032:  353., e013:  359., e021:  367.
-  };
-  const TRIVECTOR_C: Trivector = Trivector {
-    e123: -373., e032: -379., e013: -383., e021: -389.
-  };
-  const PSEUDOSCALAR_A: Pseudoscalar = Pseudoscalar { e0123:  397. };
-  const PSEUDOSCALAR_C: Pseudoscalar = Pseudoscalar { e0123: -409. };
+  use crate::test_values::*;
 
   mod multivector {
     use super::*;

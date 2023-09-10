@@ -13,6 +13,7 @@ macro_rules! impl_meet {
   ($meet_fn:ident: $lhs:ty, $rhs:ty => $output:ty) => {
     impl Meet<$rhs> for $lhs {
       type Output = $output;
+
       #[inline]
       fn meet(self, rhs: $rhs) -> Self::Output {
         $meet_fn(self, rhs)

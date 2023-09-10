@@ -13,6 +13,7 @@ macro_rules! impl_join {
   ($join_fn:ident: $lhs:ty, $rhs:ty => $output:ty) => {
     impl Join<$rhs> for $lhs {
       type Output = $output;
+
       #[inline]
       fn join(self, rhs: $rhs) -> Self::Output {
         $join_fn(self, rhs)

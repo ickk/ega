@@ -13,6 +13,7 @@ macro_rules! impl_dot {
   ($dot_fn:ident: $lhs:ty, $rhs:ty => $output:ty) => {
     impl Dot<$rhs> for $lhs {
       type Output = $output;
+
       #[inline]
       fn dot(self, rhs: $rhs) -> Self::Output {
         $dot_fn(self, rhs)

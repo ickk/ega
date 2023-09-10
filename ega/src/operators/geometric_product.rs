@@ -12,6 +12,7 @@ macro_rules! impl_geometric_product {
   ($mul_fn:ident: $lhs:ty, $rhs:ty => $output:ty) => {
     impl GeometricProduct<$rhs> for $lhs {
       type Output = $output;
+
       #[inline]
       fn geometric_product(self, rhs: $rhs) -> Self::Output {
         $mul_fn(self, rhs)

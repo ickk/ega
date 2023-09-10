@@ -6,6 +6,7 @@ macro_rules! impl_sub {
   ($sub_fn:ident: $lhs:ty, $rhs:ty => $output:ty) => {
     impl Sub<$rhs> for $lhs {
       type Output = $output;
+
       #[inline]
       fn sub(self, rhs: $rhs) -> Self::Output {
         $sub_fn(self, rhs)

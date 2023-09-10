@@ -757,10 +757,6 @@ mod tests {
     e23:  223., e31:  227., e12:  229.,
     e01:  233., e02:  239., e03:  241.,
   };
-  const BIVECTOR_B: Bivector = Bivector {
-    e23:  251., e31:  257., e12:  263.,
-    e01:  269., e02:  271., e03:  277.,
-  };
   const BIVECTOR_C: Bivector = Bivector {
     e23: -281., e31: -283., e12: -293.,
     e01: -307., e02: -311., e03: -313.,

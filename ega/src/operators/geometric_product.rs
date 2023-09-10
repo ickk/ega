@@ -27,6 +27,13 @@ impl_geometric_product! { multivector_mul_bivector: Multivector, Bivector => Mul
 impl_geometric_product! { multivector_mul_trivector: Multivector, Trivector => Multivector }
 impl_geometric_product! { multivector_mul_pseudoscalar: Multivector, Pseudoscalar => Multivector }
 
+impl_geometric_product! { scalar_mul_multivector: Scalar, Multivector => Multivector }
+impl_geometric_product! { scalar_mul_scalar: Scalar, Scalar => Scalar }
+impl_geometric_product! { scalar_mul_vector: Scalar, Vector => Vector }
+impl_geometric_product! { scalar_mul_bivector: Scalar, Bivector => Bivector }
+impl_geometric_product! { scalar_mul_trivector: Scalar, Trivector => Trivector }
+impl_geometric_product! { scalar_mul_pseudoscalar: Scalar, Pseudoscalar => Pseudoscalar }
+
 // Multivector
 
 #[rustfmt::skip]
@@ -403,6 +410,100 @@ fn multivector_mul_pseudoscalar(
   }
 }
 
+// Scalar
+
+#[rustfmt::skip]
+#[inline]
+fn scalar_mul_multivector(
+  lhs: Scalar,
+  mut rhs: Multivector,
+) -> Multivector {
+  rhs.s *= lhs.s;
+  rhs.e0 *= lhs.s;
+  rhs.e1 *= lhs.s;
+  rhs.e2 *= lhs.s;
+  rhs.e3 *= lhs.s;
+  rhs.e01 *= lhs.s;
+  rhs.e02 *= lhs.s;
+  rhs.e03 *= lhs.s;
+  rhs.e12 *= lhs.s;
+  rhs.e31 *= lhs.s;
+  rhs.e23 *= lhs.s;
+  rhs.e021 *= lhs.s;
+  rhs.e013 *= lhs.s;
+  rhs.e032 *= lhs.s;
+  rhs.e123 *= lhs.s;
+  rhs.e0123 *= lhs.s;
+
+  rhs
+}
+
+#[rustfmt::skip]
+#[inline]
+fn scalar_mul_scalar(
+  mut lhs: Scalar,
+  rhs: Scalar,
+) -> Scalar {
+  lhs.s *= rhs.s;
+
+  lhs
+}
+
+#[rustfmt::skip]
+#[inline]
+fn scalar_mul_vector(
+  lhs: Scalar,
+  mut rhs: Vector,
+) -> Vector {
+  rhs.e0 *= lhs.s;
+  rhs.e1 *= lhs.s;
+  rhs.e2 *= lhs.s;
+  rhs.e3 *= lhs.s;
+
+  rhs
+}
+
+#[rustfmt::skip]
+#[inline]
+fn scalar_mul_bivector(
+  lhs: Scalar,
+  mut rhs: Bivector,
+) -> Bivector {
+  rhs.e01 *= lhs.s;
+  rhs.e02 *= lhs.s;
+  rhs.e03 *= lhs.s;
+  rhs.e12 *= lhs.s;
+  rhs.e31 *= lhs.s;
+  rhs.e23 *= lhs.s;
+
+  rhs
+}
+
+#[rustfmt::skip]
+#[inline]
+fn scalar_mul_trivector(
+  lhs: Scalar,
+  mut rhs: Trivector,
+) -> Trivector {
+  rhs.e021 *= lhs.s;
+  rhs.e013 *= lhs.s;
+  rhs.e032 *= lhs.s;
+  rhs.e123 *= lhs.s;
+
+  rhs
+}
+
+#[rustfmt::skip]
+#[inline]
+fn scalar_mul_pseudoscalar(
+  lhs: Scalar,
+  mut rhs: Pseudoscalar,
+) -> Pseudoscalar {
+  rhs.e0123 *= lhs.s;
+
+  rhs
+}
+
 #[rustfmt::skip]
 #[cfg(any(test, doctest))]
 mod tests {
@@ -464,7 +565,7 @@ mod tests {
   mod multivector {
     use super::*;
     #[test]
-    fn geometric_product_multivector_1() {
+    fn mul_multivector_1() {
       let result = MULTIVECTOR_A.geometric_product(MULTIVECTOR_B);
       let expected = Multivector {
           e0: 23311.,   e1: -3564.,   e2: -4676.,    e3: -4116.,
@@ -475,7 +576,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_multivector_2() {
+    fn mul_multivector_2() {
       let result = MULTIVECTOR_A.geometric_product(MULTIVECTOR_C);
       let expected = Multivector {
         s: 2704.,
@@ -488,7 +589,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_multivector_3() {
+    fn mul_multivector_3() {
       let result = MULTIVECTOR_A.geometric_product(MULTIVECTOR_D);
       let expected = Multivector {
         s: 6780.,
@@ -501,7 +602,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_scalar_1() {
+    fn mul_scalar_1() {
       let result = MULTIVECTOR_A.geometric_product(SCALAR_A);
       let expected = Multivector {
         s: 1507.,
@@ -514,7 +615,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_scalar_2() {
+    fn mul_scalar_2() {
       let result = MULTIVECTOR_A.geometric_product(SCALAR_C);
       let expected = Multivector {
         s: -1639.,
@@ -527,7 +628,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_vector_1() {
+    fn mul_vector_1() {
       let result = MULTIVECTOR_A.geometric_product(VECTOR_A);
       let expected = Multivector {
         s: 2455.,
@@ -540,7 +641,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_vector_2() {
+    fn mul_vector_2() {
       let result = MULTIVECTOR_A.geometric_product(VECTOR_C);
       let expected = Multivector {
         s: -3063.,
@@ -553,7 +654,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_bivector_1() {
+    fn mul_bivector_1() {
       let result = MULTIVECTOR_A.geometric_product(BIVECTOR_A);
       let expected = Multivector {
         s: -11109.,
@@ -566,7 +667,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_bivector_2() {
+    fn mul_bivector_2() {
       let result = MULTIVECTOR_A.geometric_product(BIVECTOR_C);
       let expected = Multivector {
         s: 14031.,
@@ -579,7 +680,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_trivector_1() {
+    fn mul_trivector_1() {
       let result = MULTIVECTOR_A.geometric_product(TRIVECTOR_A);
       let expected = Multivector {
         s: -12997.,
@@ -592,7 +693,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_trivector_2() {
+    fn mul_trivector_2() {
       let result = MULTIVECTOR_A.geometric_product(TRIVECTOR_C);
       let expected = Multivector {
         s: 15293.,
@@ -605,7 +706,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_pseudoscalar_1() {
+    fn mul_pseudoscalar_1() {
       let result = MULTIVECTOR_A.geometric_product(PSEUDOSCALAR_A);
       let expected = Multivector {
         e0: 16277.,
@@ -617,7 +718,7 @@ mod tests {
       assert_eq!(dbg!(result), dbg!(expected));
     }
     #[test]
-    fn geometric_product_pseudoscalar_2() {
+    fn mul_pseudoscalar_2() {
       let result = MULTIVECTOR_A.geometric_product(PSEUDOSCALAR_C);
       let expected = Multivector {
         e0: -16769.,
@@ -626,6 +727,60 @@ mod tests {
         e0123: -4499.,
         ..zero()
       };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod scalar {
+    use super::*;
+    #[test]
+    fn mul_multivector_1() {
+      let result = SCALAR_A.geometric_product(MULTIVECTOR_A);
+      let expected = Multivector {
+        s: 1507.,
+        e0: 274., e1: 411., e2: 685., e3: 959.,
+        e01: 3151., e02: 3973., e03: 4247.,
+        e12: 2603., e31: 2329., e23: 1781.,
+        e021: 7261., e013: 6439., e032: 5891., e123: 5617.,
+        e0123: 5069.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn mul_scalar_1() {
+      let result = SCALAR_A.geometric_product(SCALAR_B);
+      let expected = Scalar { s: 19043. };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn mul_vector_1() {
+      let result = SCALAR_A.geometric_product(VECTOR_A);
+      let expected = Vector {
+        e0: 20687., e1: 21509., e2: 22331., e3: 22879.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn mul_bivector_1() {
+      let result = SCALAR_A.geometric_product(BIVECTOR_A);
+      let expected = Bivector {
+        e01: 31921., e02: 32743., e03: 33017.,
+        e12: 31373., e31: 31099., e23: 30551.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn mul_trivector_1() {
+      let result = SCALAR_A.geometric_product(TRIVECTOR_A);
+      let expected = Trivector {
+        e021: 47539., e013: 46169., e032: 45347., e123: 43429.,
+      };
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn mul_pseudoscalar_1() {
+      let result = SCALAR_A.geometric_product(PSEUDOSCALAR_A);
+      let expected = Pseudoscalar { e0123: 54389. };
       assert_eq!(dbg!(result), dbg!(expected));
     }
   }

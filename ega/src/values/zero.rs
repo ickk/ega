@@ -1,5 +1,6 @@
 use crate::*;
 
+#[inline]
 pub fn zero<T: Zero>() -> T {
   <T as Zero>::zero()
 }

@@ -6,6 +6,7 @@ macro_rules! impl_add {
   ($add_fn:ident: $lhs:ty, $rhs:ty => $output:ty) => {
     impl Add<$rhs> for $lhs {
       type Output = $output;
+
       #[inline]
       fn add(self, rhs: $rhs) -> Self::Output {
         $add_fn(self, rhs)

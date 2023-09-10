@@ -27,7 +27,6 @@ pub trait EgaValue:
   + PartialEq
   + Zero
   + Neg
-  // + Mul & variants
   + GradeSelect
   + Reverse
   + Add<Multivector>
@@ -65,6 +64,13 @@ pub trait EgaValue:
   + Join<Bivector>
   + Join<Trivector>
   + Join<Pseudoscalar>
+  + GeometricProduct<Multivector>
+  + GeometricProduct<Empty>
+  + GeometricProduct<Scalar>
+  + GeometricProduct<Vector>
+  + GeometricProduct<Bivector>
+  + GeometricProduct<Trivector>
+  + GeometricProduct<Pseudoscalar>
 {
 }
 

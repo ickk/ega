@@ -52,8 +52,8 @@ impl Debug for Bivector {
   fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
     if fmt.alternate() {
       // pretty print
-      let width = fmt.width().unwrap_or(3);
-      let precision = fmt.precision().unwrap_or(0);
+      let width = fmt.width().unwrap_or(8);
+      let precision = fmt.precision().unwrap_or(2);
       fmt.write_fmt(format_args!(
         "Bivector {{\n\
         \x20 e23: {e23:width$.precision$},\
@@ -86,8 +86,8 @@ impl Debug for Bivector {
 
 impl Debug for BivectorArray {
   fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
-    let width = fmt.width().unwrap_or(3);
-    let precision = fmt.precision().unwrap_or(0);
+    let width = fmt.width().unwrap_or(8);
+    let precision = fmt.precision().unwrap_or(2);
     if fmt.alternate() {
       // pretty print
       fmt.write_fmt(format_args!(

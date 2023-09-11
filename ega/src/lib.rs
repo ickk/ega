@@ -1,5 +1,6 @@
 // we allow `std` in tests for convenience
-#![cfg_attr(not(any(test, doctest)), no_std)]
+// otherwise it's conditionally available with the `std` cargo-feature
+#![cfg_attr(not(any(feature = "std", test, doctest)), no_std)]
 
 mod operators;
 mod values;

@@ -4,3 +4,11 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
+libm = { version = "0.2.0", optional = true }
+
+[features]
+# When disabling `std` you will lose some features unless you enable the `libm`
+# feature.
+default = ["std"]
+std = []
+# libm = ["num-traits/libm"]

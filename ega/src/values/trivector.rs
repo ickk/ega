@@ -48,8 +48,8 @@ impl From<[f32; 4]> for TrivectorArray {
 
 impl Debug for TrivectorArray {
   fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
-    let width = fmt.width().unwrap_or(3);
-    let precision = fmt.precision().unwrap_or(0);
+    let width = fmt.width().unwrap_or(8);
+    let precision = fmt.precision().unwrap_or(2);
     if fmt.alternate() {
       // pretty print
       fmt.write_fmt(format_args!(

@@ -7,10 +7,14 @@ mod join;
 mod meet;
 mod mul;
 mod neg;
+mod norm;
 mod reverse;
+mod conjugate;
 mod sub;
+mod normalise;
 
 pub use add::Add;
+pub use conjugate::Conjugate;
 pub use dot::Dot;
 pub use geometric_product::GeometricProduct;
 pub use grade_select::GradeSelect;
@@ -19,24 +23,35 @@ pub use join::Join;
 pub use meet::Meet;
 pub use mul::Mul;
 pub use neg::Neg;
+pub use norm::{Norm, IdealNorm};
+pub use normalise::Normalise;
 pub use reverse::Reverse;
 pub use sub::Sub;
 
-use crate::{values::Empty, Scalar};
+use crate::values::Empty;
 
-/// The norm
-pub trait Norm {
-  /// The squared norm
-  fn norm_squared(self) -> Scalar;
+/// Grade Involution
+pub trait Involution {
+  type Output;
 
-  /// The norm
-  fn norm(self) -> Scalar;
+  /// Grade Involution
+  fn involution(self) -> Self;
 }
 
-/// Normalise
-pub trait Normalise: Norm {
-  /// The normalised value
-  fn normalise(self) -> Self;
+/// Scalar Product
+pub trait ScalarProduct {
+  type Output;
+  /// Scalar Product, "star operator"
+  ///
+  /// not to be confused with the geometric product of a Scalar & Multivector
+  fn scalar_product(self) -> Self::Output;
+}
+
+/// Left Contraction
+pub trait LeftContraction {
+  type Output;
+
+  fn left_contraction(self) -> Self::Output;
 }
 
 /// Exponentiation

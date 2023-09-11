@@ -1,4 +1,5 @@
 mod add;
+mod conjugate;
 mod dot;
 mod geometric_product;
 mod grade_select;
@@ -8,10 +9,9 @@ mod meet;
 mod mul;
 mod neg;
 mod norm;
-mod reverse;
-mod conjugate;
-mod sub;
 mod normalise;
+mod reverse;
+mod sub;
 
 pub use add::Add;
 pub use conjugate::Conjugate;
@@ -23,7 +23,7 @@ pub use join::Join;
 pub use meet::Meet;
 pub use mul::Mul;
 pub use neg::Neg;
-pub use norm::{Norm, IdealNorm};
+pub use norm::Norm;
 pub use normalise::Normalise;
 pub use reverse::Reverse;
 pub use sub::Sub;

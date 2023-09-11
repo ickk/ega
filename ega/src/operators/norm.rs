@@ -17,28 +17,28 @@ impl<T: NormSquared> Norm for T {
   }
 }
 
-/// The Ideal norm, ||A||_inf
-///
-/// aka "Infinity Norm" or "Vanishing Norm"
-pub trait IdealNorm {
-  /// The Ideal norm, ||A||_inf
-  fn ideal_norm(self) -> Scalar;
-}
+// /// The Ideal norm, ||A||_inf
+// ///
+// /// aka "Infinity Norm" or "Vanishing Norm"
+// pub trait IdealNorm {
+//   /// The Ideal norm, ||A||_inf
+//   fn ideal_norm(self) -> Scalar;
+// }
 
-// needs sqrt function, so relies on std or libm
-#[cfg(any(feature = "std", feature = "libm"))]
-impl<T, O> IdealNorm for T
-where
-  T: HodgeDual<Output = O>,
-  O: NormSquared,
-{
-  #[inline]
-  fn ideal_norm(self) -> Scalar {
-    Scalar {
-      s: self.hodge_dual().norm_squared().s.abs().sqrt(),
-    }
-  }
-}
+// // needs sqrt function, so relies on std or libm
+// #[cfg(any(feature = "std", feature = "libm"))]
+// impl<T, O> IdealNorm for T
+// where
+//   T: HodgeDual<Output = O>,
+//   O: NormSquared,
+// {
+//   #[inline]
+//   fn ideal_norm(self) -> Scalar {
+//     Scalar {
+//       s: self.hodge_dual().norm_squared().s.abs().sqrt(),
+//     }
+//   }
+// }
 
 /// The squared norm, ||A||^2
 pub trait NormSquared {
@@ -48,14 +48,59 @@ pub trait NormSquared {
   fn norm_squared(self) -> Scalar;
 }
 
-impl<T, O> NormSquared for T
-where
-  T: Copy + Reverse + Conjugate + GeometricProduct<T, Output = O>,
-  O: GradeSelect + Reverse,
-{
-  #[inline]
+// impl<T, O> NormSquared for T
+// where
+//   // T: Copy + Reverse + Conjugate + GeometricProduct<T, Output = O>,
+//   T: Copy + Reverse + Dot<T, Output = O>,
+//   O: GradeSelect + Reverse + std::fmt::Debug,
+// {
+//   #[inline]
+//   fn norm_squared(self) -> Scalar {
+//     // let norm_r2 = self.geometric_product(self.reverse());
+//     let norm_r2_inner = self.dot(self.reverse());
+
+//     // dbg!(&norm_r2);
+//     dbg!(&norm_r2_inner);
+
+//     // norm_r2.grade_0()
+//     norm_r2_inner.grade_0()
+//   }
+// }
+
+impl NormSquared for Scalar {
+  fn norm_squared(mut self) -> Scalar {
+    self.s *= self.s;
+    self
+  }
+}
+
+impl NormSquared for Vector {
   fn norm_squared(self) -> Scalar {
-    self.geometric_product(self.reverse()).grade_0()
+    let mut out = Scalar { s: 0. };
+
+    out.s += self.e1*self.e1;
+    out.s += self.e2*self.e2;
+    out.s += self.e3*self.e3;
+
+    out
+  }
+}
+
+impl NormSquared for Bivector {
+  fn norm_squared(self) -> Scalar {
+    let mut out = Scalar { s: 0. };
+
+    out.s += self.e12*self.e12;
+    out.s += self.e31*self.e31;
+    out.s += self.e23*self.e23;
+
+    out
+  }
+}
+
+impl NormSquared for Trivector {
+  fn norm_squared(self) -> Scalar {
+    Scalar { s: self.e123*self.e123 }
   }
 }
 

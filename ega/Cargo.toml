@@ -11,4 +11,3 @@ libm = { version = "0.2.0", optional = true }
 # feature.
 default = ["std"]
 std = []
-# libm = ["num-traits/libm"]

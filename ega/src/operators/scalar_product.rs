@@ -218,3 +218,250 @@ fn trivector_scalar_product_trivector(
 
   Scalar { s }
 }
+
+#[rustfmt::skip]
+#[cfg(any(test, doctest))]
+mod tests {
+  use super::*;
+  use crate::test_values::*;
+
+  mod multivector {
+    use super::*;
+    #[test]
+    fn scalar_product_multivector_1() {
+      let result = MULTIVECTOR_A.scalar_product(MULTIVECTOR_B);
+      let expected = MULTIVECTOR_A.geometric_product(MULTIVECTOR_B).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_scalar_1() {
+      let result = MULTIVECTOR_A.scalar_product(SCALAR_A);
+      let expected = MULTIVECTOR_A.geometric_product(SCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_vector_1() {
+      let result = MULTIVECTOR_A.scalar_product(VECTOR_A);
+      let expected = MULTIVECTOR_A.geometric_product(VECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_bivector_1() {
+      let result = MULTIVECTOR_A.scalar_product(BIVECTOR_A);
+      let expected = MULTIVECTOR_A.geometric_product(BIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_trivector_1() {
+      let result = MULTIVECTOR_A.scalar_product(TRIVECTOR_A);
+      let expected = MULTIVECTOR_A.geometric_product(TRIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_pseudoscalar_1() {
+      let result = MULTIVECTOR_A.scalar_product(PSEUDOSCALAR_A);
+      let expected = MULTIVECTOR_A.geometric_product(PSEUDOSCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod scalar {
+    use super::*;
+    #[test]
+    fn scalar_product_multivector_1() {
+      let result = SCALAR_A.scalar_product(MULTIVECTOR_A);
+      let expected = SCALAR_A.geometric_product(MULTIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_scalar_1() {
+      let result = SCALAR_A.scalar_product(SCALAR_B);
+      let expected = SCALAR_A.geometric_product(SCALAR_B).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_vector_1() {
+      let result = SCALAR_A.scalar_product(VECTOR_A);
+      let expected = SCALAR_A.geometric_product(VECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_bivector_1() {
+      let result = SCALAR_A.scalar_product(BIVECTOR_A);
+      let expected = SCALAR_A.geometric_product(BIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_trivector_1() {
+      let result = SCALAR_A.scalar_product(TRIVECTOR_A);
+      let expected = SCALAR_A.geometric_product(TRIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_pseudoscalar_1() {
+      let result = SCALAR_A.scalar_product(PSEUDOSCALAR_A);
+      let expected = SCALAR_A.geometric_product(PSEUDOSCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod vector {
+    use super::*;
+    #[test]
+    fn scalar_product_multivector_1() {
+      let result = VECTOR_A.scalar_product(MULTIVECTOR_A);
+      let expected = VECTOR_A.geometric_product(MULTIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_scalar_1() {
+      let result = VECTOR_A.scalar_product(SCALAR_A);
+      let expected = VECTOR_A.geometric_product(SCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_vector_1() {
+      let result = VECTOR_A.scalar_product(VECTOR_B);
+      let expected = VECTOR_A.geometric_product(VECTOR_B).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_bivector_1() {
+      let result = VECTOR_A.scalar_product(BIVECTOR_A);
+      let expected = VECTOR_A.geometric_product(BIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_trivector_1() {
+      let result = VECTOR_A.scalar_product(TRIVECTOR_A);
+      let expected = VECTOR_A.geometric_product(TRIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_pseudoscalar_1() {
+      let result = VECTOR_A.scalar_product(PSEUDOSCALAR_A);
+      let expected = VECTOR_A.geometric_product(PSEUDOSCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod bivector {
+    use super::*;
+    #[test]
+    fn scalar_product_multivector_1() {
+      let result = BIVECTOR_A.scalar_product(MULTIVECTOR_A);
+      let expected = BIVECTOR_A.geometric_product(MULTIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_scalar_1() {
+      let result = BIVECTOR_A.scalar_product(SCALAR_A);
+      let expected = BIVECTOR_A.geometric_product(SCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_vector_1() {
+      let result = BIVECTOR_A.scalar_product(VECTOR_A);
+      let expected = BIVECTOR_A.geometric_product(VECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_bivector_1() {
+      let result = BIVECTOR_A.scalar_product(BIVECTOR_B);
+      let expected = BIVECTOR_A.geometric_product(BIVECTOR_B).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_trivector_1() {
+      let result = BIVECTOR_A.scalar_product(TRIVECTOR_A);
+      let expected = BIVECTOR_A.geometric_product(TRIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_pseudoscalar_1() {
+      let result = BIVECTOR_A.scalar_product(PSEUDOSCALAR_A);
+      let expected = BIVECTOR_A.geometric_product(PSEUDOSCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod trivector {
+    use super::*;
+    #[test]
+    fn scalar_product_multivector_1() {
+      let result = TRIVECTOR_A.scalar_product(MULTIVECTOR_A);
+      let expected = TRIVECTOR_A.geometric_product(MULTIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_scalar_1() {
+      let result = TRIVECTOR_A.scalar_product(SCALAR_A);
+      let expected = TRIVECTOR_A.geometric_product(SCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_vector_1() {
+      let result = TRIVECTOR_A.scalar_product(VECTOR_A);
+      let expected = TRIVECTOR_A.geometric_product(VECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_bivector_1() {
+      let result = TRIVECTOR_A.scalar_product(BIVECTOR_A);
+      let expected = TRIVECTOR_A.geometric_product(BIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_trivector_1() {
+      let result = TRIVECTOR_A.scalar_product(TRIVECTOR_B);
+      let expected = TRIVECTOR_A.geometric_product(TRIVECTOR_B).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_pseudoscalar_1() {
+      let result = TRIVECTOR_A.scalar_product(PSEUDOSCALAR_A);
+      let expected = TRIVECTOR_A.geometric_product(PSEUDOSCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+
+  mod pseudoscalar {
+    use super::*;
+    #[test]
+    fn scalar_product_multivector_1() {
+      let result = PSEUDOSCALAR_A.scalar_product(MULTIVECTOR_A);
+      let expected = PSEUDOSCALAR_A.geometric_product(MULTIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_scalar_1() {
+      let result = PSEUDOSCALAR_A.scalar_product(SCALAR_A);
+      let expected = PSEUDOSCALAR_A.geometric_product(SCALAR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_vector_1() {
+      let result = PSEUDOSCALAR_A.scalar_product(VECTOR_A);
+      let expected = PSEUDOSCALAR_A.geometric_product(VECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_bivector_1() {
+      let result = PSEUDOSCALAR_A.scalar_product(BIVECTOR_A);
+      let expected = PSEUDOSCALAR_A.geometric_product(BIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_trivector_1() {
+      let result = PSEUDOSCALAR_A.scalar_product(TRIVECTOR_A);
+      let expected = PSEUDOSCALAR_A.geometric_product(TRIVECTOR_A).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+    #[test]
+    fn scalar_product_pseudoscalar_1() {
+      let result = PSEUDOSCALAR_A.scalar_product(PSEUDOSCALAR_B);
+      let expected = PSEUDOSCALAR_A.geometric_product(PSEUDOSCALAR_B).grade_0();
+      assert_eq!(dbg!(result), dbg!(expected));
+    }
+  }
+}

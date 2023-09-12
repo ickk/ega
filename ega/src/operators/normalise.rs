@@ -12,11 +12,7 @@ where
 {
   #[inline]
   fn normalise(self) -> Self {
-    // let ideal_norm = self.ideal_norm();
-    let norm = self.norm();
-    // dbg!(&ideal_norm, &norm);
-    dbg!(&norm);
-    self * (1. / norm.s)
+    self * (1. / self.norm().s)
   }
 }
 

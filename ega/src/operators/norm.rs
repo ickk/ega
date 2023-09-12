@@ -94,12 +94,24 @@ mod tests {
   use super::*;
   use crate::test_values::*;
 
-  // #[test]
-  // fn norm_multivector() {
-  //   let result = MULTIVECTOR_A.norm();
-  //
-  //   assert_eq!(dbg!(result), dbg!(expected));
-  // }
+  #[test]
+  fn norm_multivector() {
+    let result = MULTIVECTOR_A.norm();
+
+    let expected_scalar_product =
+      MULTIVECTOR_A.scalar_product(MULTIVECTOR_A.reverse()).sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_scalar_product));
+
+    let expected_geometric_product = MULTIVECTOR_A
+      .geometric_product(MULTIVECTOR_A.reverse())
+      .grade_0()
+      .sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_geometric_product));
+
+    let expected_dot_product =
+      MULTIVECTOR_A.dot(MULTIVECTOR_A.reverse()).grade_0().sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_dot_product));
+  }
 
   #[test]
   fn norm_scalar() {
@@ -108,31 +120,53 @@ mod tests {
     assert_eq!(dbg!(result), dbg!(expected));
   }
 
-  // #[test]
-  // fn norm_vector() {
-  //   let result = VECTOR_A.norm();
-  //
-  //   assert_eq!(dbg!(result), dbg!(expected));
-  // }
+  #[test]
+  fn norm_vector() {
+    let result = VECTOR_A.norm();
 
-  // #[test]
-  // fn norm_bivector() {
-  //   let result = BIVECTOR_A.norm();
-  //
-  //   assert_eq!(dbg!(result), dbg!(expected));
-  // }
+    let expected_scalar_product =
+      VECTOR_A.scalar_product(VECTOR_A.reverse()).sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_scalar_product));
 
-  // #[test]
-  // fn norm_trivector() {
-  //   let result = TRIVECTOR_A.norm();
-  //
-  //   assert_eq!(dbg!(result), dbg!(expected));
-  // }
+    let expected_geometric_product =
+      (VECTOR_A.geometric_product(VECTOR_A.reverse()).grade_0()).sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_geometric_product));
 
-  // #[test]
-  // fn norm_pseudoscalar() {
-  //   let result = PSEUDOSCALAR_A.norm();
-  //
-  //   assert_eq!(dbg!(result), dbg!(expected));
-  // }
+    let expected_dot_product = VECTOR_A.dot(VECTOR_A).sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_dot_product));
+  }
+
+  #[test]
+  fn norm_bivector() {
+    let result = BIVECTOR_A.norm();
+
+    let expected_scalar_product =
+      BIVECTOR_A.scalar_product(BIVECTOR_A.reverse()).sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_scalar_product));
+
+    let expected_geometric_product =
+      (BIVECTOR_A.geometric_product(BIVECTOR_A.reverse()).grade_0()).sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_geometric_product));
+
+    let expected_dot_product = BIVECTOR_A.dot(BIVECTOR_A.reverse()).sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_dot_product));
+  }
+
+  #[test]
+  fn norm_trivector() {
+    let result = TRIVECTOR_A.norm();
+
+    let expected_scalar_product =
+      TRIVECTOR_A.scalar_product(TRIVECTOR_A.reverse()).sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_scalar_product));
+
+    let expected_geometric_product = TRIVECTOR_A
+      .geometric_product(TRIVECTOR_A.reverse())
+      .grade_0()
+      .sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_geometric_product));
+
+    let expected_dot_product = TRIVECTOR_A.dot(TRIVECTOR_A.reverse()).sqrt();
+    assert_eq!(dbg!(result), dbg!(expected_dot_product));
+  }
 }

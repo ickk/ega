@@ -1,11 +1,35 @@
 use super::*;
-use core::fmt::{Debug, Formatter};
+use core::{
+  fmt::{Debug, Formatter},
+  ops::Deref,
+};
 
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]
 pub struct Scalar {
   /// Scalar component
   pub s: f32,
+}
+
+impl Scalar {
+  #[inline]
+  pub fn sqrt(self) -> Scalar {
+    Scalar { s: self.s.sqrt() }
+  }
+
+  #[inline]
+  pub fn abs(self) -> Scalar {
+    Scalar { s: self.s.abs() }
+  }
+}
+
+impl Deref for Scalar {
+  type Target = f32;
+
+  #[inline]
+  fn deref(&self) -> &f32 {
+    &self.s
+  }
 }
 
 #[derive(Copy, Clone, Default, PartialEq)]

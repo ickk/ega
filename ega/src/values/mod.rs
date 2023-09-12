@@ -38,9 +38,8 @@ mod ega_value {
     + HodgeDual
     + NormSquared
     + Norm
-    + Normalise
-    // + IdealNormSquared
-    // + IdealNorm
+    + IdealNormSquared
+    + IdealNorm
     + Add<Multivector>
     + Add<Empty>
     + Add<Scalar>

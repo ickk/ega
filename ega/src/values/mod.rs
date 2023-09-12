@@ -18,80 +18,92 @@ pub use trivector::*;
 pub use vector::*;
 pub use {zero::zero, zero::Zero};
 
-use crate::operators::*;
-pub trait EgaValue:
-  private::Sealed
-  + Copy
-  + Clone
-  + core::fmt::Debug
-  + PartialEq
-  + Zero
-  + Neg
-  + GradeSelect
-  + Reverse
-  + Add<Multivector>
-  + Add<Empty>
-  + Add<Scalar>
-  + Add<Vector>
-  + Add<Bivector>
-  + Add<Trivector>
-  + Add<Pseudoscalar>
-  + Sub<Multivector>
-  + Sub<Empty>
-  + Sub<Scalar>
-  + Sub<Vector>
-  + Sub<Bivector>
-  + Sub<Trivector>
-  + Sub<Pseudoscalar>
-  + Meet<Multivector>
-  + Meet<Empty>
-  + Meet<Scalar>
-  + Meet<Vector>
-  + Meet<Bivector>
-  + Meet<Trivector>
-  + Meet<Pseudoscalar>
-  + Dot<Multivector>
-  + Dot<Empty>
-  + Dot<Scalar>
-  + Dot<Vector>
-  + Dot<Bivector>
-  + Dot<Trivector>
-  + Dot<Pseudoscalar>
-  + Join<Multivector>
-  + Join<Empty>
-  + Join<Scalar>
-  + Join<Vector>
-  + Join<Bivector>
-  + Join<Trivector>
-  + Join<Pseudoscalar>
-  + GeometricProduct<Multivector>
-  + GeometricProduct<Empty>
-  + GeometricProduct<Scalar>
-  + GeometricProduct<Vector>
-  + GeometricProduct<Bivector>
-  + GeometricProduct<Trivector>
-  + GeometricProduct<Pseudoscalar>
-{
-}
+// Some of the supertraits rely on std/libm (i.e. Norm)
+#[cfg(any(feature = "std", feature = "libm"))]
+pub use ega_value::EgaValue;
+#[cfg(any(feature = "std", feature = "libm"))]
+mod ega_value {
+  use crate::*;
 
-impl EgaValue for Multivector {}
-impl EgaValue for Empty {}
-impl EgaValue for Scalar {}
-impl EgaValue for Vector {}
-impl EgaValue for Bivector {}
-impl EgaValue for Trivector {}
-impl EgaValue for Pseudoscalar {}
+  pub trait EgaValue:
+    Copy
+    + Clone
+    + core::fmt::Debug
+    + PartialEq
+    + Zero
+    + Neg
+    + GradeSelect
+    + Reverse
+    + Conjugate
+    + HodgeDual
+    + NormSquared
+    + Norm
+    + Normalise
+    // + IdealNormSquared
+    // + IdealNorm
+    + Add<Multivector>
+    + Add<Empty>
+    + Add<Scalar>
+    + Add<Vector>
+    + Add<Bivector>
+    + Add<Trivector>
+    + Add<Pseudoscalar>
+    + Sub<Multivector>
+    + Sub<Empty>
+    + Sub<Scalar>
+    + Sub<Vector>
+    + Sub<Bivector>
+    + Sub<Trivector>
+    + Sub<Pseudoscalar>
+    + Meet<Multivector>
+    + Meet<Empty>
+    + Meet<Scalar>
+    + Meet<Vector>
+    + Meet<Bivector>
+    + Meet<Trivector>
+    + Meet<Pseudoscalar>
+    + Dot<Multivector>
+    + Dot<Empty>
+    + Dot<Scalar>
+    + Dot<Vector>
+    + Dot<Bivector>
+    + Dot<Trivector>
+    + Dot<Pseudoscalar>
+    + Join<Multivector>
+    + Join<Empty>
+    + Join<Scalar>
+    + Join<Vector>
+    + Join<Bivector>
+    + Join<Trivector>
+    + Join<Pseudoscalar>
+    + GeometricProduct<Multivector>
+    + GeometricProduct<Empty>
+    + GeometricProduct<Scalar>
+    + GeometricProduct<Vector>
+    + GeometricProduct<Bivector>
+    + GeometricProduct<Trivector>
+    + GeometricProduct<Pseudoscalar>
+    + ScalarProduct<Multivector>
+    + ScalarProduct<Empty>
+    + ScalarProduct<Scalar>
+    + ScalarProduct<Vector>
+    + ScalarProduct<Bivector>
+    + ScalarProduct<Trivector>
+    + ScalarProduct<Pseudoscalar>
+  {
+  }
 
-impl private::Sealed for Multivector {}
-impl private::Sealed for Empty {}
-impl private::Sealed for Scalar {}
-impl private::Sealed for Vector {}
-impl private::Sealed for Bivector {}
-impl private::Sealed for Trivector {}
-impl private::Sealed for Pseudoscalar {}
+  impl EgaValue for Multivector {}
+  impl EgaValue for Empty {}
+  impl EgaValue for Scalar {}
+  impl EgaValue for Vector {}
+  impl EgaValue for Bivector {}
+  impl EgaValue for Trivector {}
+  impl EgaValue for Pseudoscalar {}
 
-mod private {
-  pub trait Sealed {}
+  mod private {
+    pub trait Sealed {}
+  }
 }
 
 /// Create accessor functions for elements of a field

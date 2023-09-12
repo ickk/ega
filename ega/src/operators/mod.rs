@@ -12,6 +12,7 @@ mod neg;
 mod norm;
 mod normalise;
 mod reverse;
+mod scalar_product;
 mod sub;
 
 pub use add::Add;
@@ -28,9 +29,10 @@ pub use neg::Neg;
 pub use norm::{Norm, NormSquared};
 pub use normalise::Normalise;
 pub use reverse::Reverse;
+pub use scalar_product::ScalarProduct;
 pub use sub::Sub;
 
-use crate::values::Empty;
+use crate::{values::Empty, Zero};
 
 /// Grade Involution
 pub trait Involution {
@@ -38,15 +40,6 @@ pub trait Involution {
 
   /// Grade Involution
   fn involution(self) -> Self;
-}
-
-/// Scalar Product
-pub trait ScalarProduct {
-  type Output;
-  /// Scalar Product, "star operator"
-  ///
-  /// not to be confused with the geometric product of a Scalar & Multivector
-  fn scalar_product(self) -> Self::Output;
 }
 
 /// Left Contraction
@@ -86,4 +79,10 @@ fn return_rhs<Lhs, Rhs>(_: Lhs, rhs: Rhs) -> Rhs {
 #[inline]
 fn return_neg_rhs<Lhs, Rhs: Neg<Output = Rhs>>(_: Lhs, rhs: Rhs) -> Rhs {
   -rhs
+}
+
+/// return zero
+#[inline]
+fn return_zero<Lhs, Rhs, Output: Zero>(_: Lhs, _: Rhs) -> Output {
+  Output::zero()
 }

@@ -59,6 +59,20 @@ impl HodgeDual for Multivector {
   }
 }
 
+impl HodgeDual for Empty {
+  type Output = Empty;
+
+  #[inline]
+  fn hodge_dual(self) -> Empty {
+    Empty
+  }
+
+  #[inline]
+  fn hodge_undual(self) -> Empty {
+    Empty
+  }
+}
+
 impl HodgeDual for Scalar {
   type Output = Pseudoscalar;
 

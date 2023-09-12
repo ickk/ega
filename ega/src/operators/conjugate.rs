@@ -7,6 +7,7 @@ pub trait Conjugate {
 }
 
 impl Conjugate for Multivector {
+  #[inline]
   fn conjugate(mut self) -> Self {
     self.e0 = -self.e0;
     self.e1 = -self.e1;
@@ -24,31 +25,43 @@ impl Conjugate for Multivector {
   }
 }
 
+impl Conjugate for Empty {
+  #[inline]
+  fn conjugate(self) -> Self {
+    Empty
+  }
+}
+
 impl Conjugate for Scalar {
+  #[inline]
   fn conjugate(self) -> Self {
     self
   }
 }
 
 impl Conjugate for Vector {
+  #[inline]
   fn conjugate(self) -> Self {
     -self
   }
 }
 
 impl Conjugate for Bivector {
+  #[inline]
   fn conjugate(self) -> Self {
     -self
   }
 }
 
 impl Conjugate for Trivector {
+  #[inline]
   fn conjugate(self) -> Self {
     self
   }
 }
 
 impl Conjugate for Pseudoscalar {
+  #[inline]
   fn conjugate(self) -> Self {
     self
   }

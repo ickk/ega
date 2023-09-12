@@ -12,16 +12,14 @@ impl<T: NormSquared> Norm for T {
   #[inline]
   fn norm(self) -> Scalar {
     Scalar {
-      s: self.norm_squared().s.abs().sqrt(),
+      s: self.norm_squared().s.sqrt(),
     }
   }
 }
 
-/// The squared norm, ||A||^2
+/// The squared (Euclidean) norm, ||A||^2
 pub trait NormSquared {
-  /// The squared norm, ||A||^2
-  ///
-  /// A * reverse(A)
+  /// The squared (Euclidean) norm, ||A||^2
   fn norm_squared(self) -> Scalar;
 }
 
@@ -38,6 +36,13 @@ impl NormSquared for Multivector {
       + self.e123 * self.e123;
 
     Scalar { s }
+  }
+}
+
+impl NormSquared for Empty {
+  #[inline]
+  fn norm_squared(self) -> Scalar {
+    zero()
   }
 }
 

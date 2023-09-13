@@ -16,6 +16,8 @@ pub(crate) struct PseudoscalarArray {
 }
 
 impl Pseudoscalar {
+  pub const UNIT: Pseudoscalar = Pseudoscalar { e0123: 1.0 };
+
   #[allow(unused)]
   #[inline(always)]
   pub(crate) const fn to_pseudoscalar_array(self) -> PseudoscalarArray {

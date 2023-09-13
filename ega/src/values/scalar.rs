@@ -12,6 +12,8 @@ pub struct Scalar {
 }
 
 impl Scalar {
+  pub const UNIT: Scalar = Scalar { s: 1.0 };
+
   #[inline]
   pub fn sqrt(self) -> Scalar {
     Scalar { s: self.s.sqrt() }

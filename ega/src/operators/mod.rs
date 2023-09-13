@@ -6,6 +6,7 @@ mod grade_select;
 mod hodge_dual;
 mod ideal_norm;
 mod join;
+mod inverse;
 mod meet;
 mod mul;
 mod neg;
@@ -14,7 +15,9 @@ mod normalise;
 mod reverse;
 mod scalar_product;
 mod sub;
+mod div;
 
+pub use div::Div;
 pub use add::Add;
 pub use conjugate::Conjugate;
 pub use dot::Dot;
@@ -23,6 +26,7 @@ pub use grade_select::GradeSelect;
 pub use hodge_dual::HodgeDual;
 pub use ideal_norm::{IdealNorm, IdealNormSquared};
 pub use join::Join;
+pub use inverse::Inverse;
 pub use meet::Meet;
 pub use mul::Mul;
 pub use neg::Neg;
@@ -40,13 +44,6 @@ pub trait Involution {
 
   /// Grade Involution
   fn involution(self) -> Self;
-}
-
-/// Left Contraction
-pub trait LeftContraction {
-  type Output;
-
-  fn left_contraction(self) -> Self::Output;
 }
 
 /// Exponentiation

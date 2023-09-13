@@ -18,12 +18,13 @@ impl Inverse for Vector {
   }
 }
 
-impl Inverse for Bivector {
-  #[inline]
-  fn inverse(self) -> Self {
-    simple_inverse(self)
-  }
-}
+// I don't think this works in general
+// impl Inverse for Bivector {
+//   #[inline]
+//   fn inverse(self) -> Self {
+//     simple_inverse(self)
+//   }
+// }
 
 impl Inverse for Trivector {
   #[inline]
@@ -61,13 +62,13 @@ mod tests {
     assert_eq!(dbg!(Multivector { s: 1., ..zero() }), dbg!(product));
   }
 
-  #[test]
-  fn inverse_bivector() {
-    let inverse = BIVECTOR_A.inverse();
-    let product = BIVECTOR_A * inverse;
+  // #[test]
+  // fn inverse_bivector() {
+  //   let inverse = BIVECTOR_A.inverse();
+  //   let product = BIVECTOR_A * inverse;
 
-    assert_eq!(dbg!(Multivector { s: 1., ..zero() }), dbg!(product));
-  }
+  //   assert_eq!(dbg!(Multivector { s: 1., ..zero() }), dbg!(product));
+  // }
 
   #[test]
   fn inverse_trivector_1() {

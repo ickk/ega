@@ -132,7 +132,8 @@ mod tests {
   #[test]
   fn ideal_norm_trivector_1() {
     let result = TRIVECTOR_A.ideal_norm();
-    let expected = TRIVECTOR_A.hodge_dual().norm() * Pseudoscalar { e0123: 1. };
+    let expected =
+      TRIVECTOR_A.hodge_dual().norm() * Pseudoscalar { e0123: 1. };
 
     assert_eq!(dbg!(result), dbg!(expected));
   }
@@ -140,7 +141,8 @@ mod tests {
   #[test]
   fn ideal_norm_pseudoscalar_1() {
     let result = PSEUDOSCALAR_A.ideal_norm();
-    let expected = PSEUDOSCALAR_A.hodge_dual().norm() * Pseudoscalar { e0123: 1. };
+    let expected =
+      PSEUDOSCALAR_A.hodge_dual().norm() * Pseudoscalar { e0123: 1. };
 
     assert_eq!(dbg!(result), dbg!(expected));
   }

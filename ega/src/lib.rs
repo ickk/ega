@@ -3,8 +3,8 @@
 #![cfg_attr(not(any(feature = "std", test, doctest)), no_std)]
 
 mod operators;
-mod values;
 mod optional_features;
+mod values;
 
 pub use operators::*;
 pub use values::*;

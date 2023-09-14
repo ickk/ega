@@ -79,8 +79,8 @@ impl From<[f32; 1]> for ScalarArray {
 
 impl Debug for Scalar {
   fn fmt(&self, fmt: &mut Formatter<'_>) -> core::fmt::Result {
-    fmt.write_str("Scalar ")?;
-    fmt.debug_set().entry(&self.s).finish()
+    let precision = fmt.precision().unwrap_or(2);
+    fmt.write_fmt(format_args!("Scalar {{ {:.precision$} }}", &self.s))
   }
 }
 

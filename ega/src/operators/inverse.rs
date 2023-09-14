@@ -59,7 +59,7 @@ mod tests {
     let inverse = VECTOR_A.inverse();
     let product = VECTOR_A * inverse;
 
-    assert_eq!(dbg!(Multivector { s: 1., ..zero() }), dbg!(product));
+    assert_eq!(dbg!(Scalar { s: 1.0 }), dbg!(product));
   }
 
   // #[test]

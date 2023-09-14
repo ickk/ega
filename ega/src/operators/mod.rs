@@ -6,6 +6,7 @@ mod geometric_product;
 mod grade_select;
 mod hodge_dual;
 mod ideal_norm;
+mod partial_eq;
 mod inverse;
 mod join;
 mod meet;
@@ -17,6 +18,7 @@ mod reverse;
 mod scalar_product;
 mod sub;
 
+pub use partial_eq::PartialEq;
 pub use add::Add;
 pub use conjugate::Conjugate;
 pub use div::Div;

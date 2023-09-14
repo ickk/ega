@@ -151,3 +151,64 @@ impl Debug for Multivector {
     }
   }
 }
+
+impl From<Scalar> for Multivector {
+  #[inline]
+  fn from(scalar: Scalar) -> Multivector {
+    Multivector {
+      s: scalar.s,
+      ..zero()
+    }
+  }
+}
+
+impl From<Vector> for Multivector {
+  #[inline]
+  fn from(vector: Vector) -> Multivector {
+    Multivector {
+      e0: vector.e0,
+      e1: vector.e1,
+      e2: vector.e2,
+      e3: vector.e3,
+      ..zero()
+    }
+  }
+}
+
+impl From<Bivector> for Multivector {
+  #[inline]
+  fn from(bivector: Bivector) -> Multivector {
+    Multivector {
+      e01: bivector.e01,
+      e02: bivector.e02,
+      e03: bivector.e03,
+      e23: bivector.e23,
+      e31: bivector.e31,
+      e12: bivector.e12,
+      ..zero()
+    }
+  }
+}
+
+impl From<Trivector> for Multivector {
+  #[inline]
+  fn from(trivector: Trivector) -> Multivector {
+    Multivector {
+      e032: trivector.e032,
+      e013: trivector.e013,
+      e021: trivector.e021,
+      e123: trivector.e123,
+      ..zero()
+    }
+  }
+}
+
+impl From<Pseudoscalar> for Multivector {
+  #[inline]
+  fn from(pseudoscalar: Pseudoscalar) -> Multivector {
+    Multivector {
+      e0123: pseudoscalar.e0123,
+      ..zero()
+    }
+  }
+}

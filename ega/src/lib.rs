@@ -4,6 +4,7 @@
 
 mod operators;
 mod values;
+mod optional_features;
 
 pub use operators::*;
 pub use values::*;

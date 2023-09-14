@@ -18,14 +18,6 @@ impl Inverse for Vector {
   }
 }
 
-// I don't think this works in general
-// impl Inverse for Bivector {
-//   #[inline]
-//   fn inverse(self) -> Self {
-//     simple_inverse(self)
-//   }
-// }
-
 impl Inverse for Trivector {
   #[inline]
   fn inverse(self) -> Self {
@@ -33,7 +25,7 @@ impl Inverse for Trivector {
   }
 }
 
-// this is valid for elements of a single grade
+// this is only valid for some kinds of elements
 #[inline]
 fn simple_inverse<T: Copy + Reverse + NormSquared + Mul<f32, Output = T>>(
   value: T,
@@ -45,13 +37,15 @@ fn simple_inverse<T: Copy + Reverse + NormSquared + Mul<f32, Output = T>>(
 mod tests {
   use super::*;
   use crate::test_values::*;
+  use ::approx::assert_relative_eq;
 
   #[test]
   fn inverse_scalar() {
     let inverse = SCALAR_A.inverse();
     let product = SCALAR_A * inverse;
 
-    assert_eq!(dbg!(Scalar { s: 1.0 }), dbg!(product));
+    let expected = Scalar::UNIT;
+    assert_relative_eq!(dbg!(expected), dbg!(product));
   }
 
   #[test]
@@ -59,22 +53,16 @@ mod tests {
     let inverse = VECTOR_A.inverse();
     let product = VECTOR_A * inverse;
 
-    assert_eq!(dbg!(Scalar { s: 1.0 }), dbg!(product));
+    let expected = Multivector::from(Scalar::UNIT);
+    assert_relative_eq!(dbg!(expected), dbg!(product));
   }
-
-  // #[test]
-  // fn inverse_bivector() {
-  //   let inverse = BIVECTOR_A.inverse();
-  //   let product = BIVECTOR_A * inverse;
-
-  //   assert_eq!(dbg!(Multivector { s: 1., ..zero() }), dbg!(product));
-  // }
 
   #[test]
   fn inverse_trivector_1() {
     let inverse = TRIVECTOR_A.inverse();
     let product = TRIVECTOR_A * inverse;
 
-    assert_eq!(dbg!(Multivector { s: 1., ..zero() }), dbg!(product));
+    let expected = Multivector::from(Scalar::UNIT);
+    assert_relative_eq!(dbg!(expected), dbg!(product));
   }
 }

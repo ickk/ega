@@ -1,28 +1,44 @@
-# EGA
+EGA
+===
 
-This project is a work-in-progress implementation of a PGA library for 3D
-computer graphics.
+WIP implementation of a 3D PGA library for computer graphics.
 
 ---
 
-This library is an implementation of an R{3,0,1} geometric algebra, which is
-the smallest geometric algebra that can encode 3D euclidian geometry.
+"Projective Geometric Algebra" is a relatively small GA suitible for 3D
+euclidean geometry, including rotations, translations, & reflections.
 
-Other algebras in the same family include the R{2,0,1} 2D PGA, and the R{4,1}
-Conformal Geometric Algebra. The CGA can also encode euclidian geometry (among
-other things like spheres), however its full multivector has 25 elements. This
-means a full geometric product is quite expensive to compute in CGA.
+The algebra is 4 dimensional. A full-multivector contains 16 values; this makes
+it comparable to the common 4x4 matrix from linear algebra. The implementation
+here is simple & sparse, so many common products may be cheaper to compute
+compared to a 4x4 matrix product. There are lots of unit tests, but there's
+also likely a couple bugs & and lots of missing features.
 
-Compared to CGA (R{4,1}), the R{3,0,1} PGA (this library), has a multivector
-with only 16 elements and a computational cost roughly equivalent to a 4x4
-matrix in linear algebra.
+Note: the products implemented largely follow the Cayley tables from
+[bivector.net].
 
-Furthermore, this library uses the type system along with the product rules of
-the algebra to reduce the computational & memory costs where possible. For
-instance we store only the vector components `e0`,`e1`,`e2`,`e3` as a `Vector`
-and we know that the outer-product of a vector with another vector is a
-bivector (on a 6 element basis). so `Vector.meet(Vector) -> Bivector`. This
-helps to avoid full-16 element products in many cases.
+[bivector.net]: (https://bivector.net)
 
-See [bivector.net](https://bivector.net/PGA4CS.html) for more information
-about the mathematics.
+In the future I may try to implement the algebra detailed by
+[rigidgeometricalgebra.org], which uses slightly different notation & products.
+
+[rigidgeometricalgebra.org]: (https://rigidgeometricalgebra.org)
+
+---
+
+Some references I found helpful:
+
+- L. Dorst and S. D. Keninck, “A Guided Tour to the Plane-Based Geometric Algebra PGA,” bivector.net, https://bivector.net/PGA4CS.pdf, 2022.
+- C. G. Gunn, “Course notes Geometric Algebra for Computer Graphics SIGGRAPH 2019,” bivector.net, https://bivector.net/PROJECTIVE_GEOMETRIC_ALGEBRA.pdf, 2019.
+- L. Dorst, S. Mann, and D. Fontijne, "Geometric Algebra for Computer Science: An Object-Oriented Approach to Geometry". Morgan Kaufmann Publishers, 2007.
+- A. Macdonald, "Linear and Geometric Algebra". Charleston, SC: Alan Macdonald, 2017.
+- E. Lengyel, "Foundations of Game Engine Development". Lincoln, CA: Terathon Software LLC, 2016.
+
+License
+-------
+
+This crate is dual-licensed under either the
+[Apache license, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+or the
+[MIT license](http://opensource.org/licenses/MIT)
+at your option.

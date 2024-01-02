@@ -1,4 +1,4 @@
-use core::fmt::{Debug, Formatter};
+use ::core::fmt::{Debug, Formatter};
 
 #[derive(Copy, Clone, Default, PartialEq, Eq)]
 pub struct Empty;

@@ -1,6 +1,6 @@
 use crate::*;
 
-pub use core::ops::Mul;
+pub use ::core::ops::Mul;
 
 macro_rules! impl_mul {
   // we wrap `f32`s with `Scalar`

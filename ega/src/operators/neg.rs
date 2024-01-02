@@ -1,6 +1,6 @@
 use crate::*;
 
-pub use core::ops::Neg;
+pub use ::core::ops::Neg;
 
 impl Neg for Multivector {
   type Output = Multivector;

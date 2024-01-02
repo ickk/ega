@@ -1,6 +1,5 @@
-use crate::*;
-
 use super::return_zero;
+use crate::*;
 
 /// Scalar Product
 ///

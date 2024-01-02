@@ -1,6 +1,6 @@
 use crate::*;
 
-pub use core::cmp::PartialEq;
+pub use ::core::cmp::PartialEq;
 
 macro_rules! impl_eq_when_zero {
   ($lhs:ty, $rhs:ty) => {

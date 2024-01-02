@@ -1,6 +1,6 @@
 use crate::*;
 
-pub use core::ops::Div;
+pub use ::core::ops::Div;
 
 macro_rules! impl_div {
   ($lhs:ty, f32 => $output:ty) => {

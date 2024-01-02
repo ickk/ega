@@ -1,6 +1,7 @@
 use super::{return_lhs, return_rhs};
 use crate::*;
-pub use core::ops::Add;
+
+pub use ::core::ops::Add;
 
 macro_rules! impl_add {
   ($add_fn:ident: $lhs:ty, $rhs:ty => $output:ty) => {

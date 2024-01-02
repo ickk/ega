@@ -1,5 +1,5 @@
 use super::*;
-use core::fmt::{Debug, Formatter};
+use ::core::fmt::{Debug, Formatter};
 
 #[derive(Copy, Clone, Default, PartialEq)]
 #[repr(C)]

@@ -1,5 +1,8 @@
 #![cfg_attr(not(any(feature = "std", test, doctest)), no_std)]
 
+#[cfg(feature = "libm")]
+use libm::Libm;
+
 mod operators;
 mod optional_features;
 mod values;

@@ -12,7 +12,10 @@ impl<T: NormSquared> Norm for T {
   #[inline]
   fn norm(self) -> Scalar {
     Scalar {
+      #[cfg(not(feature = "libm"))]
       s: self.norm_squared().s.sqrt(),
+      #[cfg(feature = "libm")]
+      s: Libm::<f32>::sqrt(self.norm_squared().s),
     }
   }
 }

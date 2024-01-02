@@ -1,5 +1,5 @@
 use super::*;
-use core::{
+use crate::*;
   fmt::{Debug, Formatter},
   ops::Deref,
 };
@@ -14,14 +14,26 @@ pub struct Scalar {
 impl Scalar {
   pub const UNIT: Scalar = Scalar { s: 1.0 };
 
+  #[cfg(any(feature = "std", feature = "libm"))]
   #[inline]
   pub fn sqrt(self) -> Scalar {
-    Scalar { s: self.s.sqrt() }
+    Scalar {
+      #[cfg(not(feature = "libm"))]
+      s: self.s.sqrt(),
+      #[cfg(feature = "libm")]
+      s: Libm::<f32>::sqrt(self.s),
+    }
   }
 
+  #[cfg(any(feature = "std", feature = "libm"))]
   #[inline]
   pub fn abs(self) -> Scalar {
-    Scalar { s: self.s.abs() }
+    Scalar {
+      #[cfg(not(feature = "libm"))]
+      s: self.s.abs(),
+      #[cfg(feature = "libm")]
+      s: Libm::<f32>::fabs(self.s),
+    }
   }
 }
 

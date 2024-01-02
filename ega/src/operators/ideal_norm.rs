@@ -14,6 +14,9 @@ impl<T: IdealNormSquared> IdealNorm for T {
   #[inline]
   fn ideal_norm(self) -> Pseudoscalar {
     Pseudoscalar {
+      #[cfg(feature = "libm")]
+      e0123: Libm::<f32>::sqrt(self.ideal_norm_squared().e0123),
+      #[cfg(not(feature = "libm"))]
       e0123: self.ideal_norm_squared().e0123.sqrt(),
     }
   }
